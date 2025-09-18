@@ -1,20 +1,18 @@
 @import "tailwindcss";
 
-
 /* 🎨 Thème La Régence */
 @theme {
---color-bg: #F5EFE6; /* beige clair */
---color-ink: #0F172A; /* texte principal */
---color-brand: #0F5132; /* vert foncé */
---color-brand-contrast: #ffffff;
+  --color-bg: #F5EFE6;        /* beige clair */
+  --color-ink: #0F172A;       /* texte principal */
+  --color-brand: #25471f;     /* ✅ nouveau vert partout */
+  --color-brand-contrast: #ffffff;
 }
-
 
 /* 🔧 Utilitaires réutilisables */
 @layer components {
-.btn { @apply px-5 py-3 rounded-xl border transition; }
-.btn-primary { @apply bg-brand text-white hover:opacity-90 border-brand; }
-.btn-outline { @apply text-brand border-brand hover:bg-brand hover:text-white; }
-.card { @apply border rounded-2xl p-4 hover:shadow-sm; }
-.soft-border { @apply border border-brand/20; }
+  .btn { @apply px-5 py-3 rounded-xl border transition; }
+  .btn-primary { @apply bg-brand text-white hover:opacity-90 border-brand; }
+  .btn-outline { @apply text-brand border-brand hover:bg-brand hover:text-white; }
+  .card { @apply border rounded-2xl p-4 hover:shadow-sm; }
+  .soft-border { @apply border border-brand/20; }
 }

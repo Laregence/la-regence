@@ -1,169 +1,137 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Nav from "../components/Nav.astro";
-import Footer from "../components/Footer.astro";
 
+// 🟢 CONFIG
+const DRIVE_ID = "1kT5FYy81tf49MghFeU6MbwdBPgZIoiCB";
 const title = "La Régence — Bar-Brasserie à Mont-de-Marsan";
-const description = "Cuisine maison le midi & le soir, café, bières, cocktails. Terrasse et salle conviviales au cœur de Mont-de-Marsan.";
+const description =
+  "Cuisine maison le midi & le soir, café, bières, cocktails. Terrasse et salle conviviales au cœur de Mont-de-Marsan.";
+
+const today = new Date().toISOString().slice(0, 10);
+const menuPrimary = `https://drive.google.com/uc?export=view&id=${DRIVE_ID}&v=${today}`;
+const menuFallback = `https://drive.google.com/thumbnail?id=${DRIVE_ID}&sz=w1600&v=${today}`;
 ---
 <BaseLayout {title} {description}>
-  <Fragment slot="nav"><Nav /></Fragment>
+  <!-- SPLASH -->
+  <div
+    id="splash"
+    class="fixed inset-0 z-50 bg-brand text-[var(--color-bg)]
+           flex flex-col items-center justify-center gap-5
+           transform-gpu translate-y-0 transition-transform duration-[1800ms] ease-out"
+  >
+    <img src="/logo.png" alt="La Régence"
+         class="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" />
+    <p class="text-2xl md:text-3xl tracking-wide">Bar-Brasserie à Mont-de-Marsan</p>
+  </div>
 
-  <!-- HERO -->
-  <section class="grid md:grid-cols-2 gap-8 items-center py-10">
-    <div class="space-y-5">
-      <h1 class="text-4xl font-extrabold md:text-5xl leading-tight text-brand">
-        Bar-Brasserie conviviale, cuisine maison
-      </h1>
-      <p class="text-lg text-slate-700">
-        Menus le midi en semaine, carte les soirs du lundi au samedi & samedi midi. Café, bières, cocktails, vins et boissons chaudes.
-      </p>
-      <div class="flex flex-wrap gap-3">
-        <a href="/menu" class="btn btn-primary">Voir le menu</a>
-        <a href="/evenements" class="btn btn-outline">Événements</a>
-        <a href="tel:+33558859272" class="btn btn-outline">Appeler pour réserver</a>
-      </div>
-      <ul class="flex gap-4 text-sm text-slate-500">
-        <li>✓ Produits frais</li>
-        <li>✓ Terrasse</li>
-        <li>✓ Centre-ville</li>
-      </ul>
-    </div>
-    <div class="relative">
-      <img src="/hero.jpg" alt="La Régence — salle & terrasse" class="w-full h-auto rounded-2xl soft-border" />
-      <div class="absolute -bottom-4 -right-4 bg-white soft-border rounded-xl p-4">
-        <p class="font-semibold">Service du soir</p>
-        <p class="text-sm text-slate-600">Lun–Sam • 19h–22h</p>
-      </div>
-    </div>
-  </section>
-
-<!-- 👇 Miniature menu du jour (affichée 10h–15h seulement) -->
-  <DailyMenuThumb driveId="1kT5FYy81tf49MghFeU6MbwdBPgZIoiCB" />
-
-  
-  <!-- BARRE INFO RAPIDE -->
-  <section class="grid sm:grid-cols-3 gap-4 py-4">
-    <a href="/menu" class="card soft-border transition">
-      <p class="font-semibold text-brand">Menu & Carte</p>
-      <p class="text-sm text-slate-600">Cuisine maison, boissons du bar</p>
-    </a>
-    <a href="/evenements" class="card soft-border transition">
-      <p class="font-semibold text-brand">Événements</p>
-      <p class="text-sm text-slate-600">Vendredi cocktails, matchs, etc.</p>
-    </a>
-    <a href="https://maps.google.com/?q=La%20R%C3%A9gence%2C%202%20rue%20L%C3%A9on%20Gambetta%2040000%20Mont-de-Marsan" class="card soft-border transition">
-      <p class="font-semibold text-brand">Nous trouver</p>
-      <p class="text-sm text-slate-600">2 rue Léon Gambetta</p>
-    </a>
-  </section>
-
-  <!-- HIGHLIGHTS / AVANTAGES -->
-  <section class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 py-6">
-    <div class="card soft-border">
-      <p class="font-semibold mb-1 text-brand">Cuisine maison</p>
-      <p class="text-sm text-slate-600">Carte courte, produits frais & saison.</p>
-    </div>
-    <div class="card soft-border">
-      <p class="font-semibold mb-1 text-brand">Café & bar</p>
-      <p class="text-sm text-slate-600">Lattes, bières pression, cocktails, vins.</p>
-    </div>
-    <div class="card soft-border">
-      <p class="font-semibold mb-1 text-brand">Service midi & soir</p>
-      <p class="text-sm text-slate-600">Menu du midi, carte du soir (lun–sam).</p>
-    </div>
-    <div class="card soft-border">
-      <p class="font-semibold mb-1 text-brand">Centre-ville</p>
-      <p class="text-sm text-slate-600">2 rue Léon Gambetta, Mont-de-Marsan.</p>
-    </div>
-  </section>
-
-  <!-- HORAIRES -->
-  <section class="grid md:grid-cols-3 gap-6 py-10">
-    <div class="md:col-span-2 rounded-2xl soft-border p-6">
-      <h2 class="text-2xl font-bold mb-4 text-brand">Horaires</h2>
-      <div class="grid sm:grid-cols-2 gap-4 text-sm">
-        <div>
-          <p class="font-medium">Lundi–Jeudi</p>
-          <p class="text-slate-600">7h30–00h</p>
+  <!-- Layout principal -->
+  <div class="flex min-h-screen">
+    <!-- SIDEBAR GAUCHE (20%) : vert de marque + texte beige -->
+    <aside
+      class="w-[20%] fixed top-0 left-0 h-screen border-r soft-border p-6 flex flex-col gap-6 z-40 bg-brand text-[var(--color-bg)]"
+    >
+      <a href="/" class="flex items-center gap-3">
+        <img src="/logo.png" alt="La Régence" class="w-12 h-12" />
+        <div class="leading-tight">
+          <p class="font-bold">La Régence</p>
+          <p class="text-sm opacity-80">Bar-Brasserie</p>
         </div>
-        <div>
-          <p class="font-medium">Vendredi–Samedi</p>
-          <p class="text-slate-600">7h30–2h00</p>
-        </div>
-        <div class="sm:col-span-2">
-          <p class="font-medium">Service du soir</p>
-          <p class="text-slate-600">Lundi au samedi + samedi midi</p>
+      </a>
+
+      <nav class="flex flex-col gap-2 text-[15px]">
+        <a href="/menu" class="px-4 py-2 rounded-xl border inline-block border-[var(--color-bg)] text-[var(--color-bg)]
+           hover:bg-[var(--color-bg)] hover:text-brand transition">Carte</a>
+        <a href="/boissons" class="px-4 py-2 rounded-xl border inline-block border-[var(--color-bg)] text-[var(--color-bg)]
+           hover:bg-[var(--color-bg)] hover:text-brand transition">Boisson</a>
+        <a href="/la-regence" class="px-4 py-2 rounded-xl border inline-block border-[var(--color-bg)] text-[var(--color-bg)]
+           hover:bg-[var(--color-bg)] hover:text-brand transition">La Régence</a>
+        <a href="/contact" class="px-4 py-2 rounded-xl border inline-block border-[var(--color-bg)] text-[var(--color-bg)]
+           hover:bg-[var(--color-bg)] hover:text-brand transition">Contact</a>
+      </nav>
+
+      <div class="mt-auto">
+        <p class="text-xs uppercase tracking-wide opacity-80 mb-2">Suivez-nous</p>
+        <div class="flex items-center gap-4">
+          <a href="#" aria-label="Instagram" class="hover:opacity-80" title="Instagram">
+            <!-- Icône IG -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.2 2.4.4.6.2 1 .4 1.4.8s.6.8.8 1.4c.2.5.3 1.2.4 2.4.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.9-.4 2.4-.2.6-.4 1-.8 1.4s-.8.6-1.4.8c-.5.2-1.2.3-2.4.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.2-2.4-.4a3.7 3.7 0 0 1-2.2-2.2c-.2-.5-.3-1.2-.4-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.9.4-2.4.2-.6.4-1 .8-1.4s.8-.6 1.4-.8c.5-.2 1.2-.3 2.4-.4C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.8.1-1 0-1.6.2-1.9.3-.5.2-.8.4-1.2.8s-.6.7-.8 1.2c-.1.3-.3.9-.3 1.9-.1 1.3-.1 1.7-.1 4.8s0 3.5.1 4.8c0 1 .2 1.6.3 1.9.2.5.4.8.8 1.2s.7.6 1.2.8c.3.1.9.3 1.9.3 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1 0 1.6-.2 1.9-.3.5-.2.8-.4 1.2-.8s.6-.7.8-1.2c.1-.3.3-.9.3-1.9.1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c0-1-.2-1.6-.3-1.9a3 3 0 0 0-.8-1.2c-.4-.4-.7-.6-1.2-.8-.3-.1-.9-.3-1.9-.3-1.3-.1-1.7-.1-4.8-.1Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm0 1.8a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm5-2.1a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="hover:opacity-80" title="Facebook">
+            <!-- Icône FB -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.12 8.44 9.94v-7.03H7.9V12H10.5v-2.3c0-2.56 1.52-3.98 3.85-3.98 1.12 0 2.3.2 2.3.2v2.54h-1.29c-1.27 0-1.67.79-1.67 1.6V12h2.84l-.45 2.97h-2.4v7.03C18.34 21.18 22 17.06 22 12.06Z"/></svg>
+          </a>
         </div>
       </div>
-    </div>
-    <div class="rounded-2xl soft-border p-6">
-      <h3 class="text-lg font-semibold text-brand">Adresse</h3>
-      <p class="text-slate-700">La Régence<br/>2 rue Léon Gambetta<br/>40000 Mont-de-Marsan</p>
-      <a href="https://maps.google.com/?q=La%20R%C3%A9gence%2C%202%20rue%20L%C3%A9on%20Gambetta%2040000%20Mont-de-Marsan" class="inline-block mt-3 btn btn-outline">Itinéraire</a>
-      <p class="mt-3"><a href="tel:+33558859272" class="underline">05 58 85 92 72</a></p>
-    </div>
-  </section>
+    </aside>
 
-  <!-- APERÇU DU MENU (teaser simple) -->
-  <section class="py-10">
-    <div class="flex items-end justify-between gap-4 mb-4">
-      <h2 class="text-2xl font-bold text-brand">Un aperçu du menu</h2>
-      <a href="/menu" class="text-sm underline">Voir toute la carte</a>
-    </div>
-    <div class="grid md:grid-cols-3 gap-4">
-      <article class="card soft-border">
-        <p class="font-semibold">Burger du Chef</p>
-        <p class="text-sm text-slate-600">Frites maison · 15,90€</p>
-      </article>
-      <article class="card soft-border">
-        <p class="font-semibold">Butternut rôti au miel</p>
-        <p class="text-sm text-slate-600">Boulgour steak, œuf poché · 14,50€</p>
-      </article>
-      <article class="card soft-border">
-        <p class="font-semibold">Lillet Tonic (25cl)</p>
-        <p class="text-sm text-slate-600">7,50€</p>
-      </article>
-    </div>
-  </section>
+    <!-- CONTENU DROITE (80%) -->
+    <main class="ml-[20%] w-[80%] p-6">
+      <div class="grid md:grid-cols-2 gap-6 items-start">
+        <div class="space-y-4">
+          <h1 class="text-3xl font-extrabold text-brand">Bienvenue à La Régence</h1>
+          <p class="text-slate-700">
+            Cuisine maison, produits frais. Service le midi en semaine et le soir du lundi au samedi.
+            Bar, café, cocktails et vins — ambiance conviviale en plein centre-ville.
+          </p>
+          <div class="flex gap-3">
+            <a href="/menu" class="btn btn-primary">Voir la carte</a>
+            <a href="/contact" class="btn btn-outline">Contact</a>
+          </div>
+        </div>
 
-  <!-- GALERIE SIMPLE -->
-  <section class="py-6">
-    <h2 class="text-2xl font-bold mb-4 text-brand">En images</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <img src="/hero.jpg" alt="Salle" class="rounded-xl soft-border"/>
-      <img src="/hero.jpg" alt="Terrasse" class="rounded-xl soft-border"/>
-      <img src="/hero.jpg" alt="Cocktails" class="rounded-xl soft-border"/>
-      <img src="/hero.jpg" alt="Plat" class="rounded-xl soft-border"/>
-    </div>
-  </section>
-
-  <!-- BLOC RÉSEAUX / ACTU -->
-  <section class="grid md:grid-cols-2 gap-6 py-10">
-    <div class="rounded-2xl soft-border p-6">
-      <h2 class="text-2xl font-bold mb-2 text-brand">Actu & événements</h2>
-      <p class="text-slate-600 text-sm mb-4">Soirée cocktails le vendredi, menus spéciaux, matchs…</p>
-      <a href="/evenements" class="btn btn-outline">Voir le calendrier</a>
-    </div>
-    <div class="rounded-2xl soft-border p-6">
-      <h3 class="text-lg font-semibold mb-2 text-brand">Suivez-nous</h3>
-      <p class="text-slate-600 text-sm">Instagram & Facebook pour les nouveautés et la carte du jour.</p>
-      <div class="flex gap-3 mt-3">
-        <a href="#" class="underline text-sm">Instagram</a>
-        <a href="#" class="underline text-sm">Facebook</a>
+        <div class="grid gap-4">
+          <div class="rounded-2xl soft-border overflow-hidden">
+            <img
+              id="heroDynamic"
+              src="/bar.jpg"
+              alt="La Régence — visuel"
+              class="w-full h-64 md:h-80 object-cover"
+              data-primary={menuPrimary}
+              data-fallback={menuFallback}
+            />
+          </div>
+          <div class="rounded-2xl soft-border overflow-hidden">
+            <img src="/bar-small.jpg" alt="La Régence — intérieur" class="w-full h-40 object-cover" />
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </main>
+  </div>
 
-  <!-- CTA FINAL -->
-  <section class="rounded-2xl soft-border p-6 my-10 text-center">
-    <h2 class="text-2xl font-bold mb-2 text-brand">On vous accueille aujourd’hui !</h2>
-    <p class="text-slate-600 mb-4">Passez quand vous voulez, ou réservez une table au téléphone.</p>
-    <div class="flex items-center justify-center gap-3">
-      <a href="tel:+33558859272" class="btn btn-primary">Appeler</a>
-      <a href="/menu" class="btn btn-outline">Voir le menu</a>
-    </div>
-  </section>
+  <!-- Scripts -->
+  <script is:inline>
+    // Splash : slide up après 3s (1.8s d'anim)
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function startSplashExit(){
+      const s=document.getElementById('splash');
+      if(!s) return;
+      if(prefersReduced){ s.remove(); return; }
+      s.classList.add('-translate-y-full');
+      s.addEventListener('transitionend',()=>s.remove(),{once:true});
+    }
+    window.addEventListener('load',()=>{ setTimeout(()=>{ requestAnimationFrame(startSplashExit); },3000); });
 
-  <Fragment slot="footer"><Footer /></Fragment>
+    // Image dynamique (10–15h Europe/Paris → menu, sinon bar.jpg) + ?showMenu=1
+    (() => {
+      const img = document.getElementById('heroDynamic');
+      if (!img) return;
+
+      const params = new URLSearchParams(location.search);
+      const forceMenu = params.get('showMenu') === '1';
+
+      const now = new Date();
+      const hh = Number(new Intl.DateTimeFormat('fr-FR', {
+        hour: '2-digit', hour12: false, timeZone: 'Europe/Paris'
+      }).format(now));
+
+      if (forceMenu || (hh >= 10 && hh < 15)) {
+        const primary = img.dataset.primary;
+        const fallback = img.dataset.fallback;
+        const test = new Image();
+        test.onload = () => { img.src = primary };
+        test.onerror = () => { img.src = fallback };
+        test.src = primary;
+      }
+    })();
+  </script>
 </BaseLayout>
