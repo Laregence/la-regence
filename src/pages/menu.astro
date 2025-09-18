@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "Menu du jour — La Régence";
+const description = "Découvrez le menu du jour, mis à jour quotidiennement.";
+const DRIVE_ID = "1kT5FYy81tf49MghFeU6MbwdBPgZIoiCB";
+const today = new Date().toISOString().slice(0,10);
+const imgUrl = `https://drive.google.com/uc?export=view&id=${DRIVE_ID}&v=${today}`;
+---
+<BaseLayout {title} {description}>
+  <section class="py-8">
+    <h1 class="text-3xl font-bold text-brand mb-4">Menu du jour</h1>
+    <figure class="card soft-border max-w-3xl">
+      <img src={imgUrl} alt="Menu du jour — La Régence" class="w-full h-auto rounded-2xl" />
+      <figcaption class="text-sm text-slate-500 p-3">Mis à jour quotidiennement.</figcaption>
+    </figure>
+  </section>
+</BaseLayout>
