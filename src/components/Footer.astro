@@ -1,0 +1,27 @@
+---
+const phone = "05 58 85 92 72";
+const phoneHref = "tel:+33558859272";
+const email = "laregence.mdn@gmail.com";
+---
+<footer class="grid md:grid-cols-3 gap-4 text-sm">
+<div>
+<p class="font-semibold">La Régence</p>
+<p>2 rue Léon Gambetta</p>
+<p>40000 Mont‑de‑Marsan</p>
+<p class="mt-2"><a href={phoneHref} class="underline">{phone}</a></p>
+<p><a class="underline" href={`mailto:${email}`}>{email}</a></p>
+</div>
+<div>
+<p class="font-semibold">Horaires</p>
+<p>Lun–Jeu : 7h30–00h</p>
+<p>Ven–Sam : 7h30–2h00</p>
+<p>Service du soir : lun–sam + samedi midi</p>
+</div>
+<div>
+<p class="font-semibold">Suivez‑nous</p>
+<p class="flex gap-3">
+<a class="underline" href="#">Instagram</a>
+<a class="underline" href="#">Facebook</a>
+</p>
+</div>
+</footer>

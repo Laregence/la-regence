@@ -1,0 +1,33 @@
+---
+import "../styles/global.css"; // ✅ active Tailwind v4 et ton thème
+const {
+title = "La Régence — Bar-Brasserie à Mont-de-Marsan",
+description = "Cuisine maison le midi & le soir. Café, bières, cocktails, terrasse conviviale.",
+} = Astro.props;
+---
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="icon" href="/favicon.ico" />
+</head>
+<body class="min-h-screen flex flex-col bg-bg text-ink"> <!-- 👈 couleurs globales -->
+<header class="sticky top-0 bg-white/80 backdrop-blur z-50 border-b">
+<div class="max-w-5xl mx-auto px-4">
+<slot name="nav" />
+</div>
+</header>
+<main class="flex-1">
+<div class="max-w-5xl mx-auto px-4 py-8">
+<slot />
+</div>
+</main>
+<footer class="border-t">
+<div class="max-w-5xl mx-auto px-4 py-8">
+<slot name="footer" />
+</div>
+</footer>
+</body>
+</html>

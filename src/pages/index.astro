@@ -1,11 +1,165 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const title = "La Régence — Bar-Brasserie à Mont-de-Marsan";
+const description = "Cuisine maison le midi & le soir, café, bières, cocktails. Terrasse et salle conviviales au cœur de Mont-de-Marsan.";
 ---
+<BaseLayout {title} {description}>
+  <Fragment slot="nav"><Nav /></Fragment>
 
-<Layout>
-	<Welcome />
-</Layout>
+  <!-- HERO -->
+  <section class="grid md:grid-cols-2 gap-8 items-center py-10">
+    <div class="space-y-5">
+      <h1 class="text-4xl font-extrabold md:text-5xl leading-tight text-brand">
+        Bar-Brasserie conviviale, cuisine maison
+      </h1>
+      <p class="text-lg text-slate-700">
+        Menus le midi en semaine, carte les soirs du lundi au samedi & samedi midi. Café, bières, cocktails, vins et boissons chaudes.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href="/menu" class="btn btn-primary">Voir le menu</a>
+        <a href="/evenements" class="btn btn-outline">Événements</a>
+        <a href="tel:+33558859272" class="btn btn-outline">Appeler pour réserver</a>
+      </div>
+      <ul class="flex gap-4 text-sm text-slate-500">
+        <li>✓ Produits frais</li>
+        <li>✓ Terrasse</li>
+        <li>✓ Centre-ville</li>
+      </ul>
+    </div>
+    <div class="relative">
+      <img src="/hero.jpg" alt="La Régence — salle & terrasse" class="w-full h-auto rounded-2xl soft-border" />
+      <div class="absolute -bottom-4 -right-4 bg-white soft-border rounded-xl p-4">
+        <p class="font-semibold">Service du soir</p>
+        <p class="text-sm text-slate-600">Lun–Sam • 19h–22h</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BARRE INFO RAPIDE -->
+  <section class="grid sm:grid-cols-3 gap-4 py-4">
+    <a href="/menu" class="card soft-border transition">
+      <p class="font-semibold text-brand">Menu & Carte</p>
+      <p class="text-sm text-slate-600">Cuisine maison, boissons du bar</p>
+    </a>
+    <a href="/evenements" class="card soft-border transition">
+      <p class="font-semibold text-brand">Événements</p>
+      <p class="text-sm text-slate-600">Vendredi cocktails, matchs, etc.</p>
+    </a>
+    <a href="https://maps.google.com/?q=La%20R%C3%A9gence%2C%202%20rue%20L%C3%A9on%20Gambetta%2040000%20Mont-de-Marsan" class="card soft-border transition">
+      <p class="font-semibold text-brand">Nous trouver</p>
+      <p class="text-sm text-slate-600">2 rue Léon Gambetta</p>
+    </a>
+  </section>
+
+  <!-- HIGHLIGHTS / AVANTAGES -->
+  <section class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 py-6">
+    <div class="card soft-border">
+      <p class="font-semibold mb-1 text-brand">Cuisine maison</p>
+      <p class="text-sm text-slate-600">Carte courte, produits frais & saison.</p>
+    </div>
+    <div class="card soft-border">
+      <p class="font-semibold mb-1 text-brand">Café & bar</p>
+      <p class="text-sm text-slate-600">Lattes, bières pression, cocktails, vins.</p>
+    </div>
+    <div class="card soft-border">
+      <p class="font-semibold mb-1 text-brand">Service midi & soir</p>
+      <p class="text-sm text-slate-600">Menu du midi, carte du soir (lun–sam).</p>
+    </div>
+    <div class="card soft-border">
+      <p class="font-semibold mb-1 text-brand">Centre-ville</p>
+      <p class="text-sm text-slate-600">2 rue Léon Gambetta, Mont-de-Marsan.</p>
+    </div>
+  </section>
+
+  <!-- HORAIRES -->
+  <section class="grid md:grid-cols-3 gap-6 py-10">
+    <div class="md:col-span-2 rounded-2xl soft-border p-6">
+      <h2 class="text-2xl font-bold mb-4 text-brand">Horaires</h2>
+      <div class="grid sm:grid-cols-2 gap-4 text-sm">
+        <div>
+          <p class="font-medium">Lundi–Jeudi</p>
+          <p class="text-slate-600">7h30–00h</p>
+        </div>
+        <div>
+          <p class="font-medium">Vendredi–Samedi</p>
+          <p class="text-slate-600">7h30–2h00</p>
+        </div>
+        <div class="sm:col-span-2">
+          <p class="font-medium">Service du soir</p>
+          <p class="text-slate-600">Lundi au samedi + samedi midi</p>
+        </div>
+      </div>
+    </div>
+    <div class="rounded-2xl soft-border p-6">
+      <h3 class="text-lg font-semibold text-brand">Adresse</h3>
+      <p class="text-slate-700">La Régence<br/>2 rue Léon Gambetta<br/>40000 Mont-de-Marsan</p>
+      <a href="https://maps.google.com/?q=La%20R%C3%A9gence%2C%202%20rue%20L%C3%A9on%20Gambetta%2040000%20Mont-de-Marsan" class="inline-block mt-3 btn btn-outline">Itinéraire</a>
+      <p class="mt-3"><a href="tel:+33558859272" class="underline">05 58 85 92 72</a></p>
+    </div>
+  </section>
+
+  <!-- APERÇU DU MENU (teaser simple) -->
+  <section class="py-10">
+    <div class="flex items-end justify-between gap-4 mb-4">
+      <h2 class="text-2xl font-bold text-brand">Un aperçu du menu</h2>
+      <a href="/menu" class="text-sm underline">Voir toute la carte</a>
+    </div>
+    <div class="grid md:grid-cols-3 gap-4">
+      <article class="card soft-border">
+        <p class="font-semibold">Burger du Chef</p>
+        <p class="text-sm text-slate-600">Frites maison · 15,90€</p>
+      </article>
+      <article class="card soft-border">
+        <p class="font-semibold">Butternut rôti au miel</p>
+        <p class="text-sm text-slate-600">Boulgour steak, œuf poché · 14,50€</p>
+      </article>
+      <article class="card soft-border">
+        <p class="font-semibold">Lillet Tonic (25cl)</p>
+        <p class="text-sm text-slate-600">7,50€</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- GALERIE SIMPLE -->
+  <section class="py-6">
+    <h2 class="text-2xl font-bold mb-4 text-brand">En images</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <img src="/hero.jpg" alt="Salle" class="rounded-xl soft-border"/>
+      <img src="/hero.jpg" alt="Terrasse" class="rounded-xl soft-border"/>
+      <img src="/hero.jpg" alt="Cocktails" class="rounded-xl soft-border"/>
+      <img src="/hero.jpg" alt="Plat" class="rounded-xl soft-border"/>
+    </div>
+  </section>
+
+  <!-- BLOC RÉSEAUX / ACTU -->
+  <section class="grid md:grid-cols-2 gap-6 py-10">
+    <div class="rounded-2xl soft-border p-6">
+      <h2 class="text-2xl font-bold mb-2 text-brand">Actu & événements</h2>
+      <p class="text-slate-600 text-sm mb-4">Soirée cocktails le vendredi, menus spéciaux, matchs…</p>
+      <a href="/evenements" class="btn btn-outline">Voir le calendrier</a>
+    </div>
+    <div class="rounded-2xl soft-border p-6">
+      <h3 class="text-lg font-semibold mb-2 text-brand">Suivez-nous</h3>
+      <p class="text-slate-600 text-sm">Instagram & Facebook pour les nouveautés et la carte du jour.</p>
+      <div class="flex gap-3 mt-3">
+        <a href="#" class="underline text-sm">Instagram</a>
+        <a href="#" class="underline text-sm">Facebook</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="rounded-2xl soft-border p-6 my-10 text-center">
+    <h2 class="text-2xl font-bold mb-2 text-brand">On vous accueille aujourd’hui !</h2>
+    <p class="text-slate-600 mb-4">Passez quand vous voulez, ou réservez une table au téléphone.</p>
+    <div class="flex items-center justify-center gap-3">
+      <a href="tel:+33558859272" class="btn btn-primary">Appeler</a>
+      <a href="/menu" class="btn btn-outline">Voir le menu</a>
+    </div>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>

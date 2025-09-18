@@ -1,0 +1,18 @@
+---
+const links = [
+  { href: "/", label: "Accueil" },
+  { href: "/menu", label: "Menu" },
+  { href: "/evenements", label: "Événements" },
+];
+---
+<nav class="flex items-center gap-6 h-14">
+  <a href="/" class="flex items-center gap-2 font-semibold">
+    <img src="/logo.png" alt="La Régence" class="w-8 h-8" />
+    <span>La Régence</span>
+  </a>
+  <ul class="flex items-center gap-4 ml-auto">
+    {links.map(l => (
+      <li><a href={l.href} class="hover:underline">{l.label}</a></li>
+    ))}
+  </ul>
+</nav>
