@@ -1,43 +1,65 @@
 ---
 const {
-  driveId = "1kT5FYy81tf49MghFeU6MbwdBPgZIoiCB", // ton FILE_ID Google Drive
+  driveId = "1kT5FYy81tf49MghFeU6MbwdBPgZIoiCB",
   title = "Menu du jour",
   tz = "Europe/Paris",
+  startHour = 10,
+  endHour = 15,
 } = Astro.props;
 
-const today = new Date().toISOString().slice(0,10); // cache-busting quotidien
-const imgUrl = `https://drive.google.com/uc?export=view&id=${driveId}&v=${today}`;
+const today = new Date().toISOString().slice(0, 10); // bust cache quotidien
+const primaryUrl = `https://drive.google.com/uc?export=view&id=${driveId}&v=${today}`;
+const fallbackUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1200&v=${today}`;
 ---
-
-<section id="daily-menu" class="py-6" hidden>
+<section id="daily-menu" class="py-6 hidden">
   <h2 class="text-2xl font-bold text-brand mb-3">{title}</h2>
 
-  <!-- Miniature avec effet hover -->
   <a
     href="/menu"
     class="group block max-w-md rounded-2xl soft-border overflow-hidden"
     aria-label="Voir le menu du jour"
   >
     <img
-      src={imgUrl}
+      src={primaryUrl}
+      data-fallback={fallbackUrl}
       alt="Menu du jour — La Régence"
       loading="eager"
       class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-      onerror="this.insertAdjacentHTML('afterend','<p class=&quot;text-sm text-red-600 p-3&quot;>Menu indisponible pour le moment.</p>'); this.remove();"
+      onerror="
+        if(!this.dataset.switched){
+          this.dataset.switched='1';
+          this.src=this.dataset.fallback;
+        }else{
+          this.insertAdjacentHTML('afterend','<p class=&quot;text-sm text-red-600 p-3&quot;>Menu indisponible pour le moment.</p>');
+          this.remove();
+        }
+      "
     />
     <div class="p-3 text-sm text-slate-500">Survolez pour agrandir — cliquez pour les détails</div>
   </a>
 </section>
 
-<!-- Affichage 10:00–14:59 Europe/Paris -->
-<script is:inline>
-(() => {
-  try {
-    const el = document.getElementById('daily-menu');
-    const tz = { timeZone: /**/"{{tz}}".replaceAll('"','')/**/ || 'Europe/Paris' };
-    // Récupère l'heure locale Europe/Paris (00–23)
-    const hh = Number(new Intl.DateTimeFormat('fr-FR', { hour: '2-digit', hour12: false, ...tz }).format(new Date()));
-    if (hh >= 10 && hh < 15) el.hidden = false;
-  } catch (e) {}
-})();
+<!-- Affichage 10:00–14:59 Europe/Paris (mode test : ?showMenu=1) -->
+<script is:inline define:vars={{ tz, startHour, endHour }}>
+  (() => {
+    try {
+      const el = document.getElementById('daily-menu');
+      if (!el) return;
+
+      const params = new URLSearchParams(location.search);
+      const force = params.get('showMenu') === '1';
+
+      const now = new Date();
+      const hourStr = new Intl.DateTimeFormat('fr-FR', {
+        hour: '2-digit',
+        hour12: false,
+        timeZone: tz,
+      }).format(now);
+      const hh = Number(hourStr);
+
+      if (force || (hh >= Number(startHour) && hh < Number(endHour))) {
+        el.classList.remove('hidden');
+      }
+    } catch {}
+  })();
 </script>

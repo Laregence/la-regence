@@ -2,17 +2,61 @@
 
 /* 🎨 Thème La Régence */
 @theme {
-  --color-bg: #F5EFE6;        /* beige clair */
-  --color-ink: #0F172A;       /* texte principal */
-  --color-brand: #25471f;     /* ✅ nouveau vert partout */
+  --color-bg: #F5EFE6;         /* beige clair */
+  --color-ink: #0F172A;        /* texte principal */
+  --color-brand: #25471f;      /* ✅ ton vert partout */
   --color-brand-contrast: #ffffff;
 }
 
-/* 🔧 Utilitaires réutilisables */
+@layer base {
+  html, body { color: var(--color-ink); background: var(--color-bg); }
+}
+
+/* 🔧 Composants utilitaires */
 @layer components {
   .btn { @apply px-5 py-3 rounded-xl border transition; }
   .btn-primary { @apply bg-brand text-white hover:opacity-90 border-brand; }
   .btn-outline { @apply text-brand border-brand hover:bg-brand hover:text-white; }
   .card { @apply border rounded-2xl p-4 hover:shadow-sm; }
   .soft-border { @apply border border-brand/20; }
+}
+
+/* 🛠️ Splash anti-purge (utilisé par le JS) */
+@layer utilities {
+  .slide-up-out { transform: translateY(-100%) !important; }
+}
+@layer utilities {
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+}
+@layer utilities {
+  /* Fade-in pour le CONTENU du splash (pas le fond) */
+  .fade-in-contents {
+    opacity: 0;
+    animation: splashFadeIn 600ms ease-out forwards;
+  }
+  @keyframes splashFadeIn {
+    to { opacity: 1; }
+  }
+}
+@layer utilities {
+  .font-splash {
+    font-family: 'Limelight', cursive;
+    letter-spacing: 0.03em;
+  }
+}
+@layer utilities {
+  .font-limelight {
+    font-family: 'Limelight', cursive;
+  }
+}
+@layer utilities {
+  .font-nour {
+    font-family: 'Noto Sans', sans-serif;
+  }
 }

@@ -1,18 +1,54 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+// ✅ Mets ici ton FILE_ID Google Drive
+const DRIVE_ID = "1kT5FYy81tf49MghFeU6MbwdBPgZIoiCB";
+
 const title = "Menu du jour — La Régence";
 const description = "Découvrez le menu du jour, mis à jour quotidiennement.";
-const DRIVE_ID = "1kT5FYy81tf49MghFeU6MbwdBPgZIoiCB";
-const today = new Date().toISOString().slice(0,10);
-const imgUrl = `https://drive.google.com/uc?export=view&id=${DRIVE_ID}&v=${today}`;
+
+// Bust cache quotidien pour forcer un rafraîchissement 1x/jour
+const today = new Date().toISOString().slice(0, 10);
+
+// Deux URLs possibles : on essaye d'abord 'view', puis on bascule sur 'thumbnail' si erreur
+const primaryUrl = `https://drive.google.com/uc?export=view&id=${DRIVE_ID}&v=${today}`;
+const fallbackUrl = `https://drive.google.com/thumbnail?id=${DRIVE_ID}&sz=w1600&v=${today}`;
 ---
 <BaseLayout {title} {description}>
   <section class="py-8">
-    <h1 class="text-3xl font-bold text-brand mb-4">Menu du jour</h1>
+    <div class="flex items-center justify-between gap-4 mb-4">
+      <h1 class="text-3xl font-bold text-brand">Menu du jour</h1>
+      <a href="/" class="text-sm underline">← Retour à l’accueil</a>
+    </div>
+
     <figure class="card soft-border max-w-3xl">
-      <img src={imgUrl} alt="Menu du jour — La Régence" class="w-full h-auto rounded-2xl" />
-      <figcaption class="text-sm text-slate-500 p-3">Mis à jour quotidiennement.</figcaption>
+      <button
+        id="openModal"
+        class="group block w-full rounded-2xl overflow-hidden text-left"
+        aria-label="Ouvrir le menu en grand"
+      >
+        <img
+          src={primaryUrl}
+          data-fallback={fallbackUrl}
+          alt="Menu du jour — La Régence"
+          loading="eager"
+          class="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
+          onerror="
+            if(!this.dataset.switched){
+              this.dataset.switched='1';
+              this.src=this.dataset.fallback;
+            }else{
+              this.insertAdjacentHTML('afterend','<p class=&quot;text-sm text-red-600 p-3&quot;>Menu indisponible pour le moment.</p>');
+              this.remove();
+              document.getElementById('openModal')?.setAttribute('disabled','true');
+            }
+          "
+        />
+      </button>
+      <figcaption class="text-sm text-slate-500 p-3">
+        Actualisé automatiquement chaque jour. Cliquez pour agrandir.
+      </figcaption>
     </figure>
   </section>
-</BaseLayout>
+
+  <!-- Lightbox / Modale native -->

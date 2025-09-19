@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://dreamy-scone-d1ec11.netlify.app', // ton URL (à changer plus tard si domaine)
+  site: 'https://dreamy-scone-d1ec11.netlify.app', // ton domaine plus tard
   vite: {
-    plugins: [tailwind()], // ✅ Tailwind v4 via Vite
+    plugins: [tailwind()],
   },
 });

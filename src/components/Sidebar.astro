@@ -1,0 +1,86 @@
+---
+const { className = "" } = Astro.props;
+
+const pathname = Astro.url.pathname;
+const links = [
+  { href: "/menu", label: "Carte" },
+  { href: "/boissons", label: "Boissons" },   // pluriel
+  { href: "/la-regence", label: "La Régence" },
+  { href: "/contact", label: "Contact" },
+];
+const isActive = (href) => pathname === href;
+---
+<aside
+  class={`h-screen p-6 flex flex-col gap-6 bg-brand text-[var(--color-bg)] border-r soft-border ${className}`}
+  aria-label="Navigation principale"
+>
+  <!-- LOGO pleine largeur -->
+  <a href="/" class="block select-none">
+    <img
+      src="/logo.png"
+      alt="La Régence — Bar-Brasserie"
+      class="w-full h-auto object-contain max-h-[250px]"
+    />
+    <span class="sr-only">Accueil — La Régence</span>
+  </a>
+
+  <!-- Barre cuivre sous le logo -->
+  <div class="h-[2px] rounded-full" style="background:#a3742c;"></div>
+
+  <!-- NAVIGATION (gros, centré, Limelight, MAJUSCULES) -->
+  <nav class="flex flex-col gap-6 text-3xl text-center font-limelight uppercase" aria-label="Menu latéral">
+    {links.map((l, i) => (
+      <div>
+        <a
+          href={l.href}
+          class={`transition
+                  ${isActive(l.href)
+                    ? "font-bold text-[var(--color-bg)] bg-[var(--color-bg)]/20"
+                    : "text-[var(--color-bg)] hover:text-[var(--color-bg)]/80"
+                  }`}
+        >
+          {l.label}
+        </a>
+
+       <!-- Après le dernier lien : barre cuivre + logos sociaux -->
+{ i === links.length - 1 && (
+  <div class="mt-2">
+    <div class="h-[2px] rounded-full mb-3" style="background:#a3742c;"></div>
+    <div class="flex items-center justify-center gap-8">
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/la_regence_mdm/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:opacity-80" title="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14 fill-current text-[var(--color-bg)]" viewBox="0 0 24 24">
+          <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm0 2h10c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3zm5 3.3a5.7 5.7 0 1 0 0 11.4 5.7 5.7 0 0 0 0-11.4zm0 2a3.7 3.7 0 1 1 0 7.4 3.7 3.7 0 0 1 0-7.4zM17.8 6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/>
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/LaRegenceMDM/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:opacity-80" title="Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14 fill-current text-[var(--color-bg)]" viewBox="0 0 24 24">
+          <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.12 8.44 9.94v-7.03H7.9V12H10.5v-2.3c0-2.56 1.52-3.98 3.85-3.98 1.12 0 2.3.2 2.3.2v2.54h-1.29c-1.27 0-1.67.79-1.67 1.6V12h2.84l-.45 2.97h-2.4v7.03C18.34 21.18 22 17.06 22 12.06Z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+)}
+
+      </div>
+    ))}
+  </nav>
+
+    <!-- BAS DE COLONNE : Adresse centrée -->
+  <div class="mt-auto text-center font-nour">
+    <a
+      href="https://maps.google.com/?q=La%20R%C3%A9gence%2C%202%20rue%20L%C3%A9on%20Gambetta%2040000%20Mont-de-Marsan"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block text-[var(--color-bg)] hover:opacity-80 transition"
+    >
+      <p class="text-base font-semibold">La Régence</p>
+      <p class="text-sm opacity-90">
+        2 rue Léon Gambetta<br/>40000 Mont-de-Marsan
+      </p>
+    </a>
+  </div>
+
+</aside>

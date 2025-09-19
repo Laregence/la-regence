@@ -1,0 +1,26 @@
+---
+import Sidebar from "../components/Sidebar.astro";
+import "../styles/global.css";
+
+const { title = "La Régence", description = "" } = Astro.props;
+---
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <!-- Google Font Limelight pour le splash (déjà utilisée si tu l'as ajoutée) -->
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+  </head>
+  <body class="text-ink bg-[var(--color-bg)]">
+    <!-- Sidebar fixe : 1/5 -->
+    <div class="fixed top-0 left-0 w-[20%]">
+      <Sidebar />
+    </div>
+
+    <!-- Contenu : 4/5 -->
+    <main class="ml-[20%] w-[80%] min-h-screen">
+      <slot />
+    </main>
+  </body>
+</html>
