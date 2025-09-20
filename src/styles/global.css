@@ -60,3 +60,8 @@
     font-family: 'Noto Sans', sans-serif;
   }
 }
+.blur-xs {
+  filter: blur(2px);
+  
+}
+
