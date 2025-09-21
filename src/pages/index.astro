@@ -12,183 +12,221 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
            flex flex-col items-center justify-center
            transform-gpu translate-y-0 transition-transform duration-[1800ms] ease-out"
   >
-    <!-- Trait cuivre à 90% -->
     <div class="absolute left-0 right-0" style="top:90%; height:3px; background:#a3742c;"></div>
-
-    <!-- Copyright sous le trait -->
     <div class="absolute w-full text-center text-sm opacity-80 flex flex-col items-center" style="top:92%;">
       <img src="/logo.png" alt="La Régence" class="w-6 h-6 mb-1 opacity-90" />
       <p>© La Régence 2025</p>
     </div>
-
-    <!-- Contenu (Limelight + fade-in) -->
     <div class="flex flex-col items-center gap-5 font-splash fade-in-contents">
       <img src="/logo.png" alt="La Régence" class="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" />
       <p class="text-2xl md:text-3xl">Bar-Brasserie à Mont-de-Marsan</p>
     </div>
   </div>
 
- <!-- ========= CONTENU DROITE (4/5) ========= -->
-<div id="page-wrap">
-  <section class="w-full h-dvh box-border px-4 md:px-6 py-4 overflow-hidden">
-  <!-- 50 / 50 -->
-  <div class="grid grid-cols-2 gap-4 md:gap-6 h-full min-h-0">
-    <!-- COLONNE TEXTE (gauche) : aligné en bas -->
-    <div class="min-h-0 flex items-end">
-      <div class="w-full max-w-xl px-3 md:px-5 mx-auto text-right space-y-3 md:space-y-4 mb-4">
-        <h1 class="text-2xl md:text-3xl font-bold text-brand leading-tight">Bar Restaurant La Régence</h1>
+  <!-- ========= CONTENU DROITE ========= -->
+  <div id="page-wrap">
+    <section class="w-full md:h-dvh px-4 md:px-6 py-4 md:overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 md:h-full md:min-h-0">
+        <!-- ====== TEXTE (DESKTOP SEULEMENT) ====== -->
+        <div class="min-h-0 hidden md:flex md:items-end">
+          <div
+            class="w-full max-w-prose md:max-w-xl mx-auto
+                   text-center md:text-right
+                   space-y-4 md:space-y-4
+                   pt-2 md:pt-0 md:mb-4
+                   px-2 md:px-5"
+          >
+            <h1 class="text-2xl sm:text-3xl md:text-3xl font-bold text-brand leading-tight">
+              Bar Restaurant La Régence
+            </h1>
 
-        <p class="text-slate-700 italic text-sm md:text-base leading-snug">
-          « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
-        </p>
+            <p class="text-slate-700 italic text-base leading-snug">
+              « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
+            </p>
 
-        <p class="text-slate-700 leading-snug text-sm md:text-base">
-          La Régence s’inscrit dans le quotidien des montois depuis 1988. En 2024, deux frères reprennent l’adresse
-          et lui donnent un nouveau souffle, fidèle à l’esprit convivial qui l’a toujours animée.
-        </p>
+            <p class="text-slate-700 leading-relaxed text-base">
+              La Régence s’inscrit dans le quotidien des montois depuis 1988. En 2024, deux frères reprennent l’adresse
+              et lui donnent un nouveau souffle, fidèle à l’esprit convivial qui l’a toujours animée.
+            </p>
 
-        <p class="text-slate-700 leading-snug text-sm md:text-base">
-          La cuisine, inspirée de la tradition brasserie, se veut généreuse et accessible, préparée avec soin à partir
-          de produits frais et de recettes travaillées sur place. Dans un décor chaleureux — bois, lumière douce et
-          touches végétales — La Régence est pensée comme un lieu de vie où l’on se retrouve pour déjeuner, trinquer
-          ou prolonger la soirée.
-        </p>
+            <p class="text-slate-700 leading-relaxed text-base">
+              La cuisine, inspirée de la tradition brasserie, se veut généreuse et accessible, préparée avec soin à partir
+              de produits frais et de recettes travaillées sur place. Dans un décor chaleureux — bois, lumière douce et
+              touches végétales — La Régence est pensée comme un lieu de vie où l’on se retrouve pour déjeuner, trinquer
+              ou prolonger la soirée.
+            </p>
 
-        <p class="text-slate-700">
-          <a href="tel:+33558859272" class="underline">Réservez votre table au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72</a>
-        </p>
-      </div>
-    </div>
-
-    <!-- COLONNE IMAGES (droite) : grille contrainte, sans débordement -->
-    <div class="min-h-0 h-full min-w-0 overflow-hidden">
-      <!-- Grille interne : grande image à gauche (2/3), deux petites empilées à droite (1/3),
-           hauteur maîtrisée via rows=10 pour faire 40% + 40% en bas -->
-      <div class="grid grid-cols-3 grid-rows-10 gap-4 h-full min-w-0">
-        <!-- Grande image : prend 2 colonnes, toute la hauteur -->
-        <div class="col-span-2 row-span-10 rounded-2xl soft-border overflow-hidden">
-          <img
-            src="/grande.jpg"
-            alt="La Régence — grande image"
-            class="w-full h-full object-cover"
-          />
-        </div>
-
-        <!-- Colonne droite (1/3) : espace vide en haut (20%), puis deux images 40% + 40% -->
-        <div class="col-span-1 row-span-2"></div> <!-- espace haut 20% -->
-
-        <!-- MENU DU JOUR (40%) -->
-        <div class="col-span-1 row-span-4 relative group cursor-pointer rounded-2xl soft-border overflow-hidden" id="menu-du-jour-thumb">
-          <img
-            src="/menu-du-jour.jpg"
-            alt="Menu du jour"
-            class="w-full h-full object-cover transition duration-300 group-hover:scale-105 filter blur-xs group-hover:blur-0"
-          />
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded">Menu du jour</span>
+            <p class="text-slate-700">
+              <a href="tel:+33558859272" class="underline">Réservez votre table au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72</a>
+            </p>
           </div>
         </div>
 
-        <!-- Petite image 2 (40%) -->
-        <div class="col-span-1 row-span-4 rounded-2xl soft-border overflow-hidden">
-          <img
-            src="/petite2.jpg"
-            alt="La Régence — image secondaire"
-            class="w-full h-full object-cover"
-          />
-        </div>
+        <!-- ====== IMAGES / MOBILE ====== -->
+        <div class="min-h-0 md:h-full md:min-w-0 md:overflow-hidden">
+          <!-- Desktop: grande + 2 petites -->
+          <div class="hidden md:grid md:grid-cols-3 md:grid-rows-10 md:gap-6 md:h-full md:min-w-0">
+            <div class="col-span-2 row-span-10 rounded-2xl soft-border overflow-hidden">
+              <img src="/grande.jpg" alt="La Régence — grande image" class="w-full h-full object-cover" />
+            </div>
+            <div class="col-span-1 row-span-2"></div>
+            <div
+              class="col-span-1 row-span-4 relative group cursor-pointer rounded-2xl soft-border overflow-hidden js-menu-thumb"
+              data-img="/menu-du-jour.jpg"
+            >
+              <img
+                src="/menu-du-jour.jpg"
+                alt="Menu du jour"
+                class="w-full h-full object-cover transition duration-300 group-hover:scale-105 filter blur-xs group-hover:blur-0"
+              />
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded">Menu du jour</span>
+              </div>
+            </div>
+            <div class="col-span-1 row-span-4 rounded-2xl soft-border overflow-hidden">
+              <img src="/petite2.jpg" alt="La Régence — image secondaire" class="w-full h-full object-cover" />
+            </div>
+          </div>
+
+          <!-- ====== MOBILE (<= md) : grande → texte → menu-du-jour → petite2 ====== -->
+div class="md:hidden space-y-4">
+  <!-- Grande image FULL BLEED -->
+  <div class="-mx-8 -mt-28 md:mx-0 md:mt-0">
+    <div class="w-screen h-[80vh] overflow-hidden">
+      <img
+        src="/grande.jpg"
+        alt="La Régence — grande image"
+        class="w-full h-full object-cover object-top rounded-none max-w-none"
+      />
+    </div>
+  </div>
+
+  <!-- TEXTE (garde un padding latéral confortable) -->
+  <div class="px-4 space-y-3 text-right">
+    <h2 class="text-2xl font-semibold text-brand">Bar Restaurant La Régence</h2>
+    <p class="text-slate-700 italic">
+      « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
+    </p>
+    <p class="text-slate-700 leading-relaxed">
+      La Régence s’inscrit dans le quotidien des montois depuis 1988. En 2024, deux frères reprennent l’adresse
+      et lui donnent un nouveau souffle, fidèle à l’esprit convivial qui l’a toujours animée.
+    </p>
+    <p class="text-slate-700 leading-relaxed">
+      Une cuisine inspirée brasserie, accessible et généreuse, préparée avec soin à partir de produits frais et
+      de recettes travaillées sur place. Un décor chaleureux — bois, lumière douce, touches végétales — pour
+      déjeuner, trinquer ou prolonger la soirée.
+    </p>
+    <p class="text-slate-700">
+      <a href="tel:+33558859272" class="underline">Réservez au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72</a>
+    </p>
+  </div>
+
+  <!-- Menu du jour -->
+  <div class="-mx-8 md:mx-0">
+    <div
+      class="relative group cursor-pointer w-screen h-[40vh] overflow-hidden max-w-none"
+      id="menu-du-jour-thumb"
+    >
+      <img
+        src="/menu-du-jour.jpg"
+        alt="Menu du jour"
+        class="w-full h-full object-cover object-top transition duration-300 group-hover:scale-105 filter blur-xs group-hover:blur-0"
+      />
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <span class="text-white text-sm font-bold bg-black/45 px-2.5 py-1 rounded">
+          Menu du jour
+        </span>
       </div>
     </div>
   </div>
-</section>
 
-
-<!-- LIGHTBOX -->
-<div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]" aria-hidden="true">
-  <!-- Fond (assombri + flou du fond) -->
- <div
-  id="lb-backdrop"
-  class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-</div>
-
-  <!-- Conteneur image (animé) -->
-  <div id="lb-figure" class="relative opacity-0 scale-95 translate-y-2 transition-all duration-300 will-change-transform will-change-opacity">
-    <img
-      id="lb-img"
-      src="/menu-du-jour.jpg"
-      alt="Menu du jour"
-      class="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-xl transition-transform duration-300"
-      style="filter:none !important;"
-    />
+  <!-- Petite image 2 -->
+  <div class="-mx-8 md:mx-0">
+    <div class="w-screen h-[40vh] overflow-hidden max-w-none">
+      <img
+        src="/petite2.jpg"
+        alt="La Régence — image secondaire"
+        class="w-full h-full object-cover object-top rounded-none max-w-none"
+      />
+    </div>
   </div>
 </div>
+      </div>
+    </section>
 
+    <!-- LIGHTBOX -->
+    <div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]" aria-hidden="true">
+      <div id="lb-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+      <div id="lb-figure" class="relative opacity-0 scale-95 translate-y-2 transition-all duration-300 will-change-transform will-change-opacity">
+        <img
+          id="lb-img"
+          src="/menu-du-jour.jpg"
+          alt="Menu du jour"
+          class="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-xl transition-transform duration-300"
+          style="filter:none !important;"
+        />
+      </div>
+    </div>
+  </div>
 
+  <!-- ========= Scripts ========= -->
+  <script is:inline>
+    // Splash
+    (function () {
+      const s = document.getElementById('splash');
+      if (!s) return;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const go = () => {
+        if (prefersReduced) { s.remove(); return; }
+        s.classList.add('slide-up-out');
+        s.addEventListener('transitionend', () => s.remove(), { once: true });
+      };
+      window.addEventListener('load', () => setTimeout(go, 1500));
+    })();
 
-<!-- ========= Scripts ========= -->
-<script is:inline>
-// --- Splash (inchangé) ---
-(function () {
-  const s = document.getElementById('splash');
-  if (!s) return;
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const go = () => {
-    if (prefersReduced) { s.remove(); return; }
-    s.classList.add('slide-up-out');
-    s.addEventListener('transitionend', () => s.remove(), { once: true });
-  };
-  window.addEventListener('load', () => setTimeout(go, 1500));
-})();
+    // Lightbox (multi-vignettes)
+    (function () {
+      const thumbs   = Array.from(document.querySelectorAll(".js-menu-thumb"));
+      const lightbox = document.getElementById("menu-du-jour-lightbox");
+      const backdrop = document.getElementById("lb-backdrop");
+      const figure   = document.getElementById("lb-figure");
+      const img      = document.getElementById("lb-img");
+      if (!thumbs.length || !lightbox || !backdrop || !figure || !img) return;
 
-// --- Lightbox SANS blur (juste fade + scale) ---
-(function () {
-  const thumb    = document.getElementById("menu-du-jour-thumb");
-  const lightbox = document.getElementById("menu-du-jour-lightbox");
-  const backdrop = document.getElementById("lb-backdrop");
-  const figure   = document.getElementById("lb-figure");
-  const img      = document.getElementById("lb-img");
-  // IMPORTANT: on ne floute plus la page
-  // const page  = document.getElementById("page-wrap");
+      function openLB(src) {
+        if (src) img.src = src;
+        lightbox.classList.remove("hidden");
+        lightbox.classList.add("flex");
+        img.style.filter = "none";
+        img.style.webkitFilter = "none";
+        requestAnimationFrame(() => {
+          backdrop.classList.add("opacity-100");
+          figure.classList.remove("opacity-0", "scale-95", "translate-y-1");
+          figure.classList.add("opacity-100", "scale-100", "translate-y-0");
+        });
+      }
 
-  if (!thumb || !lightbox || !backdrop || !figure || !img) return;
+      function closeLB() {
+        figure.classList.add("opacity-0", "scale-95", "translate-y-1");
+        figure.classList.remove("opacity-100", "scale-100", "translate-y-0");
+        backdrop.classList.remove("opacity-100");
+        setTimeout(() => {
+          lightbox.classList.add("hidden");
+          lightbox.classList.remove("flex");
+        }, 300);
+      }
 
-  function openLB() {
-    lightbox.classList.remove("hidden");
-    lightbox.classList.add("flex");
+      thumbs.forEach(t => {
+        t.addEventListener("click", () => openLB(t.dataset.img || "/menu-du-jour.jpg"));
+      });
 
-    // pas de blur sur la page
-    // if (page) page.classList.remove("blur-md", "scale-[.99]");
-
-    // Reset de sécurité : enlève tout filtre hérité
-    img.style.filter = "none";
-    img.style.webkitFilter = "none";
-
-    requestAnimationFrame(() => {
-      backdrop.classList.add("opacity-100");
-      figure.classList.remove("opacity-0", "scale-95", "translate-y-1");
-      figure.classList.add("opacity-100", "scale-100", "translate-y-0");
-    });
-  }
-
-  function closeLB() {
-    figure.classList.add("opacity-0", "scale-95", "translate-y-1");
-    figure.classList.remove("opacity-100", "scale-100", "translate-y-0");
-    backdrop.classList.remove("opacity-100");
-
-    setTimeout(() => {
-      lightbox.classList.add("hidden");
-      lightbox.classList.remove("flex");
-    }, 300);
-  }
-
-  thumb.addEventListener("click", openLB);
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === img) return; // clic sur l'image: ne rien faire
-    closeLB();
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !lightbox.classList.contains("hidden")) closeLB();
-  });
-})();
-</script>
-
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === img) return;
+        closeLB();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !lightbox.classList.contains("hidden")) closeLB();
+      });
+    })();
+  </script>
+</SidebarLayout>

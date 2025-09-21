@@ -2,10 +2,14 @@
 
 /* 🎨 Thème La Régence */
 @theme {
-  --color-bg: #F5EFE6;         /* beige clair */
+  --color-bg: #F5EFE6;         /* beige clair (fond principal) */
   --color-ink: #0F172A;        /* texte principal */
-  --color-brand: #25471f;      /* ✅ ton vert partout */
+  --color-brand: #25471f;      /* vert (brand) */
   --color-brand-contrast: #ffffff;
+
+  /* === Nouveaux tokens === */
+  --color-copper: #a3742c;     /* cuivre (barres, hover, accents) */
+  --color-bg-alt: #ead9c2;     /* beige alternatif (si besoin) */
 }
 
 @layer base {
@@ -21,47 +25,49 @@
   .soft-border { @apply border border-brand/20; }
 }
 
+/* === Fonts === */
+:root { --font-splash: "Limelight", system-ui, sans-serif; }
+.font-splash { font-family: var(--font-splash); }
+
 /* 🛠️ Splash anti-purge (utilisé par le JS) */
 @layer utilities {
   .slide-up-out { transform: translateY(-100%) !important; }
 }
+
+/* Fade-in générique */
 @layer utilities {
   .fade-in {
     opacity: 0;
     animation: fadeIn 1s ease-out forwards;
   }
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
+  @keyframes fadeIn { to { opacity: 1; } }
 }
+
+/* Fade-in pour le contenu du splash */
 @layer utilities {
-  /* Fade-in pour le CONTENU du splash (pas le fond) */
   .fade-in-contents {
     opacity: 0;
     animation: splashFadeIn 600ms ease-out forwards;
   }
-  @keyframes splashFadeIn {
-    to { opacity: 1; }
-  }
-}
-@layer utilities {
-  .font-splash {
-    font-family: 'Limelight', cursive;
-    letter-spacing: 0.03em;
-  }
-}
-@layer utilities {
-  .font-limelight {
-    font-family: 'Limelight', cursive;
-  }
-}
-@layer utilities {
-  .font-nour {
-    font-family: 'Noto Sans', sans-serif;
-  }
-}
-.blur-xs {
-  filter: blur(2px);
-  
+  @keyframes splashFadeIn { to { opacity: 1; } }
 }
 
+/* Familles alternatives si besoin ailleurs */
+@layer utilities {
+  .font-limelight { font-family: 'Limelight', cursive; }
+  .font-nour { font-family: 'Noto Sans', sans-serif; }
+}
+
+/* Blur léger custom pour vignettes */
+.blur-xs { filter: blur(2px); }
+
+/* === Nouveaux utilitaires liés aux variables === */
+@layer utilities {
+  /* Fond principal (utilisé par <main class="bg-main">) */
+  .bg-main { background: var(--color-bg); }
+
+  /* Accents cuivre si besoin */
+  .text-copper { color: var(--color-copper); }
+  .bg-copper { background-color: var(--color-copper); }
+  .border-copper { border-color: var(--color-copper); }
+}
