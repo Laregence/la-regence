@@ -1,54 +1,315 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import SidebarLayout from "../layouts/SidebarLayout.astro";
 
-// ✅ Mets ici ton FILE_ID Google Drive
-const DRIVE_ID = "1kT5FYy81tf49MghFeU6MbwdBPgZIoiCB";
-
-const title = "Menu du jour — La Régence";
-const description = "Découvrez le menu du jour, mis à jour quotidiennement.";
-
-// Bust cache quotidien pour forcer un rafraîchissement 1x/jour
-const today = new Date().toISOString().slice(0, 10);
-
-// Deux URLs possibles : on essaye d'abord 'view', puis on bascule sur 'thumbnail' si erreur
-const primaryUrl = `https://drive.google.com/uc?export=view&id=${DRIVE_ID}&v=${today}`;
-const fallbackUrl = `https://drive.google.com/thumbnail?id=${DRIVE_ID}&sz=w1600&v=${today}`;
+const title = "Carte — La Régence";
+const description = "Notre carte : formules du midi, tapas, entrées, plats et desserts.";
 ---
-<BaseLayout {title} {description}>
-  <section class="py-8">
-    <div class="flex items-center justify-between gap-4 mb-4">
-      <h1 class="text-3xl font-bold text-brand">Menu du jour</h1>
-      <a href="/" class="text-sm underline">← Retour à l’accueil</a>
-    </div>
 
-    <figure class="card soft-border max-w-3xl">
+<SidebarLayout {title} {description} active="menu">
+  <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
+  <div class="max-w-3xl ml-auto text-right md:pr-32">
+
+
+      <!-- Titre principal -->
+      <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">CARTE</h1>
+
+      <div class="h-8"></div>
+
+      <!-- ===== FORMULE MIDI ===== -->
+      <!-- Le titre devient "bouton" pour ouvrir la popup -->
       <button
-        id="openModal"
-        class="group block w-full rounded-2xl overflow-hidden text-left"
-        aria-label="Ouvrir le menu en grand"
+        type="button"
+        id="open-midi"
+        class="text-lg text-slate-700 uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer hover:text-brand transition"
+        aria-haspopup="dialog"
+        aria-controls="menu-du-jour-lightbox"
       >
-        <img
-          src={primaryUrl}
-          data-fallback={fallbackUrl}
-          alt="Menu du jour — La Régence"
-          loading="eager"
-          class="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
-          onerror="
-            if(!this.dataset.switched){
-              this.dataset.switched='1';
-              this.src=this.dataset.fallback;
-            }else{
-              this.insertAdjacentHTML('afterend','<p class=&quot;text-sm text-red-600 p-3&quot;>Menu indisponible pour le moment.</p>');
-              this.remove();
-              document.getElementById('openModal')?.setAttribute('disabled','true');
-            }
-          "
-        />
+        FORMULE MIDI
       </button>
-      <figcaption class="text-sm text-slate-500 p-3">
-        Actualisé automatiquement chaque jour. Cliquez pour agrandir.
-      </figcaption>
-    </figure>
+
+      <div class="mt-4 space-y-4">
+
+        <!-- PLAT -->
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="uppercase">Plat</p>
+          </div>
+          <div class="text-right font-medium">12 €</div>
+        </div>
+
+        <!-- ENTREE/PLAT OU PLAT/DESSERT -->
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="uppercase">Entrée / Plat ou Plat / Dessert</p>
+          </div>
+          <div class="text-right font-medium">15 €</div>
+        </div>
+
+        <!-- ENTREE/PLAT/DESSERT -->
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="uppercase">Entrée / Plat / Dessert</p>
+          </div>
+          <div class="text-right font-medium">18 €</div>
+        </div>
+      </div>
+
+      <!-- séparateur cuivre -->
+      <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
+
+      <!-- ===== TAPAS ===== -->
+      <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Tapas</h2>
+      <div class="mt-6 space-y-5 text-slate-800">
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Pâté Jean Haget (64)</p>
+            <p class="text-slate-700">pâté de campagne / pâté au piment d'Espelette / pâté piquant</p>
+          </div>
+          <div class="text-right font-medium">6 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Planche de charcuterie & fromage</p>
+            <p class="text-slate-700">jambon Serrano, chorizo ibérique, lomo et fromage de brebis</p>
+          </div>
+          <div class="text-right font-medium">15 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Croquetas</p>
+            <p class="text-slate-700">Serrano ou fromage de brebis ou mixte — 8 pièces</p>
+          </div>
+          <div class="text-right font-medium">8 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Camembert rôti</p>
+            <p class="text-slate-700">miel et thym</p>
+          </div>
+          <div class="text-right font-medium">8 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Poulet croustillant</p>
+            <p class="text-slate-700">sauce sweet chili</p>
+          </div>
+          <div class="text-right font-medium">6 €</div>
+        </div>
+      </div>
+
+      <!-- séparateur cuivre -->
+      <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
+
+      <!-- ===== ENTRÉES ===== -->
+      <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Entrées</h2>
+      <div class="mt-6 space-y-5 text-slate-800">
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Crème brûlée aux poireaux</p>
+            <p class="text-slate-700">poireaux, parmesan et chips de Serrano</p>
+          </div>
+          <div class="text-right font-medium">5,90 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Oeuf cocotte</p>
+            <p class="text-slate-700">œuf cocotte avec sa garniture du moment</p>
+          </div>
+          <div class="text-right font-medium">4,90 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Carpaccio de bœuf</p>
+            <p class="text-slate-700">origine France — 70gr — Charolais, pesto, copeaux de parmesan</p>
+          </div>
+          <div class="text-right font-medium">7,90 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Velouté du moment</p>
+            <p class="text-slate-700">velouté de légumes frais et de saison</p>
+          </div>
+          <div class="text-right font-medium">4,90 €</div>
+        </div>
+      </div>
+
+      <!-- séparateur cuivre -->
+      <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
+
+      <!-- ===== PLATS ===== -->
+      <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Plats</h2>
+      <div class="mt-6 space-y-5 text-slate-800">
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Entrecôte 200gr</p>
+            <p class="text-slate-700">origine Italie — pommes de terre frites de la Régence, sauce roquefort</p>
+          </div>
+          <div class="text-right font-medium">20,00 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Confit de canard</p>
+            <p class="text-slate-700">pommes de terre frites de la Régence, sauce au miel</p>
+          </div>
+          <div class="text-right font-medium">17,90 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Pokebowl</p>
+            <p class="text-slate-700">poulet croustillant, chou rouge, carotte, concombre, crème d’avocat, pickles de poire, riz et vinaigrette thaï</p>
+          </div>
+          <div class="text-right font-medium">16,90 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Tartare de bœuf</p>
+            <p class="text-slate-700">origine France — tartare de bœuf Charolais au couteau 180gr, pommes de terre frites de la Régence</p>
+          </div>
+          <div class="text-right font-medium">18,90 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Carbonade flamande</p>
+            <p class="text-slate-700">paleron de bœuf Black Angus, poitrine fumée, bière, pain d’épices</p>
+          </div>
+          <div class="text-right font-medium">18,90 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Burger Classique</p>
+            <p class="text-slate-700">origine Irlande — steak haché Black Angus 150gr, cheddar, bacon, pickles, pommes de terre frites de la Régence</p>
+          </div>
+          <div class="text-right font-medium">16,90 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Burger Double</p>
+            <p class="text-slate-700">origine Irlande — 2 steaks hachés Black Angus 150gr, 2 tranches de cheddar, bacon, pickles, pommes de terre frites de la Régence</p>
+          </div>
+          <div class="text-right font-medium">24,90 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Burger Poulet Satay</p>
+            <p class="text-slate-700">poulet croustillant, sauce satay au lait coco, cheddar, coleslaw, pommes de terre frites de la Régence</p>
+          </div>
+          <div class="text-right font-medium">16,90 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Burger Raclette</p>
+            <p class="text-slate-700">origine Irlande — steak haché Black Angus 150gr, fromage à raclette, bacon, pickles, pommes de terre frites de la Régence</p>
+          </div>
+          <div class="text-right font-medium">17,90 €</div>
+        </div>
+      </div>
+
+      <!-- séparateur cuivre -->
+      <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
+
+      <!-- ===== DESSERTS ===== -->
+      <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Desserts</h2>
+      <div class="mt-6 space-y-5 text-slate-800">
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Crème brûlée</p>
+            <p class="text-slate-700">à la vanille et fève de tonka</p>
+          </div>
+          <div class="text-right font-medium">6,00 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Cœur coulant</p>
+            <p class="text-slate-700">à la pistache et chocolat blanc, sorbet framboise</p>
+          </div>
+          <div class="text-right font-medium">6,50 €</div>
+        </div>
+
+        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+          <div class="text-right">
+            <p class="font-semibold uppercase">Café gourmand</p>
+          </div>
+          <div class="text-right font-medium">7,00 €</div>
+        </div>
+
+      </div>
+    </div>
   </section>
 
-  <!-- Lightbox / Modale native -->
+  <!-- ===== LIGHTBOX (réutilisable) ===== -->
+  <div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]" aria-hidden="true" role="dialog" aria-modal="true">
+    <div id="lb-backdrop" class="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300"></div>
+    <div id="lb-figure" class="relative opacity-0 scale-95 translate-y-2 transition-all duration-300 will-change-transform will-change-opacity">
+      <img id="lb-img" src="/menu-du-jour.jpg" alt="Menu du jour"
+           class="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-xl transition-transform duration-300"
+           style="filter:none !important;" />
+    </div>
+  </div>
+
+  <!-- ===== Script : click sur FORMULE MIDI => ouvre la popup ===== -->
+  <script is:inline>
+    (function () {
+      const trigger  = document.getElementById('open-midi');
+      const lightbox = document.getElementById('menu-du-jour-lightbox');
+      const backdrop = document.getElementById('lb-backdrop');
+      const figure   = document.getElementById('lb-figure');
+      const img      = document.getElementById('lb-img');
+      if (!trigger || !lightbox || !backdrop || !figure || !img) return;
+
+      function openLB() {
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+        img.style.filter = 'none';
+        requestAnimationFrame(() => {
+          backdrop.classList.add('opacity-100');
+          figure.classList.remove('opacity-0', 'scale-95', 'translate-y-2');
+          figure.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+        });
+      }
+      function closeLB() {
+        figure.classList.add('opacity-0', 'scale-95', 'translate-y-2');
+        figure.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+        backdrop.classList.remove('opacity-100');
+        setTimeout(() => {
+          lightbox.classList.add('hidden');
+          lightbox.classList.remove('flex');
+        }, 300);
+      }
+
+      trigger.addEventListener('click', openLB);
+      // Accessibilité clavier (Entrée/Espace)
+      trigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLB(); }
+      });
+
+      // Fermeture
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === img) return;
+        closeLB();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) closeLB();
+      });
+    })();
+  </script>
+</SidebarLayout>

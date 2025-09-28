@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-const { title = "La Régence", description = "" } = Astro.props;
+const { title = "La Régence", description = "", active = ""  } = Astro.props;
 ---
 
 <html lang="fr">
@@ -77,33 +77,67 @@ const { title = "La Régence", description = "" } = Astro.props;
 
           <nav class="mt-4">
             <ul class="space-y-6 text-3xl uppercase text-center">
-              <li><a href="/menu" class="block hover:text-[var(--color-copper)]">Carte</a></li>
-              <li><a href="/boissons" class="block hover:text-[var(--color-copper)]">Boissons</a></li>
-              <li><a href="/la-regence" class="block hover:text-[var(--color-copper)]">La Régence</a></li>
-              <li><a href="/contact" class="block hover:text-[var(--color-copper)]">Contact</a></li>
-            </ul>
+  <li>
+    <a href="/menu"
+       class={`block hover:text-[var(--color-copper)] ${active === "menu" ? "font-bold text-[var(--color-copper)]" : ""}`}>
+      Menu
+    </a>
+  </li>
+  <li>
+    <a href="/boissons"
+       class={`block hover:text-[var(--color-copper)] ${active === "boissons" ? "font-bold text-[var(--color-copper)]" : ""}`}>
+      Boissons
+    </a>
+  </li>
+  <li>
+    <a href="/la-regence"
+       class={`block hover:text-[var(--color-copper)] ${active === "la-regence" ? "font-bold text-[var(--color-copper)]" : ""}`}>
+      La Régence
+    </a>
+  </li>
+  <li>
+    <a href="/contact"
+       class={`block hover:text-[var(--color-copper)] ${active === "contact" ? "font-bold text-[var(--color-copper)]" : ""}`}>
+      Contact
+    </a>
+  </li>
+</ul>
+
           </nav>
 
-          <div class="h-[3px] w-4/5 bg-[var(--color-copper)] mx-auto my-8"></div>
-          <div class="flex items-center justify-center gap-6">
-            <a href="https://www.instagram.com/la_regence_mdm/" target="_blank" rel="noopener"
-               aria-label="Instagram"
-               class="inline-flex text-[var(--color-bg)] hover:text-[var(--color-copper)] transition-transform hover:scale-110">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <circle cx="17.5" cy="6.5" r="1"></circle>
-              </svg>
-            </a>
-            <a href="https://www.facebook.com/LaRegenceMDM/" target="_blank" rel="noopener"
-               aria-label="Facebook"
-               class="inline-flex text-[var(--color-bg)] hover:text-[var(--color-copper)] transition-transform hover:scale-110">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M22 12.06C22 6.49 17.52 2 12 2S2 6.49 2 12.06c0 5.01 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.78 8.44-4.93 8.44-9.94z"/>
-              </svg>
-            </a>
-          </div>
-        </div>
+         <!-- Double barre + lien Réserver (mobile, largeur calée sur la nav) -->
+<div class="max-w-[220px] w-full mx-auto my-8 space-y-3">
+  <div class="h-[3px] bg-[var(--color-copper)]"></div>
+  <a
+    href="tel:+33558859272"
+    class="block text-center uppercase tracking-wide font-semibold text-[var(--color-bg)] hover:text-[var(--color-copper)]"
+  >
+    Réserver
+  </a>
+  <div class="h-[3px] bg-[var(--color-copper)]"></div>
+</div>
+
+
+<!-- Logos réseaux sous la double barre -->
+<div class="flex justify-center gap-6">
+  <a href="https://www.instagram.com/la_regence_mdm/" target="_blank" rel="noopener"
+     aria-label="Instagram"
+     class="inline-flex text-[var(--color-bg)] hover:text-[var(--color-copper)] transition-transform hover:scale-110">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <circle cx="17.5" cy="6.5" r="1"></circle>
+    </svg>
+  </a>
+  <a href="https://www.facebook.com/LaRegenceMDM/" target="_blank" rel="noopener"
+     aria-label="Facebook"
+     class="inline-flex text-[var(--color-bg)] hover:text-[var(--color-copper)] transition-transform hover:scale-110">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 12.06C22 6.49 17.52 2 12 2S2 6.49 2 12.06c0 5.01 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.78 8.44-4.93 8.44-9.94z"/>
+    </svg>
+  </a>
+</div>
+
 
         <div>
           <div class="w-full h-[3px] bg-[var(--color-copper)]"></div>
@@ -118,50 +152,94 @@ const { title = "La Régence", description = "" } = Astro.props;
     <!-- ===== WRAPPER DESKTOP : grille 2 colonnes ===== -->
     <div class="md:grid md:grid-cols-[minmax(280px,22vw)_1fr]">
       <!-- Sidebar desktop FIXE (sticky) -->
-      <aside class="hidden md:flex bg-brand text-[var(--color-bg)] md:sticky md:top-0 md:h-dvh md:overflow-y-auto
-                     flex-col justify-between">
-        <div class="flex flex-col items-center mt-6 space-y-6 px-4">
+      <aside class="hidden md:flex bg-brand text-[var(--color-bg)] md:sticky md:top-0 md:h-dvh md:overflow-hidden
+                     flex-col">
+
+        <div class="flex-1 overflow-y-auto">
+  <div class="flex flex-col items-center mt-6 space-y-6 px-4">
+    <!-- logo + nav -->
+
           <a href="/" aria-label="Accueil">
             <img src="/logo.png" alt="La Régence" class="w-[250px] max-w-full mx-auto cursor-pointer" />
           </a>
 
           <nav class="flex flex-col items-center mt-6">
             <ul class="space-y-5 text-2xl uppercase text-center">
-              <li><a href="/menu" class="hover:text-[var(--color-copper)]">Carte</a></li>
-              <li><a href="/boissons" class="hover:text-[var(--color-copper)]">Boissons</a></li>
-              <li><a href="/la-regence" class="hover:text-[var(--color-copper)]">La Régence</a></li>
-              <li><a href="/contact" class="hover:text-[var(--color-copper)]">Contact</a></li>
-            </ul>
+  <li>
+    <a href="/menu"
+       class={`hover:text-[var(--color-copper)] ${active === "menu" ? "font-bold text-[var(--color-copper)]" : ""}`}>
+      Menu
+    </a>
+  </li>
+  <li>
+    <a href="/boissons"
+       class={`hover:text-[var(--color-copper)] ${active === "boissons" ? "font-bold text-[var(--color-copper)]" : ""}`}>
+      Boissons
+    </a>
+  </li>
+  <li>
+    <a href="/la-regence"
+       class={`hover:text-[var(--color-copper)] ${active === "la-regence" ? "font-bold text-[var(--color-copper)]" : ""}`}>
+      La Régence
+    </a>
+  </li>
+  <li>
+    <a href="/contact"
+       class={`hover:text-[var(--color-copper)] ${active === "contact" ? "font-bold text-[var(--color-copper)]" : ""}`}>
+      Contact
+    </a>
+  </li>
+</ul>
+
           </nav>
 
-          <div class="h-[3px] w-4/5 bg-[var(--color-copper)] my-6"></div>
-          <div class="flex justify-center gap-6">
-            <a href="https://www.instagram.com/la_regence_mdm/" target="_blank" rel="noopener"
-               aria-label="Instagram"
-               class="inline-flex text-[var(--color-bg)] hover:text-[var(--color-copper)] transition-transform hover:scale-110">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <circle cx="17.5" cy="6.5" r="1"></circle>
-              </svg>
-            </a>
-            <a href="https://www.facebook.com/LaRegenceMDM/" target="_blank" rel="noopener"
-               aria-label="Facebook"
-               class="inline-flex text-[var(--color-bg)] hover:text-[var(--color-copper)] transition-transform hover:scale-110">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M22 12.06C22 6.49 17.52 2 12 2S2 6.49 2 12.06c0 5.01 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.78 8.44-4.93 8.44-9.94z"/>
-              </svg>
-            </a>
-          </div>
-        </div>
+          <!-- Double barre + lien Réserver -->
+<div class="max-w-[200px] w-full mx-auto my-6 space-y-3">
+  <div class="h-[3px] bg-[var(--color-copper)]"></div>
+  <a
+    href="tel:+33558859272"
+    class="block text-center uppercase tracking-wide font-semibold hover:text-[var(--color-copper)]"
+  >
+    Réserver
+  </a>
+  <div class="h-[3px] bg-[var(--color-copper)]"></div>
+</div>
 
-        <div>
-          <div class="w-full h-[3px] bg-[var(--color-copper)]"></div>
-          <div class="flex flex-col items-center py-3 opacity-90 text-sm">
-            <img src="/logo.png" alt="La Régence" class="w-6 h-6 mb-1 opacity-90" />
-            <p>© La Régence 2025</p>
-          </div>
-        </div>
+
+<!-- Logos réseaux sous la double barre -->
+<div class="flex justify-center gap-6 pb-4">
+  <!-- Instagram -->
+  <a href="https://www.instagram.com/la_regence_mdm/" target="_blank" rel="noopener"
+     aria-label="Instagram"
+     class="inline-flex text-[var(--color-bg)] hover:text-[var(--color-copper)] transition-transform hover:scale-110">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <circle cx="17.5" cy="6.5" r="1"></circle>
+    </svg>
+  </a>
+  <!-- Facebook -->
+  <a href="https://www.facebook.com/LaRegenceMDM/" target="_blank" rel="noopener"
+     aria-label="Facebook"
+     class="inline-flex text-[var(--color-bg)] hover:text-[var(--color-copper)] transition-transform hover:scale-110">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 12.06C22 6.49 17.52 2 12 2S2 6.49 2 12.06c0 5.01 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.78 8.44-4.93 8.44-9.94z"/>
+    </svg>
+  </a>
+</div>
+
+  </div> <!-- /.flex flex-col ... -->
+</div>   <!-- /.flex-1 overflow-y-auto -->
+
+
+        <footer class="mt-auto w-full">
+  <div class="w-full h-[3px] bg-[var(--color-copper)]"></div>
+  <div class="flex flex-col items-center py-3 opacity-90 text-sm">
+    <img src="/logo.png" alt="La Régence" class="w-6 h-6 mb-1 opacity-90" />
+    <p>© La Régence 2025</p>
+  </div>
+</footer>
+
       </aside>
 
       <!-- Contenu (colonne droite) -->
