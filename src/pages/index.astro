@@ -17,26 +17,34 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
       <img src="/logo.png" alt="La Régence" class="w-6 h-6 mb-1 opacity-90" />
       <p>© La Régence 2025</p>
     </div>
-    <div class="flex flex-col items-center gap-5 font-splash fade-in-contents">
-      <img src="/logo.png" alt="La Régence" class="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" />
-      <p class="text-2xl md:text-3xl">Bar-Brasserie à Mont-de-Marsan</p>
-    </div>
+    <!-- Contenu (Limelight + fade-in) -->
+<div class="flex flex-col items-center gap-5 font-splash fade-in-contents">
+  <img 
+    src="/logo.png" 
+    alt="La Régence" 
+    class="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" 
+  />
+  <p class="text-2xl md:text-3xl text-center">
+    Bar-Brasserie à Mont-de-Marsan
+  </p>
+</div>
+
   </div>
 
   <!-- ========= CONTENU DROITE ========= -->
   <div id="page-wrap">
-    <section class="w-full md:h-dvh px-4 md:px-6 py-4 md:overflow-hidden">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 md:h-full md:min-h-0">
+    <section class="w-full xl:h-dvh px-4 xl:px-6 py-4 xl:overflow-hidden">
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 xl:gap-6 xl:h-full xl:min-h-0">
         <!-- ====== TEXTE (DESKTOP SEULEMENT) ====== -->
-        <div class="min-h-0 hidden md:flex md:items-end">
+        <div class="min-h-0 hidden xl:flex xl:items-end">
           <div
-            class="w-full max-w-prose md:max-w-xl mx-auto
-                   text-center md:text-right
-                   space-y-4 md:space-y-4
-                   pt-2 md:pt-0 md:mb-4
-                   px-2 md:px-5"
+            class="w-full max-w-prose xl:max-w-xl mx-auto
+                   text-center xl:text-right
+                   space-y-4 xl:space-y-4
+                   pt-2 xl:pt-0 xl:mb-4
+                   px-2 xl:px-5"
           >
-            <h1 class="text-2xl sm:text-3xl md:text-3xl font-bold text-brand leading-tight">
+            <h1 class="text-2xl sm:text-3xl xl:text-3xl font-bold text-brand leading-tight">
               Bar Restaurant La Régence
             </h1>
 
@@ -63,9 +71,9 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
         </div>
 
         <!-- ====== IMAGES / MOBILE ====== -->
-        <div class="min-h-0 md:h-full md:min-w-0 md:overflow-hidden">
+        <div class="min-h-0 xl:h-full xl:min-w-0 xl:overflow-hidden">
           <!-- Desktop: grande + 2 petites -->
-          <div class="hidden md:grid md:grid-cols-3 md:grid-rows-10 md:gap-6 md:h-full md:min-w-0">
+          <div class="hidden xl:grid xl:grid-cols-3 xl:grid-rows-10 xl:gap-6 xl:h-full xl:min-w-0">
             <div class="col-span-2 row-span-10 rounded-2xl soft-border overflow-hidden">
               <img src="/grande.jpg" alt="La Régence — grande image" class="w-full h-full object-cover" />
             </div>
@@ -80,7 +88,7 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
                 class="w-full h-full object-cover transition duration-300 group-hover:scale-105 filter blur-xs group-hover:blur-0"
               />
               <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded">Menu du jour</span>
+                <span class="text-white text-base xl:text-lg font-bold bg-black/45 px-3 py-1.5 rounded">Menu du jour</span>
               </div>
             </div>
             <div class="col-span-1 row-span-4 rounded-2xl soft-border overflow-hidden">
@@ -88,73 +96,70 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
             </div>
           </div>
 
-          <!-- ====== MOBILE (<= md) : grande → texte → menu-du-jour → petite2 ====== -->
-div class="md:hidden space-y-4">
-  <!-- Grande image FULL BLEED -->
-  <div class="-mx-8 -mt-28 md:mx-0 md:mt-0">
-    <div class="w-screen h-[80vh] overflow-hidden">
-      <img
-        src="/grande.jpg"
-        alt="La Régence — grande image"
-        class="w-full h-full object-cover object-top rounded-none max-w-none"
-      />
-    </div>
-  </div>
+          <!-- ====== MOBILE/TABLET (<= xl-1) : grande → texte → menu-du-jour → petite2 ====== -->
+          <div class="xl:hidden space-y-4">
+            <!-- Grande image FULL BLEED -->
+            <div class="-mx-8 -mt-28 xl:mx-0 xl:mt-0">
+              <div class="w-screen h-[80vh] overflow-hidden">
+                <img
+                  src="/grande.jpg"
+                  alt="La Régence — grande image"
+                  class="w-full h-full object-cover object-top rounded-none max-w-none"
+                />
+              </div>
+            </div>
 
-  <!-- TEXTE (garde un padding latéral confortable) -->
-  <div class="px-4 space-y-3 text-right">
-    <h2 class="text-2xl font-semibold text-brand">Bar Restaurant La Régence</h2>
-    <p class="text-slate-700 italic">
-      « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
-    </p>
-    <p class="text-slate-700 leading-relaxed">
-      La Régence s’inscrit dans le quotidien des montois depuis 1988. En 2024, deux frères reprennent l’adresse
-      et lui donnent un nouveau souffle, fidèle à l’esprit convivial qui l’a toujours animée.
-    </p>
-    <p class="text-slate-700 leading-relaxed">
-      Une cuisine inspirée brasserie, accessible et généreuse, préparée avec soin à partir de produits frais et
-      de recettes travaillées sur place. Un décor chaleureux — bois, lumière douce, touches végétales — pour
-      déjeuner, trinquer ou prolonger la soirée.
-    </p>
-    <p class="text-slate-700">
-      <a href="tel:+33558859272" class="underline">Réservez au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72</a>
-    </p>
-  </div>
+            <!-- TEXTE (marges latérales confortables) -->
+            <div class="px-4 space-y-3 text-right">
+              <h2 class="text-2xl font-semibold text-brand">Bar Restaurant La Régence</h2>
+              <p class="text-slate-700 italic">
+                « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
+              </p>
+              <p class="text-slate-700 leading-relaxed">
+                La Régence s’inscrit dans le quotidien des montois depuis 1988. En 2024, deux frères reprennent l’adresse
+                et lui donnent un nouveau souffle, fidèle à l’esprit convivial qui l’a toujours animée.
+              </p>
+              <p class="text-slate-700 leading-relaxed">
+                Une cuisine inspirée brasserie, accessible et généreuse, préparée avec soin à partir de produits frais et
+                de recettes travaillées sur place. Un décor chaleureux — bois, lumière douce, touches végétales — pour
+                déjeuner, trinquer ou prolonger la soirée.
+              </p>
+              <p class="text-slate-700">
+                <a href="tel:+33558859272" class="underline">Réservez au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72</a>
+              </p>
+            </div>
 
-  <!-- Menu du jour -->
-  <div class="-mx-8 md:mx-0">
-    <div
-      class="relative group cursor-pointer w-screen h-[40vh] overflow-hidden max-w-none"
-      id="menu-du-jour-thumb"
-    >
-      <img
-        src="/menu-du-jour.jpg"
-        alt="Menu du jour"
-        class="w-full h-full object-cover object-top transition duration-300 group-hover:scale-105 filter blur-xs group-hover:blur-0"
-      />
-      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <span class="text-white text-sm font-bold bg-black/45 px-2.5 py-1 rounded">
-          Menu du jour
-        </span>
-      </div>
-    </div>
-  </div>
+            <!-- Menu du jour (ENTIER, responsive, sans bandeau) -->
+            <div class="-mx-8 xl:mx-0">
+              <div
+                class="relative group cursor-pointer w-screen max-w-none flex items-center justify-center bg-[var(--color-bg)] js-menu-thumb"
+                data-img="/menu-du-jour.jpg"
+              >
+                <img
+                  src="/menu-du-jour.jpg"
+                  alt="Menu du jour"
+                  class="w-full h-auto object-contain transition duration-300 group-hover:scale-105"
+                />
+              </div>
+            </div>
 
-  <!-- Petite image 2 -->
-  <div class="-mx-8 md:mx-0">
-    <div class="w-screen h-[40vh] overflow-hidden max-w-none">
-      <img
-        src="/petite2.jpg"
-        alt="La Régence — image secondaire"
-        class="w-full h-full object-cover object-top rounded-none max-w-none"
-      />
-    </div>
-  </div>
-</div>
+            <!-- Petite image 2 (ENTIER, responsive) -->
+            <div class="-mx-8 xl:mx-0">
+              <div class="w-screen max-w-none flex items-center justify-center bg-[var(--color-bg)]">
+                <img
+                  src="/petite2.jpg"
+                  alt="La Régence — image secondaire"
+                  class="w-full h-auto object-contain"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- /mobile -->
+        </div>
       </div>
     </section>
 
-    <!-- LIGHTBOX -->
+    <!-- LIGHTBOX (commune mobile/desktop) -->
     <div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]" aria-hidden="true">
       <div id="lb-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
       <div id="lb-figure" class="relative opacity-0 scale-95 translate-y-2 transition-all duration-300 will-change-transform will-change-opacity">

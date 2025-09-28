@@ -5,6 +5,9 @@ const { title = "La Régence", description = "" } = Astro.props;
 
 <html lang="fr">
   <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
@@ -13,20 +16,36 @@ const { title = "La Régence", description = "" } = Astro.props;
 
   <body class="min-h-screen text-slate-900 overflow-x-hidden">
     <!-- ===== HEADER MOBILE (bandeau translucide) ===== -->
-    <header class="md:hidden fixed inset-x-0 top-0 z-40">
-      <div class="h-14 flex items-center justify-between px-4 backdrop-blur bg-black/10">
-        <!-- Burger -->
-        <button id="mb-open" aria-label="Ouvrir le menu" class="p-2 rounded-md text-brand/90 active:scale-95">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        </button>
-        <!-- Logo -->
-        <a href="/" aria-label="Accueil" class="inline-flex items-center">
-          <img src="/logo.png" alt="La Régence" class="h-8 w-auto"/>
-        </a>
-      </div>
-    </header>
+<header class="md:hidden fixed inset-x-0 top-0 z-40">
+  <div class="h-25 flex items-center justify-between px-4 backdrop-blur bg-black/10">
+    
+    <!-- Burger -->
+    <button id="mb-open" aria-label="Ouvrir le menu" class="p-2 rounded-md text-brand/90 active:scale-95">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <!-- Texte + Logo -->
+    <div class="flex items-center gap-4">
+      <a 
+        href="/" 
+        aria-label="Accueil" 
+        class="font-limelight uppercase text-3xl sm:text-4xl text-white"
+        style="text-shadow: 1px 1px 2px black, -1px -1px 2px black;"
+      >
+        LA RÉGENCE
+      </a>
+      <a href="/" aria-label="Accueil">
+        <img src="/logo.png" alt="La Régence" class="h-20 w-auto" /> <!-- Taille doublée -->
+      </a>
+    </div>
+  </div>
+</header>
+
+
+
+
 
     <!-- ===== DRAWER MOBILE (plein écran, slide gauche) ===== -->
     <div id="mb-drawer" class="md:hidden fixed inset-0 z-50 hidden">
@@ -146,7 +165,7 @@ const { title = "La Régence", description = "" } = Astro.props;
       </aside>
 
       <!-- Contenu (colonne droite) -->
-      <main class="bg-main min-h-screen px-4 sm:px-6 md:px-8 pt-16 md:pt-0">
+      <main class="bg-main min-h-screen px-4 xl:px-6 md:px-8 pt-16 md:pt-0">
         <!-- pt-16 = place pour le header mobile -->
         <slot />
       </main>
