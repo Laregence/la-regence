@@ -1,66 +1,82 @@
 ---
 import SidebarLayout from "../layouts/SidebarLayout.astro";
 
-const title = "Carte — La Régence";
-const description = "Notre carte : formules du midi, tapas, entrées, plats et desserts.";
+const title = "Menu — La Régence";
+const description = "Formules du midi, tapas, entrées, plats et desserts.";
 ---
 
 <SidebarLayout {title} {description} active="menu">
   <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
-  <div class="max-w-3xl ml-auto text-right md:pr-32">
+    <!-- Grille : colonne gauche images (desktop) + contenu (droite) -->
+    <div class="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-8">
 
-
-      <!-- Titre principal -->
-      <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">CARTE</h1>
-
-      <div class="h-8"></div>
-
-      <!-- ===== FORMULE MIDI ===== -->
-      <!-- Le titre devient "bouton" pour ouvrir la popup -->
-      <button
-        type="button"
-        id="open-midi"
-        class="text-lg text-slate-700 uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer hover:text-brand transition"
-        aria-haspopup="dialog"
-        aria-controls="menu-du-jour-lightbox"
-      >
-        FORMULE MIDI
-      </button>
-
-      <div class="mt-4 space-y-4">
-
-        <!-- PLAT -->
-        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-          <div class="text-right">
-            <p class="uppercase">Plat</p>
-          </div>
-          <div class="text-right font-medium">12 €</div>
+      <!-- ===== COLONNE IMAGES (DESKTOP) ===== -->
+      <aside class="hidden md:block">
+        <div class="sticky top-16 space-y-6">
+          <figure class="overflow-hidden rounded-2xl soft-border">
+            <img src="/menu-tapas.jpg" alt="Tapas — La Régence" class="w-full h-56 object-cover" />
+            <figcaption class="sr-only">Tapas</figcaption>
+          </figure>
+          <figure class="overflow-hidden rounded-2xl soft-border">
+            <img src="/menu-entrees.jpg" alt="Entrées — La Régence" class="w-full h-56 object-cover" />
+            <figcaption class="sr-only">Entrées</figcaption>
+          </figure>
+          <figure class="overflow-hidden rounded-2xl soft-border">
+            <img src="/menu-plats.jpg" alt="Plats — La Régence" class="w-full h-56 object-cover" />
+            <figcaption class="sr-only">Plats</figcaption>
+          </figure>
+          <figure class="overflow-hidden rounded-2xl soft-border">
+            <img src="/menu-desserts.jpg" alt="Desserts — La Régence" class="w-full h-56 object-cover" />
+            <figcaption class="sr-only">Desserts</figcaption>
+          </figure>
         </div>
+      </aside>
 
-        <!-- ENTREE/PLAT OU PLAT/DESSERT -->
-        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-          <div class="text-right">
-            <p class="uppercase">Entrée / Plat ou Plat / Dessert</p>
-          </div>
-          <div class="text-right font-medium">15 €</div>
-        </div>
+      <!-- ===== CONTENU (TEXTE À DROITE, IMAGES STICKY PAR SECTION) ===== -->
+<div class="max-w-5xl ml-auto text-right md:pr-12">
 
-        <!-- ENTREE/PLAT/DESSERT -->
-        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-          <div class="text-right">
-            <p class="uppercase">Entrée / Plat / Dessert</p>
-          </div>
-          <div class="text-right font-medium">18 €</div>
-        </div>
-      </div>
+  <!-- Titre principal -->
+  <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">MENU</h1>
+  <div class="h-8"></div>
 
-      <!-- séparateur cuivre -->
-      <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
+  <!-- ===== FORMULE MIDI (cliquable) ===== -->
+  <button
+    type="button"
+    id="open-midi"
+    class="text-lg text-slate-700 uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer hover:text-brand transition"
+    aria-haspopup="dialog"
+    aria-controls="menu-du-jour-lightbox"
+  >
+    Formule midi
+  </button>
+  <div class="mt-4 space-y-4">
+    <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+      <div class="text-right"><p class="font-semibold uppercase">Plat</p></div>
+      <div class="text-right font-medium">12 €</div>
+    </div>
+    <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+      <div class="text-right"><p class="uppercase">Entrée / Plat ou Plat / Dessert</p></div>
+      <div class="text-right font-medium">15 €</div>
+    </div>
+    <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+      <div class="text-right"><p class="uppercase">Entrée / Plat / Dessert</p></div>
+      <div class="text-right font-medium">18 €</div>
+    </div>
+  </div>
 
-      <!-- ===== TAPAS ===== -->
+  <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
+
+  <!-- ===== SECTION : TAPAS ===== -->
+  <section class="relative grid grid-cols-1 md:grid-cols-[250px_1fr] gap-6 md:items-start">
+    <!-- Image sticky (gauche) -->
+    <figure class="hidden md:block sticky top-16 self-start">
+      <img src="/menu-tapas.jpg" alt="Tapas — La Régence" class="w-full h-56 object-cover rounded-2xl soft-border" />
+    </figure>
+
+    <!-- Contenu -->
+    <div>
       <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Tapas</h2>
       <div class="mt-6 space-y-5 text-slate-800">
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Pâté Jean Haget (64)</p>
@@ -68,7 +84,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">6 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Planche de charcuterie & fromage</p>
@@ -76,7 +91,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">15 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Croquetas</p>
@@ -84,7 +98,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">8 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Camembert rôti</p>
@@ -92,7 +105,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">8 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Poulet croustillant</p>
@@ -101,14 +113,20 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           <div class="text-right font-medium">6 €</div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- séparateur cuivre -->
-      <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
+  <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
 
-      <!-- ===== ENTRÉES ===== -->
+  <!-- ===== SECTION : ENTRÉES ===== -->
+  <section class="relative grid grid-cols-1 md:grid-cols-[250px_1fr] gap-6 md:items-start">
+    <figure class="hidden md:block sticky top-16 self-start">
+      <img src="/menu-entrees.jpg" alt="Entrées — La Régence" class="w-full h-56 object-cover rounded-2xl soft-border" />
+    </figure>
+
+    <div>
       <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Entrées</h2>
       <div class="mt-6 space-y-5 text-slate-800">
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Crème brûlée aux poireaux</p>
@@ -116,7 +134,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">5,90 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Oeuf cocotte</p>
@@ -124,7 +141,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">4,90 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Carpaccio de bœuf</p>
@@ -132,7 +148,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">7,90 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Velouté du moment</p>
@@ -141,14 +156,21 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           <div class="text-right font-medium">4,90 €</div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- séparateur cuivre -->
-      <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
+  <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
 
-      <!-- ===== PLATS ===== -->
+  <!-- ===== SECTION : PLATS ===== -->
+  <section class="relative grid grid-cols-1 md:grid-cols-[250px_1fr] gap-6 md:items-start">
+    <figure class="hidden md:block sticky top-16 self-start">
+      <!-- même taille que les autres pour uniformité -->
+      <img src="/menu-plats.jpg" alt="Plats — La Régence" class="w-full h-56 object-cover rounded-2xl soft-border" />
+    </figure>
+
+    <div>
       <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Plats</h2>
       <div class="mt-6 space-y-5 text-slate-800">
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Entrecôte 200gr</p>
@@ -156,7 +178,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">20,00 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Confit de canard</p>
@@ -164,7 +185,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">17,90 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Pokebowl</p>
@@ -172,7 +192,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">16,90 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Tartare de bœuf</p>
@@ -180,7 +199,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">18,90 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Carbonade flamande</p>
@@ -188,7 +206,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">18,90 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Burger Classique</p>
@@ -196,7 +213,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">16,90 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Burger Double</p>
@@ -204,7 +220,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">24,90 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Burger Poulet Satay</p>
@@ -212,7 +227,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">16,90 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Burger Raclette</p>
@@ -221,14 +235,20 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           <div class="text-right font-medium">17,90 €</div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- séparateur cuivre -->
-      <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
+  <div class="my-8 h-[2px] w-full bg-[var(--color-copper)]"></div>
 
-      <!-- ===== DESSERTS ===== -->
+  <!-- ===== SECTION : DESSERTS ===== -->
+  <section class="relative grid grid-cols-1 md:grid-cols-[250px_1fr] gap-6 md:items-start">
+    <figure class="hidden md:block sticky top-16 self-start">
+      <img src="/menu-desserts.jpg" alt="Desserts — La Régence" class="w-full h-56 object-cover rounded-2xl soft-border" />
+    </figure>
+
+    <div>
       <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Desserts</h2>
       <div class="mt-6 space-y-5 text-slate-800">
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Crème brûlée</p>
@@ -236,7 +256,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">6,00 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Cœur coulant</p>
@@ -244,19 +263,26 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           </div>
           <div class="text-right font-medium">6,50 €</div>
         </div>
-
         <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
           <div class="text-right">
             <p class="font-semibold uppercase">Café gourmand</p>
           </div>
           <div class="text-right font-medium">7,00 €</div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ===== LIGHTBOX (réutilisable) ===== -->
+  <!-- ===== IMAGES EN BAS (MOBILE SEULEMENT) ===== -->
+  <div class="mt-10 space-y-4 md:hidden">
+    <img src="/menu-tapas.jpg"    alt="Tapas — La Régence"     class="w-full h-auto rounded-2xl soft-border" />
+    <img src="/menu-entrees.jpg"  alt="Entrées — La Régence"   class="w-full h-auto rounded-2xl soft-border" />
+    <img src="/menu-plats.jpg"    alt="Plats — La Régence"     class="w-full h-auto rounded-2xl soft-border" />
+    <img src="/menu-desserts.jpg" alt="Desserts — La Régence"  class="w-full h-auto rounded-2xl soft-border" />
+  </div>
+</div>
+    
+  <!-- ===== LIGHTBOX réutilisable pour “Formule midi” ===== -->
   <div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]" aria-hidden="true" role="dialog" aria-modal="true">
     <div id="lb-backdrop" class="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300"></div>
     <div id="lb-figure" class="relative opacity-0 scale-95 translate-y-2 transition-all duration-300 will-change-transform will-change-opacity">
@@ -266,7 +292,6 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
     </div>
   </div>
 
-  <!-- ===== Script : click sur FORMULE MIDI => ouvre la popup ===== -->
   <script is:inline>
     (function () {
       const trigger  = document.getElementById('open-midi');
@@ -295,21 +320,10 @@ const description = "Notre carte : formules du midi, tapas, entrées, plats et d
           lightbox.classList.remove('flex');
         }, 300);
       }
-
       trigger.addEventListener('click', openLB);
-      // Accessibilité clavier (Entrée/Espace)
-      trigger.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLB(); }
-      });
-
-      // Fermeture
-      lightbox.addEventListener('click', (e) => {
-        if (e.target === img) return;
-        closeLB();
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) closeLB();
-      });
+      trigger.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLB(); } });
+      lightbox.addEventListener('click', (e) => { if (e.target !== img) closeLB(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) closeLB(); });
     })();
   </script>
 </SidebarLayout>
