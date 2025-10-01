@@ -27,17 +27,30 @@ const TABS = [
       <div class="h-6"></div>
 
       <!-- Onglets -->
-      <nav class="flex flex-wrap justify-end gap-2 text-right mb-6">
-        {TABS.map(({ id, label }, i) => (
+      <!-- Barre d’onglets : une ligne, sticky, toujours visible -->
+<nav
+  class="sticky top-16 md:top-0 z-10
+         bg-[var(--color-bg)]/95 backdrop-blur supports-[backdrop-filter]:backdrop-blur
+         border-b border-brand/15"
+>
+  <div class="max-w-5xl ml-auto md:pr-12 px-2">
+    <ul class="flex justify-end items-center gap-2 whitespace-nowrap overflow-x-auto py-2">
+      {TABS.map(({ id, label }) => (
+        <li>
           <a
             href={`#${id}`}
-            data-tab-index={i}
-            class="px-3 py-1 rounded-lg border border-brand/20 hover:bg-brand hover:text-white transition"
+            class="px-3 py-1 rounded-lg border border-brand/20
+                   hover:bg-brand hover:text-white transition
+                   focus:outline-none focus:ring-2 focus:ring-brand/40"
           >
             {label}
           </a>
-        ))}
-      </nav>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
 
       <div class="h-6"></div>
 
