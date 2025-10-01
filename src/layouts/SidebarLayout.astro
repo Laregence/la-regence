@@ -77,14 +77,52 @@ const { title = "La Régence", description = "", active = ""  } = Astro.props;
 
     <!-- MILIEU : MENU (centré verticalement) -->
     <div class="flex-1 flex items-center justify-center px-6">
-      <nav aria-label="Navigation principale">
-        <ul class="space-y-6 text-3xl uppercase text-center">
-          <li><a href="/menu" class="block hover:text-[var(--color-copper)]">Carte</a></li>
-          <li><a href="/boissons" class="block hover:text-[var(--color-copper)]">Boissons</a></li>
-          <li><a href="/la-regence" class="block hover:text-[var(--color-copper)]">La Régence</a></li>
-          <li><a href="/contact" class="block hover:text-[var(--color-copper)]">Contact</a></li>
-        </ul>
-      </nav>
+      <nav class="mt-4">
+  <ul class="space-y-6 text-3xl uppercase text-center">
+    <li>
+      <a
+        href="/menu"
+        aria-current={active === "carte" ? "page" : undefined}
+        class={`block px-2 py-1 transition
+          ${active === "carte"
+            ? "text-[var(--color-copper)] font-semibold"
+            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+      >Carte</a>
+    </li>
+    <li>
+      <a
+        href="/boissons"
+        aria-current={active === "boissons" ? "page" : undefined}
+        class={`block px-2 py-1 transition
+          ${active === "boissons"
+            ? "text-[var(--color-copper)] font-semibold"
+            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+      >Boissons</a>
+    </li>
+    <li>
+      <a
+        href="/la-regence"
+        aria-current={active === "la-regence" ? "page" : undefined}
+        class={`block px-2 py-1 transition
+          ${active === "la-regence"
+            ? "text-[var(--color-copper)] font-semibold"
+            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+      >La Régence</a>
+    </li>
+    <li>
+      <a
+        href="/contact"
+        aria-current={active === "contact" ? "page" : undefined}
+        class={`block px-2 py-1 transition
+          ${active === "contact"
+            ? "text-[var(--color-copper)] font-semibold"
+            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+      >Contact</a>
+    </li>
+  </ul>
+</nav>
+
+
     </div>
 
     <!-- BAS : doubles barres + Réserver + réseaux + barre + copyright -->
@@ -145,14 +183,58 @@ const { title = "La Régence", description = "", active = ""  } = Astro.props;
 
   <!-- MILIEU : menu centré verticalement -->
   <div class="flex-1 flex items-center justify-center px-4">
-    <nav>
-      <ul class="space-y-5 text-2xl uppercase text-center">
-        <li><a href="/menu" class="hover:text-[var(--color-copper)] font-semibold">Carte</a></li>
-        <li><a href="/boissons" class="hover:text-[var(--color-copper)]">Boissons</a></li>
-        <li><a href="/la-regence" class="hover:text-[var(--color-copper)]">La Régence</a></li>
-        <li><a href="/contact" class="hover:text-[var(--color-copper)]">Contact</a></li>
-      </ul>
-    </nav>
+    <nav class="flex flex-col items-center mt-6">
+  <ul class="space-y-5 text-2xl uppercase text-center">
+    <!-- CARTE -->
+    <li>
+      <a
+        href="/menu"
+        aria-current={active === "carte" ? "page" : undefined}
+        class={`block px-2 py-1 transition
+          ${active === "carte"
+            ? "text-[var(--color-copper)] font-semibold"
+            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+      >Carte</a>
+    </li>
+
+    <!-- BOISSONS -->
+    <li>
+      <a
+        href="/boissons"
+        aria-current={active === "boissons" ? "page" : undefined}
+        class={`block px-2 py-1 transition
+          ${active === "boissons"
+            ? "text-[var(--color-copper)] font-semibold"
+            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+      >Boissons</a>
+    </li>
+
+    <!-- LA RÉGENCE -->
+    <li>
+      <a
+        href="/la-regence"
+        aria-current={active === "la-regence" ? "page" : undefined}
+        class={`block px-2 py-1 transition
+          ${active === "la-regence"
+            ? "text-[var(--color-copper)] font-semibold"
+            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+      >La Régence</a>
+    </li>
+
+    <!-- CONTACT -->
+    <li>
+      <a
+        href="/contact"
+        aria-current={active === "contact" ? "page" : undefined}
+        class={`block px-2 py-1 transition
+          ${active === "contact"
+            ? "text-[var(--color-copper)] font-semibold"
+            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+      >Contact</a>
+    </li>
+  </ul>
+</nav>
+
   </div>
 
   <!-- BAS : double barre + Réserver + réseaux + barre + copyright -->

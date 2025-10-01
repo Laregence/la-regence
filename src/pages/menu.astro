@@ -5,7 +5,8 @@ const title = "Menu — La Régence";
 const description = "Formules du midi, tapas, entrées, plats et desserts.";
 ---
 
-<SidebarLayout {title} {description} active="menu">
+<SidebarLayout {title} {description} active="carte">
+
   <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
     <div class="max-w-[1400px] ml-auto">
 
@@ -32,7 +33,7 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
 
           <div class="mt-4 space-y-4">
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p class="font-semibold uppercase">Plat</p></div>
+              <div class="text-right"><p class=" uppercase">Plat</p></div>
               <div class="text-right font-medium">12 €</div>
             </div>
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
@@ -53,73 +54,83 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
         <div class="h-[2px] w-full max-w-5xl ml-auto bg-[var(--color-copper)]"></div>
       </div>
 
-      <!-- ===== TAPAS ===== -->
-      <section class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
-        <!-- Image centrée dans la région gauche -->
-        <figure class="hidden md:flex justify-self-center">
-          <img
-            src="/menu-tapas.jpg"
-            alt="Tapas — La Régence"
-            class="w-[360px] h-[546px] object-contain rounded-2xl soft-border bg-[var(--color-bg)]"
-          />
-        </figure>
+      <!-- ===== SECTION : TAPAS ===== -->
+<section class="relative grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 lg:items-start">
+  <!-- Image : centrée verticalement -->
+  <figure class="hidden lg:block">
+    <img
+      src="/menu-tapas.jpg"
+      alt="Tapas — La Régence"
+      class="w-[360px] h-[546px] object-cover rounded-2xl soft-border"
+    />
+  </figure>
 
-        <!-- Texte -->
-        <div class="justify-self-end w-full max-w-5xl text-right">
-          <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Tapas</h2>
-          <div class="mt-6 space-y-5 text-slate-800">
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Pâté Jean Haget (64)</p>
-                <p class="text-slate-700">pâté de campagne / pâté au piment d'Espelette / pâté piquant</p>
-              </div>
-              <div class="text-right font-medium">6 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Planche de charcuterie & fromage</p>
-                <p class="text-slate-700">jambon Serrano, chorizo ibérique, lomo et fromage de brebis</p>
-              </div>
-              <div class="text-right font-medium">15 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Croquetas</p>
-                <p class="text-slate-700">Serrano ou fromage de brebis ou mixte — 8 pièces</p>
-              </div>
-              <div class="text-right font-medium">8 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Camembert rôti</p>
-                <p class="text-slate-700">miel et thym</p>
-              </div>
-              <div class="text-right font-medium">8 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Poulet croustillant</p>
-                <p class="text-slate-700">sauce sweet chili</p>
-              </div>
-              <div class="text-right font-medium">6 €</div>
-            </div>
-          </div>
+  <!-- Texte : largeur limitée, collé à droite -->
+  <div class="md:max-w-[560px] md:ml-auto text-right">
+    <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Tapas</h2>
+    <div class="mt-6 space-y-5 text-slate-800">
+      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+        <div class="text-right">
+          <p class="font-semibold uppercase">Pâté Jean Haget (64)</p>
+          <p class="text-slate-700">pâté de campagne / pâté au piment d'Espelette / pâté piquant</p>
         </div>
-      </section>
-
-      <!-- Séparateur -->
-      <div class="my-8 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] items-center">
-        <div class="hidden md:block"></div>
-        <div class="h-[2px] w-full max-w-5xl ml-auto bg-[var(--color-copper)]"></div>
+        <div class="text-right font-medium">6 €</div>
       </div>
 
+      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+        <div class="text-right">
+          <p class="font-semibold uppercase">Planche de charcuterie & fromage</p>
+          <p class="text-slate-700">jambon Serrano, chorizo ibérique, lomo et fromage de brebis</p>
+        </div>
+        <div class="text-right font-medium">15 €</div>
+      </div>
+
+      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+        <div class="text-right">
+          <p class="font-semibold uppercase">Croquetas</p>
+          <p class="text-slate-700">Serrano ou fromage de brebis ou mixte — 8 pièces</p>
+        </div>
+        <div class="text-right font-medium">8 €</div>
+      </div>
+
+      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+        <div class="text-right">
+          <p class="font-semibold uppercase">Camembert rôti</p>
+          <p class="text-slate-700">miel et thym</p>
+        </div>
+        <div class="text-right font-medium">8 €</div>
+      </div>
+
+      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+        <div class="text-right">
+          <p class="font-semibold uppercase">Poulet croustillant</p>
+          <p class="text-slate-700">sauce sweet chili</p>
+        </div>
+        <div class="text-right font-medium">6 €</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <!-- Séparateur -->
+      <div class="my-8 grid grid-cols-1 md:grid-cols-[360px_1fr] items-center">
+  <!-- Colonne image (vide en desktop) -->
+  <div class="hidden md:block"></div>
+  <!-- Colonne texte : barre cuivre -->
+  <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+</div>
+
+
       <!-- ===== ENTRÉES ===== -->
-      <section class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
-        <figure class="hidden md:flex justify-self-center">
+      <section class="relative grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 lg:items-start">
+        <!-- Image : centrée verticalement -->
+  <figure class="hidden lg:block">
           <img
             src="/menu-entrees.jpg"
             alt="Entrées — La Régence"
-            class="w-[360px] h-[546px] object-contain rounded-2xl soft-border bg-[var(--color-bg)]"
+            class="md:max-w-[360px] md:ml-auto text-right rounded-2xl soft-border"
+            
           />
         </figure>
 
@@ -159,18 +170,22 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
       </section>
 
       <!-- Séparateur -->
-      <div class="my-8 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] items-center">
-        <div class="hidden md:block"></div>
-        <div class="h-[2px] w-full max-w-5xl ml-auto bg-[var(--color-copper)]"></div>
-      </div>
+      <div class="my-8 grid grid-cols-1 md:grid-cols-[360px_1fr] items-center">
+  <!-- Colonne image (vide en desktop) -->
+  <div class="hidden md:block"></div>
+  <!-- Colonne texte : barre cuivre -->
+  <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+</div>
+
 
       <!-- ===== PLATS ===== -->
-      <section class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
-        <figure class="hidden md:flex justify-self-center">
+      <section class="relative grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 lg:items-start">
+        <!-- Image : centrée verticalement -->
+  <figure class="hidden lg:block">
           <img
             src="/menu-plats.jpg"
             alt="Plats — La Régence"
-            class="w-[360px] h-[546px] object-contain rounded-2xl soft-border bg-[var(--color-bg)]"
+            class="md:max-w-[360px] md:ml-auto text-right rounded-2xl soft-border"
           />
         </figure>
 
@@ -219,18 +234,22 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
       </section>
 
       <!-- Séparateur -->
-      <div class="my-8 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] items-center">
-        <div class="hidden md:block"></div>
-        <div class="h-[2px] w-full max-w-5xl ml-auto bg-[var(--color-copper)]"></div>
-      </div>
+      <div class="my-8 grid grid-cols-1 md:grid-cols-[360px_1fr] items-center">
+  <!-- Colonne image (vide en desktop) -->
+  <div class="hidden md:block"></div>
+  <!-- Colonne texte : barre cuivre -->
+  <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+</div>
+
 
       <!-- ===== DESSERTS ===== -->
-      <section class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
-        <figure class="hidden md:flex justify-self-center">
+      <section class="relative grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 lg:items-start">
+        <!-- Image : centrée verticalement -->
+  <figure class="hidden lg:block">
           <img
             src="/menu-desserts.jpg"
             alt="Desserts — La Régence"
-            class="w-[360px] h-[546px] object-contain rounded-2xl soft-border bg-[var(--color-bg)]"
+            class="md:max-w-[360px] md:ml-auto text-right rounded-2xl soft-border"
           />
         </figure>
 
@@ -263,6 +282,30 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
 
     </div>
   </section>
+
+  <!-- Photos regroupées en bas -->
+<div class="mt-10 -mx-6 sm:mx-0 grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-4 lg:hidden">
+  <img
+    src="/menu-tapas.jpg" alt="Tapas — La Régence"
+    class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
+  />
+  <img
+    src="/menu-entrees.jpg" alt="Entrées — La Régence"
+    class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
+  />
+  <img
+    src="/menu-plats.jpg" alt="Plats — La Régence"
+    class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
+  />
+  <img
+    src="/menu-desserts.jpg" alt="Desserts — La Régence"
+    class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
+  />
+</div>
+
+
+
+
 
   <!-- ===== LIGHTBOX “Formule midi” ===== -->
   <div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]" aria-hidden="true" role="dialog" aria-modal="true">
