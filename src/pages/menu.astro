@@ -7,54 +7,65 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
 
 <SidebarLayout {title} {description} active="menu">
   <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
-    <!-- Contenu (texte à droite, image sticky à gauche en desktop) -->
-    <div class="max-w-5xl ml-auto text-right md:pr-12">
+    <div class="max-w-[1400px] ml-auto">
 
-      <!-- Titre principal -->
-      <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">MENU</h1>
+      <!-- Titre -->
+      <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase text-right">MENU</h1>
       <div class="h-8"></div>
 
       <!-- ===== FORMULE MIDI (cliquable) ===== -->
-      <button
-        type="button"
-        id="open-midi"
-        class="text-lg text-slate-700 uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer hover:text-brand transition"
-        aria-haspopup="dialog"
-        aria-controls="menu-du-jour-lightbox"
-      >
-        Formule midi
-      </button>
-      <div class="mt-4 space-y-4">
-        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-          <div class="text-right"><p class="font-semibold uppercase">Plat</p></div>
-          <div class="text-right font-medium">12 €</div>
-        </div>
-        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-          <div class="text-right"><p class="uppercase">Entrée / Plat ou Plat / Dessert</p></div>
-          <div class="text-right font-medium">15 €</div>
-        </div>
-        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-          <div class="text-right"><p class="uppercase">Entrée / Plat / Dessert</p></div>
-          <div class="text-right font-medium">18 €</div>
-        </div>
-      </div>
-
-      <!-- Séparateur cuivre aligné texte (largeur plafonnée, ne varie pas) -->
-      <div class="my-8 grid grid-cols-1 md:grid-cols-[250px_1fr] items-center">
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
+        <!-- Colonne gauche (vide sur cette section) -->
         <div class="hidden md:block"></div>
-        <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+
+        <!-- Colonne texte -->
+        <div class="justify-self-end w-full max-w-5xl text-right">
+          <button
+            type="button"
+            id="open-midi"
+            class="text-lg text-slate-700 uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer hover:text-brand transition"
+            aria-haspopup="dialog"
+            aria-controls="menu-du-jour-lightbox"
+          >
+            Formule midi
+          </button>
+
+          <div class="mt-4 space-y-4">
+            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+              <div class="text-right"><p class="font-semibold uppercase">Plat</p></div>
+              <div class="text-right font-medium">12 €</div>
+            </div>
+            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+              <div class="text-right"><p class="uppercase">Entrée / Plat ou Plat / Dessert</p></div>
+              <div class="text-right font-medium">15 €</div>
+            </div>
+            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+              <div class="text-right"><p class="uppercase">Entrée / Plat / Dessert</p></div>
+              <div class="text-right font-medium">18 €</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- ===== SECTION : TAPAS ===== -->
-      <section class="relative grid grid-cols-1 md:grid-cols-[360px_1fr] gap-6 md:items-start">
-  <figure class="hidden md:block">
-    <div class="w-[360px] h-[546px] overflow-hidden rounded-2xl soft-border">
-      <img src="/menu-tapas.jpg" alt="Tapas — La Régence" class="w-full h-full object-cover" />
-    </div>
-  </figure>
+      <!-- Séparateur (uniquement sous la colonne texte) -->
+      <div class="my-8 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] items-center">
+        <div class="hidden md:block"></div>
+        <div class="h-[2px] w-full max-w-5xl ml-auto bg-[var(--color-copper)]"></div>
+      </div>
 
-        <!-- Contenu -->
-        <div>
+      <!-- ===== TAPAS ===== -->
+      <section class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
+        <!-- Image centrée dans la région gauche -->
+        <figure class="hidden md:flex justify-self-center">
+          <img
+            src="/menu-tapas.jpg"
+            alt="Tapas — La Régence"
+            class="w-[360px] h-[546px] object-contain rounded-2xl soft-border bg-[var(--color-bg)]"
+          />
+        </figure>
+
+        <!-- Texte -->
+        <div class="justify-self-end w-full max-w-5xl text-right">
           <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Tapas</h2>
           <div class="mt-6 space-y-5 text-slate-800">
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
@@ -96,21 +107,23 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
         </div>
       </section>
 
-      <!-- Séparateur cuivre aligné texte -->
-      <div class="my-8 grid grid-cols-1 md:grid-cols-[250px_1fr] items-center">
+      <!-- Séparateur -->
+      <div class="my-8 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] items-center">
         <div class="hidden md:block"></div>
-        <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+        <div class="h-[2px] w-full max-w-5xl ml-auto bg-[var(--color-copper)]"></div>
       </div>
 
-      <!-- ===== SECTION : ENTRÉES ===== -->
-      <section class="relative grid grid-cols-1 md:grid-cols-[360px_1fr] gap-6 md:items-start">
-  <figure class="hidden md:block">
-    <div class="w-[360px] h-[546px] overflow-hidden rounded-2xl soft-border">
-      <img src="/menu-entrees.jpg" alt="Entrées — La Régence" class="w-full h-full object-cover" />
-    </div>
-  </figure>
+      <!-- ===== ENTRÉES ===== -->
+      <section class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
+        <figure class="hidden md:flex justify-self-center">
+          <img
+            src="/menu-entrees.jpg"
+            alt="Entrées — La Régence"
+            class="w-[360px] h-[546px] object-contain rounded-2xl soft-border bg-[var(--color-bg)]"
+          />
+        </figure>
 
-        <div>
+        <div class="justify-self-end w-full max-w-5xl text-right">
           <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Entrées</h2>
           <div class="mt-6 space-y-5 text-slate-800">
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
@@ -145,105 +158,83 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
         </div>
       </section>
 
-      <!-- Séparateur cuivre aligné texte -->
-      <div class="my-8 grid grid-cols-1 md:grid-cols-[250px_1fr] items-center">
+      <!-- Séparateur -->
+      <div class="my-8 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] items-center">
         <div class="hidden md:block"></div>
-        <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+        <div class="h-[2px] w-full max-w-5xl ml-auto bg-[var(--color-copper)]"></div>
       </div>
 
-      <!-- ===== SECTION : PLATS ===== -->
-      <section class="relative grid grid-cols-1 md:grid-cols-[360px_1fr] gap-6 md:items-start">
-  <figure class="hidden md:block">
-    <div class="w-[360px] h-[546px] overflow-hidden rounded-2xl soft-border">
-      <img src="/menu-plats.jpg" alt="Plats — La Régence" class="w-full h-full object-cover" />
-    </div>
-  </figure>
+      <!-- ===== PLATS ===== -->
+      <section class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
+        <figure class="hidden md:flex justify-self-center">
+          <img
+            src="/menu-plats.jpg"
+            alt="Plats — La Régence"
+            class="w-[360px] h-[546px] object-contain rounded-2xl soft-border bg-[var(--color-bg)]"
+          />
+        </figure>
 
-        <div>
+        <div class="justify-self-end w-full max-w-5xl text-right">
           <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Plats</h2>
           <div class="mt-6 space-y-5 text-slate-800">
+            <!-- … (tes items plats inchangés) … -->
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Entrecôte 200gr</p>
-                <p class="text-slate-700">origine Italie — pommes de terre frites de la Régence, sauce roquefort</p>
-              </div>
+              <div class="text-right"><p class="font-semibold uppercase">Entrecôte 200gr</p><p class="text-slate-700">origine Italie — pommes de terre frites de la Régence, sauce roquefort</p></div>
               <div class="text-right font-medium">20,00 €</div>
             </div>
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Confit de canard</p>
-                <p class="text-slate-700">pommes de terre frites de la Régence, sauce au miel</p>
-              </div>
+              <div class="text-right"><p class="font-semibold uppercase">Confit de canard</p><p class="text-slate-700">pommes de terre frites de la Régence, sauce au miel</p></div>
               <div class="text-right font-medium">17,90 €</div>
             </div>
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Pokebowl</p>
-                <p class="text-slate-700">poulet croustillant, chou rouge, carotte, concombre, crème d’avocat, pickles de poire, riz et vinaigrette thaï</p>
-              </div>
+              <div class="text-right"><p class="font-semibold uppercase">Pokebowl</p><p class="text-slate-700">poulet croustillant, chou rouge, carotte, concombre, crème d’avocat, pickles de poire, riz et vinaigrette thaï</p></div>
               <div class="text-right font-medium">16,90 €</div>
             </div>
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Tartare de bœuf</p>
-                <p class="text-slate-700">origine France — tartare de bœuf Charolais au couteau 180gr, pommes de terre frites de la Régence</p>
-              </div>
+              <div class="text-right"><p class="font-semibold uppercase">Tartare de bœuf</p><p class="text-slate-700">origine France — tartare de bœuf Charolais au couteau 180gr, pommes de terre frites de la Régence</p></div>
               <div class="text-right font-medium">18,90 €</div>
             </div>
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Carbonade flamande</p>
-                <p class="text-slate-700">paleron de bœuf Black Angus, poitrine fumée, bière, pain d’épices</p>
-              </div>
+              <div class="text-right"><p class="font-semibold uppercase">Carbonade flamande</p><p class="text-slate-700">paleron de bœuf Black Angus, poitrine fumée, bière, pain d’épices</p></div>
               <div class="text-right font-medium">18,90 €</div>
             </div>
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Burger Classique</p>
-                <p class="text-slate-700">origine Irlande — steak haché Black Angus 150gr, cheddar, bacon, pickles, pommes de terre frites de la Régence</p>
-              </div>
+              <div class="text-right"><p class="font-semibold uppercase">Burger Classique</p><p class="text-slate-700">origine Irlande — steak haché Black Angus 150gr, cheddar, bacon, pickles, pommes de terre frites de la Régence</p></div>
               <div class="text-right font-medium">16,90 €</div>
             </div>
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Burger Double</p>
-                <p class="text-slate-700">origine Irlande — 2 steaks hachés Black Angus 150gr, 2 tranches de cheddar, bacon, pickles, pommes de terre frites de la Régence</p>
-              </div>
+              <div class="text-right"><p class="font-semibold uppercase">Burger Double</p><p class="text-slate-700">origine Irlande — 2 steaks hachés Black Angus 150gr, 2 tranches de cheddar, bacon, pickles, pommes de terre frites de la Régence</p></div>
               <div class="text-right font-medium">24,90 €</div>
             </div>
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Burger Poulet Satay</p>
-                <p class="text-slate-700">poulet croustillant, sauce satay au lait coco, cheddar, coleslaw, pommes de terre frites de la Régence</p>
-              </div>
+              <div class="text-right"><p class="font-semibold uppercase">Burger Poulet Satay</p><p class="text-slate-700">poulet croustillant, sauce satay au lait coco, cheddar, coleslaw, pommes de terre frites de la Régence</p></div>
               <div class="text-right font-medium">16,90 €</div>
             </div>
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p class="font-semibold uppercase">Burger Raclette</p>
-                <p class="text-slate-700">origine Irlande — steak haché Black Angus 150gr, fromage à raclette, bacon, pickles, pommes de terre frites de la Régence</p>
-              </div>
+              <div class="text-right"><p class="font-semibold uppercase">Burger Raclette</p><p class="text-slate-700">origine Irlande — steak haché Black Angus 150gr, fromage à raclette, bacon, pickles, pommes de terre frites de la Régence</p></div>
               <div class="text-right font-medium">17,90 €</div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Séparateur cuivre aligné texte -->
-      <div class="my-8 grid grid-cols-1 md:grid-cols-[250px_1fr] items-center">
+      <!-- Séparateur -->
+      <div class="my-8 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] items-center">
         <div class="hidden md:block"></div>
-        <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+        <div class="h-[2px] w-full max-w-5xl ml-auto bg-[var(--color-copper)]"></div>
       </div>
 
-      <!-- ===== SECTION : DESSERTS ===== -->
-      <section class="relative grid grid-cols-1 md:grid-cols-[360px_1fr] gap-6 md:items-start">
-  <figure class="hidden md:block">
-    <div class="w-[360px] h-[546px] overflow-hidden rounded-2xl soft-border">
-      <img src="/menu-desserts.jpg" alt="Desserts — La Régence" class="w-full h-full object-cover" />
-    </div>
-  </figure>
+      <!-- ===== DESSERTS ===== -->
+      <section class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
+        <figure class="hidden md:flex justify-self-center">
+          <img
+            src="/menu-desserts.jpg"
+            alt="Desserts — La Régence"
+            class="w-[360px] h-[546px] object-contain rounded-2xl soft-border bg-[var(--color-bg)]"
+          />
+        </figure>
 
-        <div>
+        <div class="justify-self-end w-full max-w-5xl text-right">
           <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Desserts</h2>
           <div class="mt-6 space-y-5 text-slate-800">
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
@@ -269,9 +260,6 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
           </div>
         </div>
       </section>
-
-      <!-- (SUPPRIMÉ) IMAGES EN BAS (MOBILE) — évite les doublons -->
-      <!-- Rien ici -->
 
     </div>
   </section>
