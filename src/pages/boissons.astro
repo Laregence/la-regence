@@ -1,0 +1,366 @@
+---
+import SidebarLayout from "../layouts/SidebarLayout.astro";
+
+const title = "Boissons — La Régence";
+const description = "Carte des boissons : chauds, softs, eaux, bières, cocktails, apéritifs & vins.";
+
+// Onglets
+const TABS = [
+  { id: "chaud",     label: "Café, thé & chocolat" },
+  { id: "softs",     label: "Softs" },
+  { id: "eaux",      label: "Eaux minérales" },
+  { id: "bieres",    label: "Bières pression & bouteilles" },
+  { id: "cocktails", label: "Cocktails" },
+  { id: "mock-shoot",label: "Mocktails & Shooters" },
+  { id: "aperitifs", label: "Apéritifs" },
+  { id: "spiritueux",label: "Spiritueux" },
+  { id: "vins",      label: "Vins" },
+];
+---
+
+<SidebarLayout {title} {description} active="boissons">
+  <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
+    <div class="max-w-5xl ml-auto text-right md:pr-12">
+
+      <!-- Titre -->
+      <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">Boissons</h1>
+      <div class="h-6"></div>
+
+      <!-- Onglets -->
+      <nav class="flex flex-wrap justify-end gap-2 text-right mb-6">
+        {TABS.map(({ id, label }, i) => (
+          <a
+            href={`#${id}`}
+            data-tab-index={i}
+            class="px-3 py-1 rounded-lg border border-brand/20 hover:bg-brand hover:text-white transition"
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+
+      <div class="h-6"></div>
+
+      <!-- ===== CAFÉ / THÉ / CHOCOLAT ===== -->
+      <section id="chaud" class="scroll-mt-24">
+        <h2 class="font-limelight text-3xl text-brand uppercase">Café, thé & chocolat</h2>
+        <div class="mt-4 space-y-3 text-slate-800">
+          {[
+            ["Espresso","1,50"],
+            ["Allongé","1,60"],
+            ["Décaféiné","1,60"],
+            ["Noisette","1,60"],
+            ["Double Espresso","2,40"],
+            ["Latte macchiato","4,00"],
+            ["Cappuccino","2,50"],
+            ["Mocaccino","4,00"],
+            ["Café frappé","4,50"],
+            ["Café Viennois","4,00"],
+            ["Affogato","6,00"],
+            ["Thé","3,00"],
+            ["Chocolat chaud classique","3,50"],
+            ["Chocolat à l’italienne (lait, noir, blanc)","4,50"],
+            ["Chocolat viennois","4,50"],
+            ["Chaï Latte","4,20"],
+            ["Matcha Latte","4,50"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
+          ))}
+          <p class="text-sm text-slate-600 mt-2">
+            Suppléments : sirop (coco, caramel, érable, vanille, noisette) +0,10 € · lait végétal +0,30 €.
+          </p>
+        </div>
+      </section>
+
+      <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+
+      <!-- ===== SOFTS ===== -->
+      <section id="softs" class="scroll-mt-24">
+        <h2 class="font-limelight text-3xl text-brand uppercase">Softs</h2>
+        <div class="mt-4 space-y-3 text-slate-800">
+          {[
+            ["Coca-Cola (Classique ou Zero)","3,20"],
+            ["Orangina","3,50"],
+            ["Schweppes (Tonic ou Agrumes)","4,00"],
+            ["Oasis tropical","3,00"],
+            ["Cacolac","2,00"],
+            ["Fuze-Tea","2,70"],
+            ["Jus Rauch 25cl (Orange, Pomme, Ace, Ananas, Fraise, Abricot, Tomate)","2,60"],
+            ["Sirop à l’eau","2,00"],
+            ["Sirop limonade","2,70"],
+            ["Limonade Vitteaut 25cl","2,60"],
+            ["Citronnade maison","4,50"],
+            ["Orange ou citron pressé","3,50"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+
+      <!-- ===== EAUX ===== -->
+      <section id="eaux" class="scroll-mt-24">
+        <h2 class="font-limelight text-3xl text-brand uppercase">Eaux minérales</h2>
+        <div class="mt-4 space-y-3 text-slate-800">
+          {[
+            ["Vittel 25cl","2,30"],
+            ["Vittel 1L","3,50"],
+            ["Perrier 33cl","3,30"],
+            ["Ogeu intense 33cl","3,00"],
+            ["San Pellegrino 1L","4,50"],
+            ["San Pellegrino 50cl","3,20"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+
+      <!-- ===== BIÈRES ===== -->
+      <section id="bieres" class="scroll-mt-24">
+        <h2 class="font-limelight text-3xl text-brand uppercase">Bières pression & bouteilles</h2>
+
+        <h3 class="mt-3 text-sm tracking-wide text-slate-600 uppercase">Pression (25cl / 50cl)</h3>
+        <div class="mt-2 space-y-3 text-slate-800">
+          {[
+            ["La Plongeuse","3,00 / 5,50"],
+            ["Corsendonk Rousse","4,30 / 8,00"],
+            ["Blanche Steen Brugge","3,70 / 7,00"],
+            ["Kasteel Rouge","4,80 / 9,00"],
+            ["La Superbe IPA","4,50 / 8,50"],
+            ["La Trappe Blonde","4,50 / 8,50"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="mt-5 text-sm tracking-wide text-slate-600 uppercase">Bouteilles & canettes</h3>
+        <div class="mt-2 space-y-3 text-slate-800">
+          {[
+            ["Desperados 33cl","6,00"],
+            ["Lindemans Kriek 25cl","4,70"],
+            ["Licorne Black 33cl","6,00"],
+            ["Trappes Nillis 0,0% 33cl","4,90"],
+            ["Bitburger 0,0% 33cl","4,00"],
+            ["Cidre Magners 33cl","7,00"],
+            ["Cidre bolée Armorik 27,5cl","4,70"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+
+      <!-- ===== COCKTAILS ===== -->
+      <section id="cocktails" class="scroll-mt-24">
+        <h2 class="font-limelight text-3xl text-brand uppercase">Cocktails</h2>
+        <div class="mt-4 space-y-3 text-slate-800">
+          {[
+            ["Mojito","7,50"],
+            ["Aperol Spritz","7,50"],
+            ["Piña Colada","7,50"],
+            ["Caïpirinha","7,50"],
+            ["Long Island","10,00"],
+            ["Basil Smash","7,50"],
+            ["Pisco Sour","8,50"],
+            ["Lemon Cheesecake Martini","8,50"],
+            ["Screaming Orgasm","8,50"],
+            ["Espresso Martini brûlé","8,00"],
+            ["La Carioca","8,50"],
+            ["Bitter Mai Tai","8,50"],
+            ["St-Germain Spritz","9,00"],
+            ["Paloma","8,50"],
+            ["Gold Rush","9,50"],
+            ["Moscow/London/Jamaican Mule","7,50"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+
+      <!-- ===== MOCKTAILS & SHOOTERS ===== -->
+      <section id="mock-shoot" class="scroll-mt-24">
+        <h2 class="font-limelight text-3xl text-brand uppercase">Mocktails & Shooters</h2>
+
+        <h3 class="mt-3 text-sm tracking-wide text-slate-600 uppercase">Mocktails</h3>
+        <div class="mt-2 space-y-3 text-slate-800">
+          {[
+            ["Gin No Fizz","8,00"],
+            ["Gin No Tonic","7,00"],
+            ["Sober Mojito","7,50"],
+            ["Sober Piña Colada","7,50"],
+            ["Sober Carioca","8,50"],
+            ["Jamaican Sober Mule","7,50"],
+            ["London No Mule","7,50"],
+            ["Basilic No Smash","7,50"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="mt-5 text-sm tracking-wide text-slate-600 uppercase">Shooters</h3>
+        <div class="mt-2 space-y-3 text-slate-800">
+          {[
+            ["La Madeleine","3,00"],
+            ["B-52","3,00"],
+            ["Cucaracha","3,00"],
+            ["Blue Kamikaze","3,00"],
+            ["After-Eight","3,00"],
+            ["Jäger Bomb","7,50"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+
+      <!-- ===== APÉRITIFS ===== -->
+      <section id="aperitifs" class="scroll-mt-24">
+        <h2 class="font-limelight text-3xl text-brand uppercase">Apéritifs</h2>
+        <div class="mt-4 space-y-3 text-slate-800">
+          {[
+            ["Ricard / Pastis 51","2,50"],
+            ["Martini (blanc, rouge)","4,00"],
+            ["Lillet (blanc, rosé)","4,00"],
+            ["Porto (rouge, blanc)","4,00"],
+            ["Kir vin blanc (cassis, mûre)","4,50"],
+            ["Get 27","4,00"],
+            ["Bailey’s","5,00"],
+            ["Izarra","5,00"],
+            ["Chartreuse Verte / Jaune","8,00"],
+            ["Limoncello","4,50"],
+            ["Manzana","3,00"],
+            ["Armagnac blanche","4,00"],
+            ["Armagnac La Hargue","6,50"],
+            ["Armagnac Marquestau 1995","12,50"],
+            ["Cognac ABK6 VS","6,00"],
+            ["Calvados de la Hêtraie","4,00"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+
+      <!-- ===== SPIRITUEUX ===== -->
+      <section id="spiritueux" class="scroll-mt-24">
+        <h2 class="font-limelight text-3xl text-brand uppercase">Spiritueux</h2>
+        <p class="text-sm text-slate-600 mt-1">Supplément soft +2 € (long-drinks).</p>
+
+        <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Vodka (4cl)</h3>
+        <div class="mt-2 space-y-3 text-slate-800">
+          {[
+            ["Eristoff","3,00"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6"><div class="text-right"><p class="uppercase">{name}</p></div><div class="text-right font-medium">{price} €</div></div>
+          ))}
+        </div>
+
+        <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Whiskys (4cl)</h3>
+        <div class="mt-2 space-y-3 text-slate-800">
+          {[
+            ["Clan Campbell","3,00"],
+            ["Jack Daniel’s","5,00"],
+            ["Buffalo Trace (bourbon)","5,50"],
+            ["Moon Harbour Signature","5,50"],
+            ["Chivas 12 ans","6,50"],
+            ["Fondaudège tourbé","5,00"],
+            ["Laphroaig 10 ans (tourbé)","8,50"],
+            ["Dalmore 12 ans","11,00"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6"><div class="text-right"><p class="uppercase">{name}</p></div><div class="text-right font-medium">{price} €</div></div>
+          ))}
+        </div>
+
+        <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Rhums (4cl)</h3>
+        <div class="mt-2 space-y-3 text-slate-800">
+          {[
+            ["Havana 3 ans / Havana Especial","3,00"],
+            ["Havana 7 ans","4,50"],
+            ["Captain Morgan","3,00"],
+            ["Diplomático reserva exclusiva","6,50"],
+            ["Plantation XO","8,50"],
+            ["Severin XO","9,50"],
+            ["Blackwell Black Gold","5,50"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6"><div class="text-right"><p class="uppercase">{name}</p></div><div class="text-right font-medium">{price} €</div></div>
+          ))}
+        </div>
+
+        <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Gins (4cl)</h3>
+        <div class="mt-2 space-y-3 text-slate-800">
+          {[
+            ["Gordon’s","3,00"],
+            ["Bombay Sapphire","5,00"],
+            ["Nikka Coffey Gin","5,50"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6"><div class="text-right"><p class="uppercase">{name}</p></div><div class="text-right font-medium">{price} €</div></div>
+          ))}
+          <p class="text-sm text-slate-600">+ tonic en supplément selon la référence.</p>
+        </div>
+
+        <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Tequila (4cl)</h3>
+        <div class="mt-2 space-y-3 text-slate-800">
+          {[
+            ["El Jimador Blanco","3,00"],
+            ["El Jimador Reposado","5,00"],
+          ].map(([name,price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6"><div class="text-right"><p class="uppercase">{name}</p></div><div class="text-right font-medium">{price} €</div></div>
+          ))}
+        </div>
+      </section>
+
+      <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+
+      <!-- ===== VINS ===== -->
+      <section id="vins" class="scroll-mt-24">
+        <h2 class="font-limelight text-3xl text-brand uppercase">Vins</h2>
+        <p class="text-slate-700 mt-3">
+          Les prix sont indiqués au verre (12,5cl) et à la bouteille (75cl). On complètera les cuvées et tarifs exacts au fil des ajouts.
+        </p>
+        <div class="mt-2 space-y-3 text-slate-800">
+          <div class="grid grid-cols-[1fr_auto_auto] gap-6">
+            <div class="text-right uppercase">Exemple cuvée rouge</div>
+            <div class="text-right font-medium">3,50 €</div>
+            <div class="text-right font-medium">20,00 €</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </section>
+</SidebarLayout>

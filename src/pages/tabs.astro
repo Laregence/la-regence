@@ -1,0 +1,72 @@
+---
+const { sections = [], activeId = sections[0]?.id } = Astro.props;
+---
+
+<div class="w-full">
+  <!-- Onglets (barre scrollable horizontale) -->
+  <div class="flex items-center justify-end mb-6">
+    <div class="flex gap-2 max-w-full overflow-x-auto no-scrollbar whitespace-nowrap pr-1">
+      {sections.map((s) => (
+        <button
+          type="button"
+          class={`px-4 py-2 rounded-xl border transition text-sm uppercase tracking-wide
+                 ${s.id === activeId
+                   ? 'bg-[var(--color-copper)] text-white border-[var(--color-copper)]'
+                   : 'bg-transparent text-brand border-brand hover:bg-brand hover:text-white'}`}
+          data-tab={s.id}
+        >
+          {s.label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Panneaux -->
+  {sections.map((s) => (
+    <section id={`panel-${s.id}`} class={s.id === activeId ? '' : 'hidden'}>
+      <div class="space-y-5 text-slate-800">
+        {s.items?.map((it) => (
+          <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+            <div class="text-right">
+              <p class="font-semibold uppercase">{it.name}</p>
+              {it.desc && <p class="text-slate-700">{it.desc}</p>}
+            </div>
+            <div class="text-right font-medium">{it.price ?? ''}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+</div>
+
+<style is:global>
+  /* masque la scrollbar horizontale si possible */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+<script is:inline>
+  (function () {
+    const btns = Array.from(document.querySelectorAll('[data-tab]'));
+    const panels = (id) => document.getElementById('panel-' + id);
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-tab');
+        // Activer le bouton cliqué / désactiver les autres
+        btns.forEach(b => {
+          const active = b === btn;
+          b.classList.toggle('bg-[var(--color-copper)]', active);
+          b.classList.toggle('text-white', active);
+          b.classList.toggle('border-[var(--color-copper)]', active);
+          b.classList.toggle('bg-transparent', !active);
+          b.classList.toggle('text-brand', !active);
+          b.classList.toggle('border-brand', !active);
+        });
+        // Afficher le bon panneau
+        document.querySelectorAll('[id^="panel-"]').forEach(p => p.classList.add('hidden'));
+        panels(id)?.classList.remove('hidden');
+      });
+    });
+  })();
+</script>
