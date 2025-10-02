@@ -4,17 +4,15 @@ import SidebarLayout from "../layouts/SidebarLayout.astro";
 const title = "Boissons — La Régence";
 const description = "Carte des boissons : chauds, softs, eaux, bières, cocktails, apéritifs & vins.";
 
-// Onglets
+// Onglets (fusionnés)
 const TABS = [
-  { id: "chaud",     label: "Café, thé & chocolat" },
-  { id: "softs",     label: "Softs" },
-  { id: "eaux",      label: "Eaux minérales" },
-  { id: "bieres",    label: "Bières pression & bouteilles" },
-  { id: "cocktails", label: "Cocktails" },
-  { id: "mock-shoot",label: "Mocktails & Shooters" },
-  { id: "aperitifs", label: "Apéritifs" },
-  { id: "spiritueux",label: "Spiritueux" },
-  { id: "vins",      label: "Vins" },
+  { id: "chaud",      label: "Café, thé & chocolat" },
+  { id: "softs",      label: "Softs" },                 // inclut Eaux
+  { id: "bieres",     label: "Bières" },
+  { id: "cocktails",  label: "Cocktails" },             // inclut Mocktails & Shooters
+  { id: "aperitifs",  label: "Apéritifs" },
+  { id: "spiritueux", label: "Spiritueux" },
+  { id: "vins",       label: "Vins" },
 ];
 ---
 
@@ -26,22 +24,19 @@ const TABS = [
       <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">Boissons</h1>
       <div class="h-6"></div>
 
-      <!-- Onglets -->
-      <!-- Barre d’onglets : une ligne, sticky, toujours visible -->
-<nav
-  class="sticky top-16 md:top-0 z-10
-         bg-[var(--color-bg)]/95 backdrop-blur supports-[backdrop-filter]:backdrop-blur
-         border-b border-brand/15"
->
-  <div class="max-w-5xl ml-auto md:pr-12 px-2">
-    <ul class="flex justify-end items-center gap-2 whitespace-nowrap overflow-x-auto py-2">
+      <!-- Barre d’onglets : 1 ligne, sticky -->
+      <!-- Barre d’onglets : minimaliste, sticky -->
+<nav class="sticky top-14 md:top-0 z-20 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur h-12 flex items-center">
+  <div class="max-w-5xl ml-auto md:pr-12 px-2 w-full">
+    <ul class="flex justify-end items-center gap-4 whitespace-nowrap overflow-x-auto">
       {TABS.map(({ id, label }) => (
         <li>
           <a
             href={`#${id}`}
-            class="px-3 py-1 rounded-lg border border-brand/20
-                   hover:bg-brand hover:text-white transition
-                   focus:outline-none focus:ring-2 focus:ring-brand/40"
+            data-tab={id}
+            class="tab-link font-limelight uppercase tracking-wide
+                   text-brand hover:text-[var(--color-copper)]
+                   transition-colors"
           >
             {label}
           </a>
@@ -55,8 +50,15 @@ const TABS = [
       <div class="h-6"></div>
 
       <!-- ===== CAFÉ / THÉ / CHOCOLAT ===== -->
-      <section id="chaud" class="scroll-mt-24">
-        <h2 class="font-limelight text-3xl text-brand uppercase">Café, thé & chocolat</h2>
+      <section id="chaud" class="scroll-mt-[104px] md:scroll-mt-12">
+        <h2
+          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
+                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+                 font-limelight text-3xl text-brand uppercase py-2"
+        >
+          Café, thé & chocolat
+        </h2>
+
         <div class="mt-4 space-y-3 text-slate-800">
           {[
             ["Espresso","1,50"],
@@ -68,15 +70,15 @@ const TABS = [
             ["Cappuccino","2,50"],
             ["Mocaccino","4,00"],
             ["Café frappé","4,50"],
-            ["Café Viennois","4,00"],
+            ["Café viennois","4,00"],
             ["Affogato","6,00"],
             ["Thé","3,00"],
             ["Chocolat chaud classique","3,50"],
             ["Chocolat à l’italienne (lait, noir, blanc)","4,50"],
             ["Chocolat viennois","4,50"],
-            ["Chaï Latte","4,20"],
-            ["Matcha Latte","4,50"],
-          ].map(([name,price]) => (
+            ["Chaï latte","4,20"],
+            ["Matcha latte","4,50"],
+          ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
@@ -90,38 +92,42 @@ const TABS = [
 
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
-      <!-- ===== SOFTS ===== -->
-      <section id="softs" class="scroll-mt-24">
-        <h2 class="font-limelight text-3xl text-brand uppercase">Softs</h2>
+      <!-- ===== SOFTS (inclut EAUX) ===== -->
+      <section id="softs" class="scroll-mt-[104px] md:scroll-mt-12">
+        <h2
+          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
+                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+                 font-limelight text-3xl text-brand uppercase py-2"
+        >
+          Softs
+        </h2>
+
         <div class="mt-4 space-y-3 text-slate-800">
           {[
-            ["Coca-Cola (Classique ou Zero)","3,20"],
+            ["Coca-Cola (classique ou zero)","3,20"],
             ["Orangina","3,50"],
-            ["Schweppes (Tonic ou Agrumes)","4,00"],
+            ["Schweppes (tonic ou agrumes)","4,00"],
             ["Oasis tropical","3,00"],
             ["Cacolac","2,00"],
             ["Fuze-Tea","2,70"],
-            ["Jus Rauch 25cl (Orange, Pomme, Ace, Ananas, Fraise, Abricot, Tomate)","2,60"],
+            ["Jus Rauch 25cl (orange, pomme, ace, ananas, fraise, abricot, tomate)","2,60"],
             ["Sirop à l’eau","2,00"],
             ["Sirop limonade","2,70"],
             ["Limonade Vitteaut 25cl","2,60"],
             ["Citronnade maison","4,50"],
             ["Orange ou citron pressé","3,50"],
-          ].map(([name,price]) => (
+          ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
             </div>
           ))}
         </div>
-      </section>
 
-      <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+        <div class="h-4"></div>
 
-      <!-- ===== EAUX ===== -->
-      <section id="eaux" class="scroll-mt-24">
-        <h2 class="font-limelight text-3xl text-brand uppercase">Eaux minérales</h2>
-        <div class="mt-4 space-y-3 text-slate-800">
+        <h3 class="text-sm tracking-wide text-slate-600 uppercase">Eaux minérales</h3>
+        <div class="mt-2 space-y-3 text-slate-800">
           {[
             ["Vittel 25cl","2,30"],
             ["Vittel 1L","3,50"],
@@ -129,7 +135,7 @@ const TABS = [
             ["Ogeu intense 33cl","3,00"],
             ["San Pellegrino 1L","4,50"],
             ["San Pellegrino 50cl","3,20"],
-          ].map(([name,price]) => (
+          ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
@@ -141,19 +147,25 @@ const TABS = [
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
       <!-- ===== BIÈRES ===== -->
-      <section id="bieres" class="scroll-mt-24">
-        <h2 class="font-limelight text-3xl text-brand uppercase">Bières pression & bouteilles</h2>
+      <section id="bieres" class="scroll-mt-[104px] md:scroll-mt-12">
+        <h2
+          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
+                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+                 font-limelight text-3xl text-brand uppercase py-2"
+        >
+          Bières
+        </h2>
 
         <h3 class="mt-3 text-sm tracking-wide text-slate-600 uppercase">Pression (25cl / 50cl)</h3>
         <div class="mt-2 space-y-3 text-slate-800">
           {[
             ["La Plongeuse","3,00 / 5,50"],
-            ["Corsendonk Rousse","4,30 / 8,00"],
+            ["Corsendonk rousse","4,30 / 8,00"],
             ["Blanche Steen Brugge","3,70 / 7,00"],
-            ["Kasteel Rouge","4,80 / 9,00"],
+            ["Kasteel rouge","4,80 / 9,00"],
             ["La Superbe IPA","4,50 / 8,50"],
-            ["La Trappe Blonde","4,50 / 8,50"],
-          ].map(([name,price]) => (
+            ["La Trappe blonde","4,50 / 8,50"],
+          ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
@@ -171,7 +183,7 @@ const TABS = [
             ["Bitburger 0,0% 33cl","4,00"],
             ["Cidre Magners 33cl","7,00"],
             ["Cidre bolée Armorik 27,5cl","4,70"],
-          ].map(([name,price]) => (
+          ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
@@ -182,14 +194,21 @@ const TABS = [
 
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
-      <!-- ===== COCKTAILS ===== -->
-      <section id="cocktails" class="scroll-mt-24">
-        <h2 class="font-limelight text-3xl text-brand uppercase">Cocktails</h2>
+      <!-- ===== COCKTAILS (inclut MOCKTAILS & SHOOTERS) ===== -->
+      <section id="cocktails" class="scroll-mt-[104px] md:scroll-mt-12">
+        <h2
+          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
+                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+                 font-limelight text-3xl text-brand uppercase py-2"
+        >
+          Cocktails
+        </h2>
+
         <div class="mt-4 space-y-3 text-slate-800">
           {[
             ["Mojito","7,50"],
             ["Aperol Spritz","7,50"],
-            ["Piña Colada","7,50"],
+            ["Piña colada","7,50"],
             ["Caïpirinha","7,50"],
             ["Long Island","10,00"],
             ["Basil Smash","7,50"],
@@ -203,33 +222,28 @@ const TABS = [
             ["Paloma","8,50"],
             ["Gold Rush","9,50"],
             ["Moscow/London/Jamaican Mule","7,50"],
-          ].map(([name,price]) => (
+          ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
             </div>
           ))}
         </div>
-      </section>
 
-      <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
+        <div class="h-4"></div>
 
-      <!-- ===== MOCKTAILS & SHOOTERS ===== -->
-      <section id="mock-shoot" class="scroll-mt-24">
-        <h2 class="font-limelight text-3xl text-brand uppercase">Mocktails & Shooters</h2>
-
-        <h3 class="mt-3 text-sm tracking-wide text-slate-600 uppercase">Mocktails</h3>
+        <h3 class="text-sm tracking-wide text-slate-600 uppercase">Mocktails</h3>
         <div class="mt-2 space-y-3 text-slate-800">
           {[
             ["Gin No Fizz","8,00"],
             ["Gin No Tonic","7,00"],
             ["Sober Mojito","7,50"],
-            ["Sober Piña Colada","7,50"],
+            ["Sober Piña colada","7,50"],
             ["Sober Carioca","8,50"],
             ["Jamaican Sober Mule","7,50"],
             ["London No Mule","7,50"],
             ["Basilic No Smash","7,50"],
-          ].map(([name,price]) => (
+          ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
@@ -237,7 +251,9 @@ const TABS = [
           ))}
         </div>
 
-        <h3 class="mt-5 text-sm tracking-wide text-slate-600 uppercase">Shooters</h3>
+        <div class="h-4"></div>
+
+        <h3 class="text-sm tracking-wide text-slate-600 uppercase">Shooters</h3>
         <div class="mt-2 space-y-3 text-slate-800">
           {[
             ["La Madeleine","3,00"],
@@ -246,7 +262,7 @@ const TABS = [
             ["Blue Kamikaze","3,00"],
             ["After-Eight","3,00"],
             ["Jäger Bomb","7,50"],
-          ].map(([name,price]) => (
+          ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
@@ -258,8 +274,15 @@ const TABS = [
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
       <!-- ===== APÉRITIFS ===== -->
-      <section id="aperitifs" class="scroll-mt-24">
-        <h2 class="font-limelight text-3xl text-brand uppercase">Apéritifs</h2>
+      <section id="aperitifs" class="scroll-mt-[104px] md:scroll-mt-12">
+        <h2
+          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
+                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+                 font-limelight text-3xl text-brand uppercase py-2"
+        >
+          Apéritifs
+        </h2>
+
         <div class="mt-4 space-y-3 text-slate-800">
           {[
             ["Ricard / Pastis 51","2,50"],
@@ -270,7 +293,7 @@ const TABS = [
             ["Get 27","4,00"],
             ["Bailey’s","5,00"],
             ["Izarra","5,00"],
-            ["Chartreuse Verte / Jaune","8,00"],
+            ["Chartreuse verte / jaune","8,00"],
             ["Limoncello","4,50"],
             ["Manzana","3,00"],
             ["Armagnac blanche","4,00"],
@@ -278,7 +301,7 @@ const TABS = [
             ["Armagnac Marquestau 1995","12,50"],
             ["Cognac ABK6 VS","6,00"],
             ["Calvados de la Hêtraie","4,00"],
-          ].map(([name,price]) => (
+          ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
@@ -290,16 +313,24 @@ const TABS = [
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
       <!-- ===== SPIRITUEUX ===== -->
-      <section id="spiritueux" class="scroll-mt-24">
-        <h2 class="font-limelight text-3xl text-brand uppercase">Spiritueux</h2>
+      <section id="spiritueux" class="scroll-mt-[104px] md:scroll-mt-12">
+        <h2
+          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
+                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+                 font-limelight text-3xl text-brand uppercase py-2"
+        >
+          Spiritueux
+        </h2>
+
         <p class="text-sm text-slate-600 mt-1">Supplément soft +2 € (long-drinks).</p>
 
         <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Vodka (4cl)</h3>
         <div class="mt-2 space-y-3 text-slate-800">
-          {[
-            ["Eristoff","3,00"],
-          ].map(([name,price]) => (
-            <div class="grid grid-cols-[1fr_auto] gap-6"><div class="text-right"><p class="uppercase">{name}</p></div><div class="text-right font-medium">{price} €</div></div>
+          {[["Eristoff","3,00"]].map(([name, price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
           ))}
         </div>
 
@@ -314,8 +345,11 @@ const TABS = [
             ["Fondaudège tourbé","5,00"],
             ["Laphroaig 10 ans (tourbé)","8,50"],
             ["Dalmore 12 ans","11,00"],
-          ].map(([name,price]) => (
-            <div class="grid grid-cols-[1fr_auto] gap-6"><div class="text-right"><p class="uppercase">{name}</p></div><div class="text-right font-medium">{price} €</div></div>
+          ].map(([name, price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
           ))}
         </div>
 
@@ -329,8 +363,11 @@ const TABS = [
             ["Plantation XO","8,50"],
             ["Severin XO","9,50"],
             ["Blackwell Black Gold","5,50"],
-          ].map(([name,price]) => (
-            <div class="grid grid-cols-[1fr_auto] gap-6"><div class="text-right"><p class="uppercase">{name}</p></div><div class="text-right font-medium">{price} €</div></div>
+          ].map(([name, price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
           ))}
         </div>
 
@@ -340,8 +377,11 @@ const TABS = [
             ["Gordon’s","3,00"],
             ["Bombay Sapphire","5,00"],
             ["Nikka Coffey Gin","5,50"],
-          ].map(([name,price]) => (
-            <div class="grid grid-cols-[1fr_auto] gap-6"><div class="text-right"><p class="uppercase">{name}</p></div><div class="text-right font-medium">{price} €</div></div>
+          ].map(([name, price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
           ))}
           <p class="text-sm text-slate-600">+ tonic en supplément selon la référence.</p>
         </div>
@@ -351,8 +391,11 @@ const TABS = [
           {[
             ["El Jimador Blanco","3,00"],
             ["El Jimador Reposado","5,00"],
-          ].map(([name,price]) => (
-            <div class="grid grid-cols-[1fr_auto] gap-6"><div class="text-right"><p class="uppercase">{name}</p></div><div class="text-right font-medium">{price} €</div></div>
+          ].map(([name, price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
           ))}
         </div>
       </section>
@@ -360,12 +403,16 @@ const TABS = [
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
       <!-- ===== VINS ===== -->
-      <section id="vins" class="scroll-mt-24">
-        <h2 class="font-limelight text-3xl text-brand uppercase">Vins</h2>
-        <p class="text-slate-700 mt-3">
-          Les prix sont indiqués au verre (12,5cl) et à la bouteille (75cl). On complètera les cuvées et tarifs exacts au fil des ajouts.
-        </p>
-        <div class="mt-2 space-y-3 text-slate-800">
+      <section id="vins" class="scroll-mt-[104px] md:scroll-mt-12">
+        <h2
+          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
+                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+                 font-limelight text-3xl text-brand uppercase py-2"
+        >
+          Vins
+        </h2>
+
+        <div class="mt-4 space-y-3 text-slate-800">
           <div class="grid grid-cols-[1fr_auto_auto] gap-6">
             <div class="text-right uppercase">Exemple cuvée rouge</div>
             <div class="text-right font-medium">3,50 €</div>
@@ -376,4 +423,40 @@ const TABS = [
 
     </div>
   </section>
+  <script is:inline>
+  (function () {
+    const ids = ["chaud","softs","bieres","cocktails","aperitifs","spiritueux","vins"];
+    const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+    const links = Array.from(document.querySelectorAll(".tab-link"));
+
+    const setActive = (id) => {
+      links.forEach(a => {
+        const active = a.dataset.tab === id;
+        a.classList.toggle("text-[var(--color-copper)]", active);
+        a.classList.toggle("text-brand", !active);
+      });
+    };
+
+    // IntersectionObserver pour l’état actif au scroll
+    const io = new IntersectionObserver((entries) => {
+      const vis = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!vis) return;
+      setActive(vis.target.id);
+    }, {
+      root: null,
+      rootMargin: "-45% 0px -45% 0px",
+      threshold: [0.06, 0.2, 0.4, 0.6]
+    });
+
+    sections.forEach(sec => io.observe(sec));
+
+    // État visuel immédiat au clic (sans attendre l’observer)
+    links.forEach(a => {
+      a.addEventListener("click", () => setActive(a.dataset.tab));
+    });
+  })();
+</script>
+
 </SidebarLayout>
