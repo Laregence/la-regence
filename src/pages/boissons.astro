@@ -2,14 +2,13 @@
 import SidebarLayout from "../layouts/SidebarLayout.astro";
 
 const title = "Boissons — La Régence";
-const description = "Carte des boissons : chauds, softs, eaux, bières, cocktails, apéritifs & vins.";
+const description = "Carte des boissons : chauds, softs, bières, cocktails, apéritifs, spiritueux & vins.";
 
-// Onglets (fusionnés)
 const TABS = [
   { id: "chaud",      label: "Café, thé & chocolat" },
-  { id: "softs",      label: "Softs" },                 // inclut Eaux
+  { id: "softs",      label: "Softs" },         // inclut Eaux
   { id: "bieres",     label: "Bières" },
-  { id: "cocktails",  label: "Cocktails" },             // inclut Mocktails & Shooters
+  { id: "cocktails",  label: "Cocktails" },     // inclut Mocktails & Shooters
   { id: "aperitifs",  label: "Apéritifs" },
   { id: "spiritueux", label: "Spiritueux" },
   { id: "vins",       label: "Vins" },
@@ -20,42 +19,39 @@ const TABS = [
   <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
     <div class="max-w-5xl ml-auto text-right md:pr-12">
 
-      <!-- Titre -->
+      <!-- Titre page -->
       <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">Boissons</h1>
-      <div class="h-6"></div>
 
-      <!-- Barre d’onglets : 1 ligne, sticky -->
-      <!-- Barre d’onglets : minimaliste, sticky -->
-<nav class="sticky top-14 md:top-0 z-20 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur h-12 flex items-center">
-  <div class="max-w-5xl ml-auto md:pr-12 px-2 w-full">
-    <ul class="flex justify-end items-center gap-4 whitespace-nowrap overflow-x-auto">
-      {TABS.map(({ id, label }) => (
-        <li>
-          <a
-            href={`#${id}`}
-            data-tab={id}
-            class="tab-link font-limelight uppercase tracking-wide
-                   text-brand hover:text-[var(--color-copper)]
-                   transition-colors"
-          >
-            {label}
-          </a>
-        </li>
-      ))}
+      <!-- Barre d’onglets : une ligne, sticky, à droite, sous header mobile h-24 -->
+      <nav
+  class="sticky top-24 md:top-0 z-30 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur border-b border-brand/15"
+>
+  <div class="max-w-5xl ml-auto md:pr-12 px-2">
+    <ul
+      id="tabsWrap"
+      class="flex justify-start items-center gap-4 whitespace-nowrap overflow-x-auto py-2 no-scrollbar scroll-smooth"
+    >
+      <!-- NOTE : class 'tab-link' et data-tab DOIVENT être présents -->
+      <li><a href="#chaud"      class="tab-link font-limelight text-brand hover:text-[var(--color-copper)] transition" data-tab="chaud">Café, thé & chocolat</a></li>
+      <li><a href="#softs"      class="tab-link font-limelight text-brand hover:text-[var(--color-copper)] transition" data-tab="softs">Softs</a></li>
+      <li><a href="#bieres"     class="tab-link font-limelight text-brand hover:text-[var(--color-copper)] transition" data-tab="bieres">Bières</a></li>
+      <li><a href="#cocktails"  class="tab-link font-limelight text-brand hover:text-[var(--color-copper)] transition" data-tab="cocktails">Cocktails</a></li>
+      <li><a href="#aperitifs"  class="tab-link font-limelight text-brand hover:text-[var(--color-copper)] transition" data-tab="aperitifs">Apéritifs</a></li>
+      <li><a href="#spiritueux" class="tab-link font-limelight text-brand hover:text-[var(--color-copper)] transition" data-tab="spiritueux">Spiritueux</a></li>
+      <li><a href="#vins"       class="tab-link font-limelight text-brand hover:text-[var(--color-copper)] transition" data-tab="vins">Vins</a></li>
     </ul>
   </div>
 </nav>
 
 
-      <div class="h-6"></div>
-
       <!-- ===== CAFÉ / THÉ / CHOCOLAT ===== -->
-      <section id="chaud" class="scroll-mt-[104px] md:scroll-mt-12">
+      <section id="chaud" class="scroll-mt-[calc(6rem+2.75rem)] md:scroll-mt-16">
         <h2
-          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
-                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
-                 font-limelight text-3xl text-brand uppercase py-2"
-        >
+  class="sticky top-[calc(6rem+2.5rem)] md:top-[2.75rem] z-20
+         bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+         border-b border-brand/10
+         font-limelight text-3xl text-brand uppercase py-2"
+>
           Café, thé & chocolat
         </h2>
 
@@ -93,15 +89,17 @@ const TABS = [
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
       <!-- ===== SOFTS (inclut EAUX) ===== -->
-      <section id="softs" class="scroll-mt-[104px] md:scroll-mt-12">
+      <section id="softs" class="scroll-mt-[calc(6rem+2.75rem)] md:scroll-mt-16">
         <h2
-          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
-                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
-                 font-limelight text-3xl text-brand uppercase py-2"
-        >
+  class="sticky top-[calc(6rem+2.5rem)] md:top-[2.75rem] z-20
+         bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+         border-b border-brand/10
+         font-limelight text-3xl text-brand uppercase py-2"
+>
           Softs
         </h2>
 
+        <!-- Softs -->
         <div class="mt-4 space-y-3 text-slate-800">
           {[
             ["Coca-Cola (classique ou zero)","3,20"],
@@ -124,8 +122,10 @@ const TABS = [
           ))}
         </div>
 
+        <!-- Espace visuel entre sous-sections -->
         <div class="h-4"></div>
 
+        <!-- Eaux minérales -->
         <h3 class="text-sm tracking-wide text-slate-600 uppercase">Eaux minérales</h3>
         <div class="mt-2 space-y-3 text-slate-800">
           {[
@@ -147,12 +147,13 @@ const TABS = [
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
       <!-- ===== BIÈRES ===== -->
-      <section id="bieres" class="scroll-mt-[104px] md:scroll-mt-12">
+      <section id="bieres" class="scroll-mt-[calc(6rem+2.75rem)] md:scroll-mt-16">
         <h2
-          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
-                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
-                 font-limelight text-3xl text-brand uppercase py-2"
-        >
+  class="sticky top-[calc(6rem+2.5rem)] md:top-[2.75rem] z-20
+         bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+         border-b border-brand/10
+         font-limelight text-3xl text-brand uppercase py-2"
+>
           Bières
         </h2>
 
@@ -195,15 +196,17 @@ const TABS = [
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
       <!-- ===== COCKTAILS (inclut MOCKTAILS & SHOOTERS) ===== -->
-      <section id="cocktails" class="scroll-mt-[104px] md:scroll-mt-12">
+      <section id="cocktails" class="scroll-mt-[calc(6rem+2.75rem)] md:scroll-mt-16">
         <h2
-          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
-                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
-                 font-limelight text-3xl text-brand uppercase py-2"
-        >
+  class="sticky top-[calc(6rem+2.5rem)] md:top-[2.75rem] z-20
+         bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+         border-b border-brand/10
+         font-limelight text-3xl text-brand uppercase py-2"
+>
           Cocktails
         </h2>
 
+        <!-- Cocktails -->
         <div class="mt-4 space-y-3 text-slate-800">
           {[
             ["Mojito","7,50"],
@@ -230,8 +233,10 @@ const TABS = [
           ))}
         </div>
 
+        <!-- Espace -->
         <div class="h-4"></div>
 
+        <!-- Mocktails -->
         <h3 class="text-sm tracking-wide text-slate-600 uppercase">Mocktails</h3>
         <div class="mt-2 space-y-3 text-slate-800">
           {[
@@ -251,8 +256,10 @@ const TABS = [
           ))}
         </div>
 
+        <!-- Espace -->
         <div class="h-4"></div>
 
+        <!-- Shooters -->
         <h3 class="text-sm tracking-wide text-slate-600 uppercase">Shooters</h3>
         <div class="mt-2 space-y-3 text-slate-800">
           {[
@@ -274,12 +281,13 @@ const TABS = [
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
       <!-- ===== APÉRITIFS ===== -->
-      <section id="aperitifs" class="scroll-mt-[104px] md:scroll-mt-12">
+      <section id="aperitifs" class="scroll-mt-[calc(6rem+2.75rem)] md:scroll-mt-16">
         <h2
-          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
-                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
-                 font-limelight text-3xl text-brand uppercase py-2"
-        >
+  class="sticky top-[calc(6rem+2.5rem)] md:top-[2.75rem] z-20
+         bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+         border-b border-brand/10
+         font-limelight text-3xl text-brand uppercase py-2"
+>
           Apéritifs
         </h2>
 
@@ -313,12 +321,13 @@ const TABS = [
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
       <!-- ===== SPIRITUEUX ===== -->
-      <section id="spiritueux" class="scroll-mt-[104px] md:scroll-mt-12">
+      <section id="spiritueux" class="scroll-mt-[calc(6rem+2.75rem)] md:scroll-mt-16">
         <h2
-          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
-                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
-                 font-limelight text-3xl text-brand uppercase py-2"
-        >
+  class="sticky top-[calc(6rem+2.5rem)] md:top-[2.75rem] z-20
+         bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+         border-b border-brand/10
+         font-limelight text-3xl text-brand uppercase py-2"
+>
           Spiritueux
         </h2>
 
@@ -326,7 +335,9 @@ const TABS = [
 
         <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Vodka (4cl)</h3>
         <div class="mt-2 space-y-3 text-slate-800">
-          {[["Eristoff","3,00"]].map(([name, price]) => (
+          {[
+            ["Eristoff","3,00"],
+          ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
@@ -403,16 +414,20 @@ const TABS = [
       <div class="my-8 h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
 
       <!-- ===== VINS ===== -->
-      <section id="vins" class="scroll-mt-[104px] md:scroll-mt-12">
+      <section id="vins" class="scroll-mt-[calc(6rem+2.75rem)] md:scroll-mt-16">
         <h2
-          class="sticky -mt-px top-[6.5rem] md:top-12 z-10
-                 bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
-                 font-limelight text-3xl text-brand uppercase py-2"
-        >
+  class="sticky top-[calc(6rem+2.5rem)] md:top-[2.75rem] z-20
+         bg-[var(--color-bg)]/95 supports-[backdrop-filter]:backdrop-blur
+         border-b border-brand/10
+         font-limelight text-3xl text-brand uppercase py-2"
+>
           Vins
         </h2>
 
-        <div class="mt-4 space-y-3 text-slate-800">
+        <p class="text-slate-700 mt-3">
+          Les prix sont indiqués au verre (12,5cl) et à la bouteille (75cl). (À compléter selon la carte.)
+        </p>
+        <div class="mt-2 space-y-3 text-slate-800">
           <div class="grid grid-cols-[1fr_auto_auto] gap-6">
             <div class="text-right uppercase">Exemple cuvée rouge</div>
             <div class="text-right font-medium">3,50 €</div>
@@ -423,40 +438,70 @@ const TABS = [
 
     </div>
   </section>
+
+  <!-- Tabs actifs au scroll + au clic -->
   <script is:inline>
-  (function () {
-    const ids = ["chaud","softs","bieres","cocktails","aperitifs","spiritueux","vins"];
-    const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
-    const links = Array.from(document.querySelectorAll(".tab-link"));
+(function () {
+  const tabsWrap = document.getElementById('tabsWrap');             // <ul id="tabsWrap"> … </ul>
+  const tabs = Array.from(document.querySelectorAll('.tab-link'));   // <a class="tab-link" data-tab="...">
+  const ids  = ['chaud','softs','bieres','cocktails','aperitifs','spiritueux','vins'];
+  const secs = ids.map(id => document.getElementById(id)).filter(Boolean);
 
-    const setActive = (id) => {
-      links.forEach(a => {
-        const active = a.dataset.tab === id;
-        a.classList.toggle("text-[var(--color-copper)]", active);
-        a.classList.toggle("text-brand", !active);
-      });
-    };
+  if (!tabs.length || !secs.length) return;
 
-    // IntersectionObserver pour l’état actif au scroll
-    const io = new IntersectionObserver((entries) => {
-      const vis = entries
-        .filter(e => e.isIntersecting)
-        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (!vis) return;
-      setActive(vis.target.id);
-    }, {
-      root: null,
-      rootMargin: "-45% 0px -45% 0px",
-      threshold: [0.06, 0.2, 0.4, 0.6]
+  const setActive = (id) => {
+    tabs.forEach(a => {
+      const active = a.dataset.tab === id;
+      a.classList.toggle('text-[var(--color-copper)]', active);
+      a.classList.toggle('text-brand', !active);
     });
+  };
 
-    sections.forEach(sec => io.observe(sec));
+  // Fait défiler la barre d'onglets pour coller l'onglet actif à gauche
+  const scrollTabIntoLeft = (linkEl) => {
+    if (!tabsWrap || !linkEl) return;
+    const pad = 12; // petit offset visuel
+    const left = Math.max(0, linkEl.offsetLeft - pad);
+    tabsWrap.scrollTo({ left, behavior: 'smooth' });
+  };
 
-    // État visuel immédiat au clic (sans attendre l’observer)
-    links.forEach(a => {
-      a.addEventListener("click", () => setActive(a.dataset.tab));
+  // ==== Initialisation: onglet actif = hash ou "chaud" ====
+  const initialId = (location.hash || '').replace('#','') || 'chaud';
+  setActive(initialId);
+  // place le bon onglet à gauche
+  const initialLink = tabs.find(a => a.dataset.tab === initialId);
+  if (initialLink) {
+    // scroll auto au chargement
+    requestAnimationFrame(() => scrollTabIntoLeft(initialLink));
+  }
+
+  // ==== IntersectionObserver: active l’onglet de la section la + visible ====
+  const io = new IntersectionObserver((entries) => {
+    const vis = entries
+      .filter(e => e.isIntersecting)
+      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!vis) return;
+
+    const id = vis.target.id;
+    setActive(id);
+    const link = tabs.find(a => a.dataset.tab === id);
+    if (link) scrollTabIntoLeft(link);
+  }, {
+    root: null,
+    rootMargin: '-45% 0px -45% 0px',
+    threshold: [0.01, 0.1, 0.25, 0.5]
+  });
+
+  secs.forEach(s => io.observe(s));
+
+  // ==== Au clic: active + aligne à gauche immédiatement ====
+  tabs.forEach(a => {
+    a.addEventListener('click', () => {
+      setActive(a.dataset.tab);
+      scrollTabIntoLeft(a);
     });
-  })();
+  });
+})();
 </script>
 
 </SidebarLayout>
