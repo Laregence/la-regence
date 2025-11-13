@@ -14,7 +14,8 @@ const { title = "La Régence", description = "", active = ""  } = Astro.props;
     <meta name="description" content={description} />
   </head>
 
-  <body class="min-h-screen text-slate-900 overflow-x-hidden">
+  <body class="min-h-screen text-slate-900 overflow-x-hidden md:overflow-hidden">
+
     <!-- ===== HEADER MOBILE (bandeau translucide) ===== -->
 <header class="md:hidden fixed inset-x-0 top-0 z-40">
   <div class="h-24 flex items-center justify-between px-4 backdrop-blur bg-black/10">
@@ -169,11 +170,13 @@ const { title = "La Régence", description = "", active = ""  } = Astro.props;
 
 
     <!-- ===== WRAPPER DESKTOP : grille 2 colonnes ===== -->
-    <div class="md:grid md:grid-cols-[minmax(280px,22vw)_1fr]">
+    <div class="md:grid md:grid-cols-[minmax(280px,22vw)_1fr] md:h-dvh">
+
       <!-- Sidebar desktop FIXE (logo en haut, menu centré, reste en bas) -->
-<aside
-  class="hidden md:flex bg-brand text-[var(--color-bg)] md:sticky md:top-0 md:h-dvh md:overflow-hidden flex-col"
->
+<aside class="hidden md:flex bg-brand text-[var(--color-bg)]
+               md:sticky md:top-0 md:h-dvh md:overflow-y-auto
+               flex-col justify-between">
+
   <!-- HAUT : logo fixé -->
   <div class="pt-6 px-4 flex-shrink-0 flex items-start justify-center">
     <a href="/" aria-label="Accueil">
@@ -284,10 +287,11 @@ const { title = "La Régence", description = "", active = ""  } = Astro.props;
 
 
       <!-- Contenu (colonne droite) -->
-      <main class="bg-main min-h-screen px-4 xl:px-6 md:px-8 pt-16 md:pt-0">
-        <!-- pt-16 = place pour le header mobile -->
-        <slot />
-      </main>
+      <main class="bg-main min-h-screen px-4 sm:px-6 md:px-8
+             pt-24 md:pt-0 md:h-dvh md:overflow-y-auto">
+  <slot />
+</main>
+
     </div>
 
     <!-- ===== Scripts : drawer mobile ===== -->

@@ -67,7 +67,6 @@ const TABS = [
             ["Mocaccino","4,00"],
             ["Café frappé","4,50"],
             ["Café viennois","4,00"],
-            ["Affogato","6,00"],
             ["Thé","3,00"],
             ["Chocolat chaud classique","3,50"],
             ["Chocolat à l’italienne (lait, noir, blanc)","4,50"],
@@ -103,12 +102,12 @@ const TABS = [
         <div class="mt-4 space-y-3 text-slate-800">
           {[
             ["Coca-Cola (classique ou zero)","3,20"],
-            ["Orangina","3,50"],
-            ["Schweppes (tonic ou agrumes)","4,00"],
-            ["Oasis tropical","3,00"],
-            ["Cacolac","2,00"],
-            ["Fuze-Tea","2,70"],
-            ["Jus Rauch 25cl (orange, pomme, ace, ananas, fraise, abricot, tomate)","2,60"],
+            ["Orangina","3,20"],
+            ["Schweppes (tonic ou agrumes)","3,50"],
+            ["Oasis tropical","3,50"],
+            ["Cacolac","4,00"],
+            ["Fuze-Tea","3,00"],
+            ["Jus Rauch 25cl (orange, pomme, ace, ananas, fraise, abricot, pamplemousse, tomate)","3,00"],
             ["Sirop à l’eau","2,00"],
             ["Sirop limonade","2,70"],
             ["Limonade Vitteaut 25cl","2,60"],
@@ -133,8 +132,8 @@ const TABS = [
             ["Vittel 1L","3,50"],
             ["Perrier 33cl","3,30"],
             ["Ogeu intense 33cl","3,00"],
-            ["San Pellegrino 1L","4,50"],
-            ["San Pellegrino 50cl","3,20"],
+            ["San Pellegrino 1L","5,00"],
+            ["San Pellegrino 50cl","3,50"],
           ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
               <div class="text-right"><p class="uppercase">{name}</p></div>
@@ -207,24 +206,39 @@ const TABS = [
         </h2>
 
         <!-- Cocktails -->
+        <h3 class="mt-5 text-sm tracking-wide text-slate-600 uppercase">Les Classiques</h3>
         <div class="mt-4 space-y-3 text-slate-800">
           {[
             ["Mojito","7,50"],
             ["Aperol Spritz","7,50"],
             ["Piña colada","7,50"],
             ["Caïpirinha","7,50"],
-            ["Long Island","10,00"],
+            ["St-Germain Spritz","9,00"],
+            ["Moscow/London/Jamaican Mule","7,50"],
+            ["Gin Fizz","7,50"],
+            ["Americano","7,50"],
+            ["Sex on the Beach","7,50"],
+            ["Tequila Sunrise","7,50"],
+          ].map(([name, price]) => (
+            <div class="grid grid-cols-[1fr_auto] gap-6">
+              <div class="text-right"><p class="uppercase">{name}</p></div>
+              <div class="text-right font-medium">{price} €</div>
+            </div>
+          ))}
+        </div>
+        <h3 class="mt-5 text-sm tracking-wide text-slate-600 uppercase">Les Signatures</h3>
+        <div class="mt-4 space-y-3 text-slate-800">
+          {[
             ["Basil Smash","7,50"],
+            ["Tiramisu Martini","8,50"],
             ["Pisco Sour","8,50"],
             ["Lemon Cheesecake Martini","8,50"],
             ["Screaming Orgasm","8,50"],
-            ["Espresso Martini brûlé","8,00"],
             ["La Carioca","8,50"],
             ["Bitter Mai Tai","8,50"],
-            ["St-Germain Spritz","9,00"],
             ["Paloma","8,50"],
             ["Gold Rush","9,50"],
-            ["Moscow/London/Jamaican Mule","7,50"],
+            ["Pisco sour","7,50"],
           ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
@@ -244,10 +258,10 @@ const TABS = [
             ["Gin No Tonic","7,00"],
             ["Sober Mojito","7,50"],
             ["Sober Piña colada","7,50"],
-            ["Sober Carioca","8,50"],
+            ["Sober Carioca","9.00"],
             ["Jamaican Sober Mule","7,50"],
             ["London No Mule","7,50"],
-            ["Basilic No Smash","7,50"],
+            ["Basilic No Smash","8,00"],
           ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
