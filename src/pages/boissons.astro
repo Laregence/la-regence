@@ -321,7 +321,7 @@ const TABS = [
             ["Armagnac blanche","4,00"],
             ["Armagnac La Hargue","6,50"],
             ["Armagnac Marquestau 1995","12,50"],
-            ["Cognac ABK6 VS","6,00"],
+            ["Cognac Jules Gautret VS","5,00"],
             ["Calvados de la Hêtraie","4,00"],
           ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
@@ -350,7 +350,7 @@ const TABS = [
         <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Vodka (4cl)</h3>
         <div class="mt-2 space-y-3 text-slate-800">
           {[
-            ["Eristoff","3,00"],
+            ["Wyborowa","3,00"],
           ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
@@ -362,12 +362,13 @@ const TABS = [
         <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Whiskys (4cl)</h3>
         <div class="mt-2 space-y-3 text-slate-800">
           {[
-            ["Clan Campbell","3,00"],
+            ["Ballantine's","3,00"],
             ["Jack Daniel’s","5,00"],
             ["Buffalo Trace (bourbon)","5,50"],
-            ["Moon Harbour Signature","5,50"],
+            ["Bulleit (bourbon)","5,50"],
+            ["Moon Harbour Signature (Bordeaux)","5,50"],
             ["Chivas 12 ans","6,50"],
-            ["Fondaudège tourbé","5,00"],
+            ["Fondaudège tourbé (Charente)","5,00"],
             ["Laphroaig 10 ans (tourbé)","8,50"],
             ["Dalmore 12 ans","11,00"],
           ].map(([name, price]) => (
@@ -385,6 +386,8 @@ const TABS = [
             ["Havana 7 ans","4,50"],
             ["Captain Morgan","3,00"],
             ["Diplomático reserva exclusiva","6,50"],
+            ["Dictador 10 ans (Colombie)","7,00"],
+            ["Bumbu XO (Panama)","8,50"],
             ["Plantation XO","8,50"],
             ["Severin XO","9,50"],
             ["Blackwell Black Gold","5,50"],
@@ -396,19 +399,18 @@ const TABS = [
           ))}
         </div>
 
-        <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Gins (4cl)</h3>
+        <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Gins (4cl + Tonic La French)</h3>
         <div class="mt-2 space-y-3 text-slate-800">
           {[
-            ["Gordon’s","3,00"],
-            ["Bombay Sapphire","5,00"],
-            ["Nikka Coffey Gin","5,50"],
+            ["Gordon’s","6,50"],
+            ["Bombay Sapphire","8,00"],
+            ["Nikka Coffey Gin","9,50"],
           ].map(([name, price]) => (
             <div class="grid grid-cols-[1fr_auto] gap-6">
               <div class="text-right"><p class="uppercase">{name}</p></div>
               <div class="text-right font-medium">{price} €</div>
             </div>
           ))}
-          <p class="text-sm text-slate-600">+ tonic en supplément selon la référence.</p>
         </div>
 
         <h3 class="mt-4 text-sm tracking-wide text-slate-600 uppercase">Tequila (4cl)</h3>
@@ -437,18 +439,105 @@ const TABS = [
 >
           Vins
         </h2>
-
-        <p class="text-slate-700 mt-3">
-          Les prix sont indiqués au verre (12,5cl) et à la bouteille (75cl). (À compléter selon la carte.)
-        </p>
+         <div class="text-right font-medium underline">ROUGE</div>
+        <h3 class="mt-3 text-sm tracking-wide text-slate-600 uppercase">Verre(12,5cl) /Bouteille(75cl)</h3>
+        
         <div class="mt-2 space-y-3 text-slate-800">
-          <div class="grid grid-cols-[1fr_auto_auto] gap-6">
-            <div class="text-right uppercase">Exemple cuvée rouge</div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Vignes Antiques Merlot - Pays d'Oc</div>
             <div class="text-right font-medium">3,50 €</div>
             <div class="text-right font-medium">20,00 €</div>
           </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Cochon volant - Languedoc Corbières</div>
+            <div class="text-right font-medium">4,20 €</div>
+            <div class="text-right font-medium">24,00 €</div>
+          </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Rochouard - St Nicolas de Bourgueil</div>
+            <div class="text-right font-medium">4,50 €</div>
+            <div class="text-right font-medium">26,00 €</div>
+          </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Luna Mas Brès - IGP Cévènnes</div>
+            <div class="text-right font-medium">4,50 €</div>
+            <div class="text-right font-medium">26,00 €</div>
+          </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Entre amis - Graves</div>
+            <div class="text-right font-medium">5,00 €</div>
+            <div class="text-right font-medium">29,00 €</div>
+          </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Pique-Basse - Côtes du Rhone</div>
+            <div class="text-right font-medium">5,50 €</div>
+            <div class="text-right font-medium">32,00 €</div>
+          </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Esprit de Doyac - Haut Médoc</div>
+            <div class="text-right font-medium">5,50 €</div>
+            <div class="text-right font-medium">32,00 €</div>
         </div>
-      </section>
+        <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">L'Optimiste - Pic Saint-Loup</div>
+            <div class="text-right font-medium">6,50 €</div>
+            <div class="text-right font-medium">38,00 €</div>
+          </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Petit Bouquey - Saint Emilion</div>
+            <div class="text-right font-medium">7,00 €</div>
+            <div class="text-right font-medium">41,00 €</div>
+        </div>
+         <div class="text-right font-medium underline">ROSÉ</div>
+           <h3 class="mt-3 text-sm tracking-wide text-slate-600 uppercase">Verre(12,5cl) /Bouteille(75cl)</h3>
+
+         <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Vignes Antiques Cinsault - Pays d'Oc</div>
+            <div class="text-right font-medium">3,50 €</div>
+            <div class="text-right font-medium">20,00 €</div>
+        </div>
+        <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Saint Roch - Côtes de Provence</div>
+            <div class="text-right font-medium">4,00 €</div>
+            <div class="text-right font-medium">23,00 €</div>
+          </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Les pieds dans le sable - IGP Landes (Capbreton)</div>
+            <div class="text-right font-medium">5,00 €</div>
+            <div class="text-right font-medium">29,00 €</div>
+        </div>
+        <div class="text-right font-medium underline">BLANC Sec</div>
+        <h3 class="mt-3 text-sm tracking-wide text-slate-600 uppercase">Verre(12,5cl) /Bouteille(75cl)</h3>
+        
+        <div class="mt-2 space-y-3 text-slate-800">
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">L'Oracle - Pays d'Oc</div>
+            <div class="text-right font-medium">3,50 €</div>
+            <div class="text-right font-medium">20,00 €</div>
+          </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Le Clos Sauvignon blanc - Touraine</div>
+            <div class="text-right font-medium">5,00 €</div>
+            <div class="text-right font-medium">29,00 €</div>
+          </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Les pieds dans le sable - IGP Landes (Capbreton)</div>
+            <div class="text-right font-medium">5,00 €</div>
+            <div class="text-right font-medium">29,00 €</div>
+          </div>
+          <div class="text-right font-medium underline">BLANC Moelleux</div>
+           <h3 class="mt-3 text-sm tracking-wide text-slate-600 uppercase">Verre(12,5cl) /Bouteille(75cl)</h3>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Demoiselle - Côtes de Gascogne</div>
+            <div class="text-right font-medium">4,50 €</div>
+            <div class="text-right font-medium">26,00 €</div>
+          </div>
+          <div class="grid grid-cols-[1fr_auto_auto] gap-18">
+            <div class="text-right uppercase">Clos Thou - Jurançon</div>
+            <div class="text-right font-medium">5,00 €</div>
+            <div class="text-right font-medium">29,00 €</div>
+          </div>
+        </section>
 
     </div>
   </section>
