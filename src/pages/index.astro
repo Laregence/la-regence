@@ -126,8 +126,13 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
     />
   </div>
 
-  <!-- menu-du-jour : même HAUTEUR que grande, recadré si besoin -->
-  <div class="rounded-2xl soft-border overflow-hidden">
+ <!-- menu-du-jour : même HAUTEUR que grande, recadré si besoin -->
+<div class="rounded-2xl soft-border overflow-hidden">
+  <button
+    type="button"
+    id="menu-du-jour-trigger"
+    class="w-full block cursor-zoom-in"
+  >
     <div id="match-size-1" class="w-full">
       <img
         src="/menu-du-jour.jpg"
@@ -136,7 +141,74 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
         id="menu-du-jour-thumb"
       />
     </div>
+  </button>
+</div>
+
+<!-- Modale d'affichage du menu du jour -->
+<dialog
+  id="menu-du-jour-modal"
+  class="p-0 bg-transparent border-none max-w-none"
+>
+  <div class="fixed inset-0 flex items-center justify-center">
+    <!-- Fond sombre cliquable -->
+    <div
+      class="absolute inset-0 bg-black/60"
+      id="menu-du-jour-backdrop"
+    ></div>
+
+    <!-- Contenu -->
+    <div class="relative max-w-4xl w-[90vw]">
+      <button
+        type="button"
+        id="menu-du-jour-close"
+        class="absolute -top-10 right-2 text-white text-4xl font-bold leading-none"
+        aria-label="Fermer l'image"
+      >
+        &times;
+      </button>
+
+      <img
+        src="/menu-du-jour.jpg"
+        alt="Menu du jour agrandi"
+        class="w-full h-auto rounded-2xl shadow-2xl"
+      />
+    </div>
   </div>
+</dialog>
+
+<script>
+  const btn = document.getElementById('menu-du-jour-trigger');
+  const modal = document.getElementById('menu-du-jour-modal');
+  const closeBtn = document.getElementById('menu-du-jour-close');
+  const backdrop = document.getElementById('menu-du-jour-backdrop');
+
+  // Ouvrir
+  btn?.addEventListener('click', () => {
+    if (typeof modal.showModal === 'function') {
+      modal.showModal();
+    } else {
+      modal.setAttribute('open', 'true');
+    }
+  });
+
+  // Fermer
+  function closeModal() {
+    if (typeof modal.close === 'function') {
+      modal.close();
+    } else {
+      modal.removeAttribute('open');
+    }
+  }
+
+  closeBtn?.addEventListener('click', closeModal);
+  backdrop?.addEventListener('click', closeModal);
+
+  // Escape pour fermer
+  modal?.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
+
 
   <!-- petite2 : même HAUTEUR que grande, recadré si besoin -->
   <div class="rounded-2xl soft-border overflow-hidden">
