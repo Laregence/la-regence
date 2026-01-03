@@ -1,0 +1,9 @@
+---
+const { title, description } = Astro.props;
+---
+
+<slot name="nav" />
+<main class="min-h-screen">
+  <slot />
+</main>
+<slot name="footer" />
