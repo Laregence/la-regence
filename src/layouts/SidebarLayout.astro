@@ -42,6 +42,34 @@ const ogImageUrl = Astro.site
 
   <meta name="generator" content={Astro.generator} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "@id": "https://laregencemdm.fr/#restaurant",
+  "name": "La Régence",
+  "image": "https://laregencemdm.fr/exterieur.jpg",
+  "url": "https://laregencemdm.fr",
+  "telephone": "+33558859272",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2 rue Léon Gambetta",
+    "addressLocality": "Mont-de-Marsan",
+    "postalCode": "40000",
+    "addressCountry": "FR"
+  },
+  "servesCuisine": [
+    "Cuisine française",
+    "Brasserie"
+  ],
+  "priceRange": "€€",
+  "sameAs": [
+    "https://www.facebook.com/LaRegenceMDM",
+    "https://www.instagram.com/la_regence_mdm/"
+  ]
+}
+</script>
+
 </head>
 
 
