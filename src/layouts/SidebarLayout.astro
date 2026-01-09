@@ -1,7 +1,11 @@
 ---
 import "../styles/global.css";
-const { title = "La Régence", description = "", active = ""  ogImage = "/og-image.png",} = Astro.props;
-
+const {
+  title = "La Régence",
+  description = "",
+  active = "",
+  ogImage = "/og-image.png",
+} = Astro.props;
 // Canonical dynamique (utilise astro.config.site si défini)
 const canonical = Astro.site
   ? new URL(Astro.url.pathname, Astro.site).toString()
