@@ -115,73 +115,50 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
   </div>
 
       <!-- === Version < 1280px : grande native, les 2 autres matchent sa hauteur === -->
-<!-- === MOBILE / TABLETTE (< xl) : scroll assumé, sections plein écran === -->
-<div class="xl:hidden flex flex-col gap-0">
-
-  <!-- 1) GRANDE IMAGE : presque plein écran -->
-  <section class="h-[92vh] w-full overflow-hidden">
+<div class="xl:hidden flex flex-col gap-4">
+  <!-- grande.jpg : NATIF (pas de ratio imposé) -->
+  <div id="g-wrap" class="rounded-2xl soft-border overflow-hidden">
     <img
+      id="g-img"
       src="/grande.jpg"
       alt="La Régence — grande image"
-      class="w-full h-full object-cover object-center"
+      class="block w-full h-auto object-contain"
       loading="eager"
       decoding="async"
     />
-  </section>
+  </div>
 
-  <!-- 2) TEXTE : juste après l’image -->
-  <section class="w-full px-4 py-8">
-    <div class="max-w-prose mx-auto text-center space-y-4">
-      <h1 class="text-2xl sm:text-3xl font-bold text-brand leading-tight">
-        Bar Restaurant La Régence
-      </h1>
-
-      <p class="text-slate-700 italic text-base leading-snug">
-        « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
-      </p>
-
-      <p class="text-slate-700 leading-relaxed text-base">
-        La Régence s’inscrit dans le quotidien des montois depuis 1988. En 2024, deux frères reprennent l’adresse
-        et lui donnent un nouveau souffle, fidèle à l’esprit convivial qui l’a toujours animée.
-      </p>
-
-      <p class="text-slate-700 leading-relaxed text-base">
-        La cuisine, inspirée de la tradition brasserie, se veut généreuse et accessible, préparée avec soin à partir
-        de produits frais et de recettes travaillées sur place. Dans un décor chaleureux — bois, lumière douce et
-        touches végétales — La Régence est pensée comme un lieu de vie où l’on se retrouve pour déjeuner, trinquer
-        ou prolonger la soirée.
-      </p>
-
-      <p class="text-slate-700">
-        <a href="tel:+33558859272" class="underline">Réservez votre table au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- 3) MENU DU JOUR : plein écran, sans espace -->
-  <section
-    class="h-screen w-full overflow-hidden js-menu-thumb cursor-pointer"
-    data-img="/menu-du-jour.jpg"
-    aria-label="Ouvrir le menu du jour"
-  >
+<!-- menu-du-jour : même HAUTEUR que grande, recadré si besoin (mobile) -->
+<div
+  class="rounded-2xl soft-border overflow-hidden js-menu-thumb cursor-pointer"
+  data-img="/menu-du-jour.jpg"
+>
+  <div id="match-size-1" class="w-full">
     <img
       src="/menu-du-jour.jpg"
       alt="Menu du jour"
       class="w-full h-full object-cover object-center"
     />
-  </section>
-
-  <!-- 4) PETITE2 : plein écran, sans espace -->
-  <section class="h-screen w-full overflow-hidden">
-    <img
-      src="/petite2.jpg"
-      alt="La Régence — image secondaire"
-      class="w-full h-full object-cover object-center"
-    />
-  </section>
-
+  </div>
 </div>
 
+
+
+  <!-- petite2 : même HAUTEUR que grande, recadré si besoin -->
+  <div class="rounded-2xl soft-border overflow-hidden">
+    <div id="match-size-2" class="w-full">
+      <img
+        src="/petite2.jpg"
+        alt="La Régence — image secondaire"
+        class="w-full h-full object-cover object-center"
+      />
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</section>
 
 
     <!-- LIGHTBOX (commune mobile/desktop) -->
@@ -262,7 +239,8 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
   // On ne travaille que sous 1280px
   const mq = window.matchMedia('(max-width: 1279px)');
 
-
+  // grande.jpg (doit avoir id="g-img")
+  const gImg = document.getElementById('g-img');
 
   // Les deux conteneurs à mettre à la même hauteur que grande.jpg
   const matchEls = [
