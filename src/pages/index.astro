@@ -264,6 +264,38 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
 
 
 
+  // Les deux conteneurs à mettre à la même hauteur que grande.jpg
+  const matchEls = [
+    document.getElementById('match-size-1'),
+    document.getElementById('match-size-2'),
+  ].filter(Boolean);
 
+  if (!gImg || !matchEls.length) return;
+
+  function syncHeights() {
+    // Si on repasse au-dessus de 1280, on nettoie
+    if (!mq.matches) {
+      matchEls.forEach(el => { el.style.height = ''; });
+      return;
+    }
+    // Hauteur rendue de grande.jpg
+    const rect = gImg.getBoundingClientRect();
+    if (rect.height > 0) {
+      const h = rect.height + 'px';
+      matchEls.forEach(el => { el.style.height = h; });
+    }
+  }
+
+  // Quand grande.jpg charge / reload
+  gImg.addEventListener('load', syncHeights);
+
+  // Sur chargement & resize
+  window.addEventListener('load', syncHeights);
+  window.addEventListener('resize', syncHeights);
+
+  // Petits recalages pour couvrir les reflows tardifs
+  setTimeout(syncHeights, 50);
+  setTimeout(syncHeights, 250);
+})();
   </script>
 </SidebarLayout>
