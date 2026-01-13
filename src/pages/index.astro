@@ -76,8 +76,8 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
     <div class="min-h-0 md:min-w-0 md:overflow-hidden">
   <!-- De md à < xl : 1 colonne (grande puis les 2 autres, même largeur/hauteur) -->
   <!-- En ≥ xl : ton layout 2/3 + 1/3 d'origine -->
-  <div class="hidden md:grid md:gap-6 md:min-w-0 md:auto-rows-auto
-              md:grid-cols-1 xl:grid-cols-3 xl:grid-rows-10 md:h-full">
+  <div class="min-h-0 flex md:h-[calc(100dvh-2rem)]">
+  <div class="w-full max-w-prose md:max-w-xl mx-auto text-center md:text-right px-2 md:px-5 flex flex-col justify-end pb-8">
 
     <!-- Grande image -->
     <div class="xl:col-span-2 xl:row-span-10 rounded-2xl soft-border overflow-hidden">
@@ -262,41 +262,8 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
   // On ne travaille que sous 1280px
   const mq = window.matchMedia('(max-width: 1279px)');
 
-  // grande.jpg (doit avoir id="g-img")
-  const gImg = document.getElementById('g-img');
 
-  // Les deux conteneurs à mettre à la même hauteur que grande.jpg
-  const matchEls = [
-    document.getElementById('match-size-1'),
-    document.getElementById('match-size-2'),
-  ].filter(Boolean);
 
-  if (!gImg || !matchEls.length) return;
 
-  function syncHeights() {
-    // Si on repasse au-dessus de 1280, on nettoie
-    if (!mq.matches) {
-      matchEls.forEach(el => { el.style.height = ''; });
-      return;
-    }
-    // Hauteur rendue de grande.jpg
-    const rect = gImg.getBoundingClientRect();
-    if (rect.height > 0) {
-      const h = rect.height + 'px';
-      matchEls.forEach(el => { el.style.height = h; });
-    }
-  }
-
-  // Quand grande.jpg charge / reload
-  gImg.addEventListener('load', syncHeights);
-
-  // Sur chargement & resize
-  window.addEventListener('load', syncHeights);
-  window.addEventListener('resize', syncHeights);
-
-  // Petits recalages pour couvrir les reflows tardifs
-  setTimeout(syncHeights, 50);
-  setTimeout(syncHeights, 250);
-})();
   </script>
 </SidebarLayout>
