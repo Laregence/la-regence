@@ -90,22 +90,26 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
     <div class="hidden xl:block xl:col-span-1 xl:row-span-2"></div>
 
     <!-- Menu du jour -->
-    <div
+<div
   class="relative group cursor-pointer rounded-2xl soft-border overflow-hidden
          xl:col-span-1 xl:row-span-4 js-menu-thumb"
-  data-img="/menu-du-jour.jpg"
-  aria-label="Ouvrir le menu du jour">
+  data-img="/menu-du-jour.png"
+  aria-label="Ouvrir le menu du jour"
+>
   <img
     src="/menu-du-jour.png"
     alt="Menu du jour"
     class="w-full md:h-[28vh] xl:h-full object-cover transition duration-300 group-hover:scale-105"
   />
+
+  <!-- badge visible seulement en ≥ xl -->
   <div class="hidden xl:flex absolute inset-0 items-center justify-center pointer-events-none">
-  <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded">
-    Menu du jour
-  </span>
+    <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded">
+      Menu du jour
+    </span>
+  </div>
 </div>
-</div>
+
 
     <!-- Petite image 2 -->
     <div class="rounded-2xl soft-border overflow-hidden xl:col-span-1 xl:row-span-4">
@@ -132,7 +136,7 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
 <!-- menu-du-jour : même HAUTEUR que grande, recadré si besoin (mobile) -->
 <div
   class="rounded-2xl soft-border overflow-hidden js-menu-thumb cursor-pointer"
-  data-img="/menu-du-jour.jpg"
+  data-img="/menu-du-jour.png"
 >
   <div id="match-size-1" class="w-full">
     <img
