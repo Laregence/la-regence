@@ -33,9 +33,9 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
 
   <!-- ========= CONTENU DROITE ========= -->
   <div id="page-wrap">
-    <section class="w-full md:h-dvh px-4 xl:px-6 py-4 overflow-hidden">
+    <section class="w-full md:h-[calc(100dvh-24px)] px-4 xl:px-6 py-3 overflow-hidden">
   <!-- Grille : 2 colonnes sous xl aussi, pour que le texte reste à gauche -->
-  <div class="grid grid-cols-[minmax(280px,1fr)_minmax(0,1fr)] gap-4 xl:gap-6">
+  <div class="grid h-full grid-cols-[minmax(280px,1fr)_minmax(0,1fr)] gap-4 xl:gap-6">
     <!-- ====== TEXTE (sticky sous 1280 ET au-dessus) ====== -->
     <div class="min-h-0 flex">
       <div class="w-full max-w-prose md:max-w-xl mx-auto
@@ -98,7 +98,7 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
       <img
         src="/menu-du-jour.png"
         alt="Menu du jour"
-        class="w-full md:h-[70vh] xl:h-full object-cover transition duration-300 group-hover:scale-105"
+        class="w-full md:h-[28vh] xl:h-full object-cover transition duration-300 group-hover:scale-105"
       />
       <!-- badge visible seulement en ≥ xl -->
       <div class="hidden xl:flex absolute inset-0 items-center justify-center pointer-events-none">
@@ -110,7 +110,7 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
     <div class="rounded-2xl soft-border overflow-hidden xl:col-span-1 xl:row-span-4">
       <img src="/petite2.jpg"
            alt="La Régence — image secondaire"
-           class="w-full md:h-[70vh] xl:h-full object-cover" />
+           class="w-full md:h-[28vh] xl:h-full object-cover" />
     </div>
   </div>
 
