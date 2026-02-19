@@ -1,148 +1,28 @@
-@import "tailwindcss";
-
-/* 🎨 Thème La Régence */
-@theme {
-  --color-bg: #F5EFE6;         /* beige clair (fond principal) */
-  --color-ink: #0F172A;        /* texte principal */
-  --color-brand: #25471f;      /* vert (brand) */
-  --color-brand-contrast: #ffffff;
-
-  /* === Nouveaux tokens === */
-  --color-copper: #a3742c;     /* cuivre (barres, hover, accents) */
-  --color-bg-alt: #ead9c2;     /* beige alternatif (si besoin) */
-}
-
-@layer base {
-  @layer base {
-  ::selection {
-    background-color: var(--color-brand); /* ton vert foncé défini dans ton thème */
-    color: #ffffff; /* texte blanc */
-  }
-  ::-moz-selection {
-    background-color: var(--color-brand);
-    color: #ffffff;
-  }
-}
-
-  html, body { color: var(--color-ink); background: var(--color-bg); }
-}
-
-/* 🔧 Composants utilitaires */
-@layer components {
-  .btn { @apply px-5 py-3 rounded-xl border transition; }
-  .btn-primary { @apply bg-brand text-white hover:opacity-90 border-brand; }
-  .btn-outline { @apply text-brand border-brand hover:bg-brand hover:text-white; }
-  .card { @apply border rounded-2xl p-4 hover:shadow-sm; }
-  .soft-border { @apply border border-brand/20; }
-}
-
-/* === Fonts === */
-:root { --font-splash: "Limelight", system-ui, sans-serif; }
-.font-splash { font-family: var(--font-splash); }
-
-/* 🛠️ Splash anti-purge (utilisé par le JS) */
-@layer utilities {
-  .slide-up-out { transform: translateY(-100%) !important; }
-}
-
-/* Fade-in générique */
-@layer utilities {
-  .fade-in {
-    opacity: 0;
-    animation: fadeIn 1s ease-out forwards;
-  }
-  @keyframes fadeIn { to { opacity: 1; } }
-}
-
-/* Fade-in pour le contenu du splash */
-@layer utilities {
-  .fade-in-contents {
-    opacity: 0;
-    animation: splashFadeIn 600ms ease-out forwards;
-  }
-  @keyframes splashFadeIn { to { opacity: 1; } }
-}
-
-/* Familles alternatives si besoin ailleurs */
-@layer utilities {
-  .font-limelight { font-family: 'Limelight', cursive; }
-  .font-nour { font-family: 'Noto Sans', sans-serif; }
-}
-
-/* Blur léger custom pour vignettes */
-.blur-xs { filter: blur(2px); }
-
-/* === Nouveaux utilitaires liés aux variables === */
-@layer utilities {
-  /* Fond principal (utilisé par <main class="bg-main">) */
-  .bg-main { background: var(--color-bg); }
-
-  /* Accents cuivre si besoin */
-  .text-copper { color: var(--color-copper); }
-  .bg-copper { background-color: var(--color-copper); }
-  .border-copper { border-color: var(--color-copper); }
-}
-@media (max-width: 1280px) {
-  /* Les trois images principales sont de même taille */
-  .menu-image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
-  .menu-image-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .menu-image-wrapper img {
-    width: 100%;
-    height: auto;
-  }
-}
-
-@media (max-width: 640px) {
-  /* Version mobile : images empilées, plein écran, sans bordures */
-  .menu-image-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .menu-image-wrapper img {
-    width: 100%;
-    height: auto;
-    border-radius: 0;
-    margin: 0;
-    padding: 0;
-  }
-  /* Suppression des marges entre les images */
-  .menu-image-wrapper img + img {
-    margin-top: 0;
-  }
-}
 /* ===== Titres page La Régence ===== */
 .section-title {
-  font-family: inherit; /* garde limelight */
-  font-size: clamp(2.5rem, 4vw, 4rem); /* environ x2 */
+  /* garde Limelight via la classe font-limelight */
+  font-size: clamp(2.5rem, 4vw, 4rem); /* ~x2 */
   line-height: 1.1;
   font-weight: 400;
 
-  text-align: center; /* centré */
-  display: inline-block; /* largeur = largeur texte */
+  text-align: center;      /* texte centré */
+  display: inline-block;   /* largeur = largeur du texte */
   position: relative;
 
   text-shadow: none !important; /* supprime glow */
   filter: none !important;
 
-  padding-top: 1rem; /* espace pour le trait */
+  padding-top: 1rem; /* place pour le trait */
 }
 
-/* Trait au-dessus */
+/* Trait au-dessus (même longueur que le texte) */
 .section-title::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%; /* même largeur que le texte */
+  width: 100%;
   height: 3px;
   background: var(--color-copper);
   border-radius: 999px;
+}
