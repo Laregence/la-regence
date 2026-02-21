@@ -119,31 +119,3 @@
     margin-top: 0;
   }
 }
-/* ===== Titres page La Régence ===== */
-.section-title {
-  font-family: inherit; /* garde limelight */
-  font-size: clamp(2.5rem, 4vw, 4rem); /* environ x2 */
-  line-height: 1.1;
-  font-weight: 400;
-
-  text-align: center; /* centré */
-  display: inline-block; /* largeur = largeur texte */
-  position: relative;
-
-  text-shadow: none !important; /* supprime glow */
-  filter: none !important;
-
-  padding-top: 1rem; /* espace pour le trait */
-}
-
-/* Trait au-dessus */
-.section-title::before {$
-  
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%; /* même largeur que le texte */
-  height: 3px;
-  background: var(--color-copper);
-  border-radius: 999px;
