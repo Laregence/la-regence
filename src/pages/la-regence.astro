@@ -7,13 +7,9 @@ const description = "Présentation du Bar & Restaurant La Régence à Mont-de-Ma
 
 <SidebarLayout {title} {description} active="la-regence">
   <!-- Conteneur général sur la hauteur de l'écran -->
-<section
-  class="h-screen w-full bg-[var(--color-bg)]
-           px-4 sm:px-6 md:px-8"
->
+  <section class="h-screen w-full bg-[var(--color-bg)] px-4 sm:px-6 md:px-8">
     <!-- Wrapper principal : relatif + plein écran -->
     <div class="relative w-full h-full">
-
       <!-- BARRE D’ONGLETS : fixe visuellement sur desktop, normale sur mobile -->
       <div
         class="w-full md:w-1/2 pr-0 md:pr-10 mb-4
@@ -56,178 +52,159 @@ const description = "Présentation du Bar & Restaurant La Régence à Mont-de-Ma
       </div>
 
       <!-- CONTENEUR SCROLLABLE + SNAP POUR LES 3 PAGES -->
-<div class="h-full md:overflow-y-scroll md:snap-y md:snap-mandatory">
+      <div class="h-full md:overflow-y-scroll md:snap-y md:snap-mandatory">
 
-  <!-- ====== PAGE 1 : LE BAR ====== -->
-  <section
-    id="bar"
-    class="md:snap-start md:h-full flex items-stretch relative"
-  >
-    <!-- Rectangle VERT full hauteur de la page -->
-    <div
-      aria-hidden="true"
-      class="hidden md:block absolute top-0 bottom-0 right-[4vw]
-             w-[min(28vw,500px)] min-w-[300px] bg-brand"
-    ></div>
+        <!-- ====== PAGE 1 : LE BAR ====== -->
+        <section id="bar" class="md:snap-start md:h-full flex items-stretch relative">
+          <!-- Rectangle VERT full hauteur de la page -->
+          <div
+            aria-hidden="true"
+            class="hidden md:block absolute top-0 bottom-0 right-[4vw]
+                   w-[min(28vw,500px)] min-w-[300px] bg-brand"
+          ></div>
 
-    <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-6 md:py-8">
+          <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-6 md:py-8">
+            <!-- COLONNE GAUCHE (texte) : droite + bas -->
+            <div class="md:w-1/2 flex flex-col items-end text-right justify-end pb-12 md:pb-20 pr-10">
+              <h2 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
+                <span class="absolute top-0 right-0 h-[3px] w-full bg-[var(--color-copper)] rounded-full"></span>
+                Le Bar
+              </h2>
 
-      <!-- COLONNE GAUCHE (texte) -->
-      <div class="md:w-1/2 flex flex-col items-center md:items-start justify-start pt-8 md:pt-24 pr-10">
+              <div class="mt-4 text-slate-800 leading-relaxed text-lg">
+                <p>
+                  Signature cocktails, sélection de bières pression et une carte courte, fraîche et conviviale.
+                </p>
+                <p class="mt-3">
+                  Bois, lumière douce, bar central — un lieu vivant du matin au soir.
+                </p>
+              </div>
+            </div>
 
-        <h2 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
-          <span class="absolute top-0 left-0 h-[3px] w-full bg-[var(--color-copper)] rounded-full"></span>
-          Le Bar
-        </h2>
+            <!-- COLONNE DROITE (images) -->
+            <div class="md:w-1/2 flex items-start gap-4 pr-[3vw]">
+              <figure class="rounded-2xl soft-border overflow-hidden w-[65%]">
+                <img
+                  src="/regence-bar-grande.jpg"
+                  alt="Le Bar — grande photo"
+                  class="h-[90vh] w-full object-cover object-center"
+                />
+              </figure>
 
-        <div class="mt-4 text-slate-800 leading-relaxed text-lg text-center md:text-left">
-          <p>
-            Signature cocktails, sélection de bières pression et une carte courte, fraîche et conviviale.
-          </p>
-          <p class="mt-3">
-            Bois, lumière douce, bar central — un lieu vivant du matin au soir.
-          </p>
-        </div>
-      </div>
+              <div class="hidden md:flex flex-col w-[35%]">
+                <figure class="rounded-2xl soft-border overflow-hidden w-full">
+                  <img
+                    src="/regence-bar-petite.jpg"
+                    alt="Le Bar — photo secondaire"
+                    class="h-[40vh] w-full object-cover object-center"
+                  />
+                </figure>
 
-      <!-- COLONNE DROITE (images) -->
-      <div class="md:w-1/2 flex items-start gap-4 pr-[3vw]">
-        <figure class="rounded-2xl soft-border overflow-hidden w-[65%]">
-          <img
-            src="/regence-bar-grande.jpg"
-            alt="Le Bar — grande photo"
-            class="h-[90vh] w-full object-cover object-center"
-          />
-        </figure>
+                <div class="h-4"></div>
 
-        <div class="hidden md:flex flex-col w-[35%]">
-          <figure class="rounded-2xl soft-border overflow-hidden w-full">
-            <img
-              src="/regence-bar-petite.jpg"
-              alt="Le Bar — photo secondaire"
-              class="h-[40vh] w-full object-cover object-center"
-            />
-          </figure>
+                <figure class="rounded-2xl soft-border overflow-hidden w-full">
+                  <img
+                    src="/regence-bar-petite-2.jpg"
+                    alt="Le Bar — troisième photo"
+                    class="h-[40vh] w-full object-cover object-center"
+                  />
+                </figure>
+              </div>
+            </div>
+          </div>
+        </section>
 
-          <div class="h-4"></div>
+        <!-- ====== PAGE 2 : LE RESTAURANT ====== -->
+        <section id="restaurant" class="md:snap-start md:min-h-full flex items-stretch py-6 md:py-8">
+          <div class="w-full flex flex-col md:flex-row md:h-full">
+            <!-- COLONNE GAUCHE : droite + bas -->
+            <div class="md:w-1/2 flex flex-col items-end text-right justify-end pb-12 md:pb-20 pr-10">
+              <h2 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
+                <span class="absolute top-0 right-0 h-[3px] w-full bg-[var(--color-copper)] rounded-full"></span>
+                Le Restaurant
+              </h2>
 
-          <figure class="rounded-2xl soft-border overflow-hidden w-full">
-            <img
-              src="/regence-bar-petite-2.jpg"
-              alt="Le Bar — troisième photo"
-              class="h-[40vh] w-full object-cover object-center"
-            />
-          </figure>
-        </div>
+              <div class="mt-4 text-slate-800 leading-relaxed text-lg">
+                <p>
+                  Cuisine de brasserie soignée, produits frais, recettes faites maison, esprit généreux.
+                </p>
+                <p class="mt-3">
+                  Service midi & soir, pour déjeuner, trinquer, prolonger la soirée.
+                </p>
+              </div>
+            </div>
+
+            <!-- COLONNE DROITE -->
+            <div class="md:w-1/2 flex flex-col gap-4 pr-[3vw]">
+              <figure class="rounded-2xl soft-border overflow-hidden">
+                <img
+                  src="/regence-restaurant-grande.jpg"
+                  alt="Le Restaurant — grande photo"
+                  class="w-full h-[55vh] object-cover object-center"
+                />
+              </figure>
+
+              <figure class="hidden md:block self-start rounded-2xl soft-border overflow-hidden">
+                <img
+                  src="/regence-restaurant-petite.jpg"
+                  alt="Le Restaurant — photo secondaire"
+                  class="w-[min(22vw,420px)] min-w-[280px] h-[28vh] object-cover object-center"
+                />
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====== PAGE 3 : LA TERRASSE ====== -->
+        <section id="terrasse" class="md:snap-start md:h-full flex items-stretch relative">
+          <!-- Rectangle CUIVRE -->
+          <div
+            aria-hidden="true"
+            class="hidden md:block absolute top-0 bottom-0 right-[4vw]
+                   w-[min(28vw,500px)] min-w-[300px] bg-[var(--color-copper)]"
+          ></div>
+
+          <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-6 md:py-8">
+            <!-- COLONNE GAUCHE : droite + bas -->
+            <div class="md:w-1/2 flex flex-col items-end text-right justify-end pb-12 md:pb-20 pr-10">
+              <h2 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
+                <span class="absolute top-0 right-0 h-[3px] w-full bg-[var(--color-copper)] rounded-full"></span>
+                La Terrasse
+              </h2>
+
+              <div class="mt-4 text-slate-800 leading-relaxed text-lg">
+                <p>
+                  Au calme, en plein centre : la terrasse pour vos cafés, déjeuners et apéritifs ensoleillés.
+                </p>
+                <p class="mt-3">
+                  Dès les beaux jours, service continu selon l’affluence.
+                </p>
+              </div>
+            </div>
+
+            <!-- COLONNE DROITE -->
+            <div class="md:w-1/2 flex flex-col gap-4 pr-[3vw]">
+              <figure class="rounded-2xl soft-border overflow-hidden">
+                <img
+                  src="/regence-terrasse-grande.jpg"
+                  alt="La Terrasse — grande photo"
+                  class="w-full h-[55vh] object-cover object-center"
+                />
+              </figure>
+
+              <figure class="hidden md:block self-start rounded-2xl soft-border overflow-hidden">
+                <img
+                  src="/regence-terrasse-petite.jpg"
+                  alt="La Terrasse — photo secondaire"
+                  class="w-[min(22vw,420px)] min-w-[280px] h-[28vh] object-cover object-center"
+                />
+              </figure>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </section>
-
-  <!-- ====== PAGE 2 : LE RESTAURANT ====== -->
-  <section
-    id="restaurant"
-    class="md:snap-start md:min-h-full flex items-stretch py-6 md:py-8"
-  >
-    <div class="w-full flex flex-col md:flex-row md:h-full">
-
-      <!-- COLONNE GAUCHE -->
-      <div class="md:w-1/2 flex flex-col items-center md:items-start justify-start pt-8 md:pt-24 pr-10">
-
-        <h2 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
-          <span class="absolute top-0 left-0 h-[3px] w-full bg-[var(--color-copper)] rounded-full"></span>
-          Le Restaurant
-        </h2>
-
-        <div class="mt-4 text-slate-800 leading-relaxed text-lg text-center md:text-left">
-          <p>
-            Cuisine de brasserie soignée, produits frais, recettes faites maison, esprit généreux.
-          </p>
-          <p class="mt-3">
-            Service midi & soir, pour déjeuner, trinquer, prolonger la soirée.
-          </p>
-        </div>
-      </div>
-
-      <!-- COLONNE DROITE -->
-      <div class="md:w-1/2 flex flex-col gap-4 pr-[3vw]">
-        <figure class="rounded-2xl soft-border overflow-hidden">
-          <img
-            src="/regence-restaurant-grande.jpg"
-            alt="Le Restaurant — grande photo"
-            class="w-full h-[55vh] object-cover object-center"
-          />
-        </figure>
-
-        <figure class="hidden md:block self-start rounded-2xl soft-border overflow-hidden">
-          <img
-            src="/regence-restaurant-petite.jpg"
-            alt="Le Restaurant — photo secondaire"
-            class="w-[min(22vw,420px)] min-w-[280px] h-[28vh] object-cover object-center"
-          />
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====== PAGE 3 : LA TERRASSE ====== -->
-  <section
-    id="terrasse"
-    class="md:snap-start md:h-full flex items-stretch relative"
-  >
-    <!-- Rectangle CUIVRE -->
-    <div
-      aria-hidden="true"
-      class="hidden md:block absolute top-0 bottom-0 right-[4vw]
-             w-[min(28vw,500px)] min-w-[300px] bg-[var(--color-copper)]"
-    ></div>
-
-    <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-6 md:py-8">
-
-      <!-- COLONNE GAUCHE -->
-      <div class="md:w-1/2 flex flex-col items-center md:items-start justify-start pt-8 md:pt-24 pr-10">
-
-        <h2 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
-          <span class="absolute top-0 left-0 h-[3px] w-full bg-[var(--color-copper)] rounded-full"></span>
-          La Terrasse
-        </h2>
-
-        <div class="mt-4 text-slate-800 leading-relaxed text-lg text-center md:text-left">
-          <p>
-            Au calme, en plein centre : la terrasse pour vos cafés, déjeuners et apéritifs ensoleillés.
-          </p>
-          <p class="mt-3">
-            Dès les beaux jours, service continu selon l’affluence.
-          </p>
-        </div>
-      </div>
-
-      <!-- COLONNE DROITE -->
-      <div class="md:w-1/2 flex flex-col gap-4 pr-[3vw]">
-        <figure class="rounded-2xl soft-border overflow-hidden">
-          <img
-            src="/regence-terrasse-grande.jpg"
-            alt="La Terrasse — grande photo"
-            class="w-full h-[55vh] object-cover object-center"
-          />
-        </figure>
-
-        <figure class="hidden md:block self-start rounded-2xl soft-border overflow-hidden">
-          <img
-            src="/regence-terrasse-petite.jpg"
-            alt="La Terrasse — photo secondaire"
-            class="w-[min(22vw,420px)] min-w-[280px] h-[28vh] object-cover object-center"
-          />
-        </figure>
-      </div>
-
-    </div>
-  </section>
-
-</div>
-
- 
-  </div>
-</section>
 
   <!-- Activation onglet courant + scroll align -->
   <script is:inline>
