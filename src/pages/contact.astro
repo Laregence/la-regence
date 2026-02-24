@@ -10,15 +10,14 @@ const description = "Horaires, réservation et contact de La Régence à Mont-de
   <section class="h-screen w-full bg-[var(--color-bg)] px-4 sm:px-6 md:px-8">
     <!-- Wrapper principal : relatif + plein écran -->
     <div class="relative w-full h-full">
-
       <!-- CONTENU (même logique que la-regence) -->
       <section class="md:h-full flex items-stretch relative">
         <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-6 md:py-8">
 
-          <!-- COLONNE GAUCHE (texte) -->
-          <div class="md:w-1/2 flex flex-col justify-start pt-8 md:pt-24 pr-0 md:pr-10">
-            <h1 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
-              <span class="absolute top-0 left-0 h-[3px] w-full bg-brand rounded-full"></span>
+          <!-- COLONNE GAUCHE (texte) — alignée à droite -->
+          <div class="md:w-1/2 flex flex-col items-end text-right justify-start pt-8 md:pt-24 pr-0 md:pr-10">
+            <h1 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4 text-right">
+              <span class="absolute top-0 right-0 h-[3px] w-full bg-brand rounded-full"></span>
               Contact
             </h1>
 
@@ -94,7 +93,6 @@ const description = "Horaires, réservation et contact de La Régence à Mont-de
 
         </div>
       </section>
-
     </div>
   </section>
 </SidebarLayout>
