@@ -6,80 +6,94 @@ const description = "Horaires, réservation et contact de La Régence à Mont-de
 ---
 
 <SidebarLayout {title} {description} active="contact">
+  <!-- Conteneur général sur la hauteur de l'écran -->
   <section class="h-screen w-full bg-[var(--color-bg)] px-4 sm:px-6 md:px-8">
-    <div class="w-full h-full flex flex-col md:flex-row md:h-full py-6 md:py-8">
+    <!-- Wrapper principal : relatif + plein écran -->
+    <div class="relative w-full h-full">
 
-      <!-- COLONNE GAUCHE (texte) -->
-      <div class="md:w-1/2 flex flex-col items-center md:items-start justify-start pt-8 md:pt-24 pr-0 md:pr-10">
-        <h1 class="font-limelight text-[var(--color-bg)] text-5xl md:text-6xl leading-none inline-block relative pt-4">
-          <span class="absolute top-0 left-0 h-[3px] w-full bg-brand rounded-full"></span>
-          Contact
-        </h1>
+      <!-- CONTENU (même logique que la-regence) -->
+      <section class="md:h-full flex items-stretch relative">
+        <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-6 md:py-8">
 
-        <div class="mt-6 text-slate-800 leading-relaxed text-lg text-center md:text-left space-y-6 max-w-prose">
-          <div>
-            <p class="font-bold">HORAIRES</p>
-            <p class="mt-2">DU LUNDI AU SAMEDI</p>
-            <p class="text-xl font-semibold">7H30 – 00H00</p>
-            <p class="mt-3">REPAS DE 12H00 A 14H00</p>
-            <p>ET DE 19H A 22H</p>
+          <!-- COLONNE GAUCHE (texte) -->
+          <div class="md:w-1/2 flex flex-col justify-start pt-8 md:pt-24 pr-0 md:pr-10">
+            <h1 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
+              <span class="absolute top-0 left-0 h-[3px] w-full bg-brand rounded-full"></span>
+              Contact
+            </h1>
 
-            <p class="mt-5 font-bold">
-              <a href="tel:+33558859272" class="underline hover:text-[var(--color-copper)] transition">
-                05 58 85 92 72
-              </a>
-            </p>
+            <div class="mt-6 text-slate-800 leading-relaxed text-lg space-y-6">
+              <div>
+                <p class="font-bold">HORAIRES</p>
+                <p class="mt-2">DU LUNDI AU SAMEDI</p>
+                <p class="text-xl font-semibold">7H30 – 00H00</p>
+                <p class="mt-3">REPAS DE 12H00 A 14H00</p>
+                <p>ET DE 19H A 22H</p>
+
+                <p class="mt-5 font-bold">
+                  <a
+                    href="tel:+33558859272"
+                    class="font-limelight text-brand hover:text-[var(--color-copper)] transition-colors duration-300"
+                  >
+                    05 58 85 92 72
+                  </a>
+                </p>
+              </div>
+
+              <div>
+                <p class="font-bold">Réservation</p>
+                <p class="mt-2">
+                  Si vous êtes un groupe de plus de 8 personnes, vous pouvez également nous contacter directement par écrit
+                  <a
+                    href="mailto:laregencemdm@gmail.com"
+                    class="font-limelight text-brand hover:text-[var(--color-copper)] transition-colors duration-300"
+                  >
+                    laregencemdm@gmail.com
+                  </a>.
+                </p>
+
+                <p class="mt-3">
+                  Pour toute demande presse, autre requête ou si vous souhaitez vous joindre à notre équipe, n’hésitez pas à nous contacter en envoyant un message à
+                  <a
+                    href="mailto:laregencemdm@gmail.com"
+                    class="font-limelight text-brand hover:text-[var(--color-copper)] transition-colors duration-300"
+                  >
+                    laregencemdm@gmail.com
+                  </a>.
+                </p>
+              </div>
+
+              <div>
+                <p>2 rue Léon Gambetta, 40 000 Mont de Marsan</p>
+              </div>
+            </div>
           </div>
 
-          <div>
-            <p class="font-bold">Réservation</p>
-            <p class="mt-2">
-              Si vous êtes un groupe de plus de 8 personnes, vous pouvez également nous contacter directement par écrit
-              <a href="mailto:laregencemdm@gmail.com" 
-  class="font-limelight text-brand hover:text-[var(--color-copper)] transition-colors duration-300"
->
-  laregencemdm@gmail.com
-</a>
-            </p>
+          <!-- COLONNE DROITE (images) -->
+          <div class="md:w-1/2 flex flex-col gap-4 pr-0 md:pr-[3vw]">
+            <figure class="rounded-2xl soft-border overflow-hidden">
+              <img
+                src="/contact-grande.jpg"
+                alt="La Régence — Contact — grande photo"
+                class="w-full h-[55vh] md:h-[70vh] object-cover object-center"
+                loading="eager"
+                decoding="async"
+              />
+            </figure>
 
-            <p class="mt-3">
-              Pour toute demande presse, autre requête ou si vous souhaitez vous joindre à notre équipe, n’hésitez pas à nous contacter en envoyant un message à
-              <a 
-  href="mailto:laregencemdm@gmail.com" 
-  class="font-limelight text-brand hover:text-[var(--color-copper)] transition-colors duration-300">
-  laregencemdm@gmail.com
-</a>
-            </p>
+            <figure class="hidden md:block self-start rounded-2xl soft-border overflow-hidden">
+              <img
+                src="/contact-petite.jpg"
+                alt="La Régence — Contact — photo secondaire"
+                class="w-[min(22vw,420px)] min-w-[280px] h-[28vh] object-cover object-center"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
           </div>
 
-          <div>
-            <p>2 rue Léon Gambetta, 40 000 Mont de Marsan</p>
-          </div>
         </div>
-      </div>
-
-      <!-- COLONNE DROITE (images) -->
-      <div class="md:w-1/2 flex flex-col gap-4 pr-0 md:pr-[3vw] mt-8 md:mt-0">
-        <figure class="rounded-2xl soft-border overflow-hidden">
-          <img
-            src="/contact-grande.jpg"
-            alt="La Régence — Contact — grande photo"
-            class="w-full h-[55vh] md:h-[70vh] object-cover object-center"
-            loading="eager"
-            decoding="async"
-          />
-        </figure>
-
-        <figure class="hidden md:block self-start rounded-2xl soft-border overflow-hidden">
-          <img
-            src="/contact-petite.jpg"
-            alt="La Régence — Contact — photo secondaire"
-            class="w-[min(22vw,420px)] min-w-[280px] h-[28vh] object-cover object-center"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-      </div>
+      </section>
 
     </div>
   </section>
