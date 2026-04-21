@@ -151,22 +151,102 @@ const menuDate = "17 avril 2026";
 
   <!-- SCRIPT LIGHTBOX -->
   <script is:inline>
-    const thumbs = document.querySelectorAll(".js-menu-thumb");
+  // Splash
+  (function () {
+    const s = document.getElementById('splash');
+    if (!s) return;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const go = () => {
+      if (prefersReduced) {
+        s.remove();
+        return;
+      }
+      s.classList.add('slide-up-out');
+      s.addEventListener('transitionend', () => s.remove(), { once: true });
+    };
+
+    window.addEventListener('load', () => setTimeout(go, 1500));
+  })();
+
+  // Lightbox (multi-vignettes)
+  (function () {
+    const thumbs   = Array.from(document.querySelectorAll(".js-menu-thumb"));
     const lightbox = document.getElementById("menu-du-jour-lightbox");
-    const img = document.getElementById("lb-img");
+    const backdrop = document.getElementById("lb-backdrop");
+    const figure   = document.getElementById("lb-figure");
+    const img      = document.getElementById("lb-img");
+    if (!thumbs.length || !lightbox || !backdrop || !figure || !img) return;
+
+    function openLB(src) {
+      if (src) img.src = src;
+      lightbox.classList.remove("hidden");
+      lightbox.classList.add("flex");
+      img.style.filter = "none";
+      img.style.webkitFilter = "none";
+      requestAnimationFrame(() => {
+        backdrop.classList.add("opacity-100");
+        figure.classList.remove("opacity-0", "scale-95", "translate-y-1");
+        figure.classList.add("opacity-100", "scale-100", "translate-y-0");
+      });
+    }
+
+    function closeLB() {
+      figure.classList.add("opacity-0", "scale-95", "translate-y-1");
+      figure.classList.remove("opacity-100", "scale-100", "translate-y-0");
+      backdrop.classList.remove("opacity-100");
+      setTimeout(() => {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+      }, 300);
+    }
 
     thumbs.forEach(t => {
-      t.addEventListener("click", () => {
-        img.src = t.dataset.img;
-        lightbox.classList.remove("hidden");
-        lightbox.classList.add("flex");
-      });
+      t.addEventListener("click", () => openLB(t.dataset.img || "/menu-du-jour.jpg"));
     });
 
-    lightbox.addEventListener("click", () => {
-      lightbox.classList.add("hidden");
-      lightbox.classList.remove("flex");
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === img) return;
+      closeLB();
     });
-  </script>
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !lightbox.classList.contains("hidden")) closeLB();
+    });
+  })();
+
+  // Égaliser les hauteurs sous 1280px
+  (function () {
+    const mq = window.matchMedia('(max-width: 1279px)');
+    const gImg = document.getElementById('g-img');
+    const matchEls = [
+      document.getElementById('match-size-1'),
+      document.getElementById('match-size-2'),
+    ].filter(Boolean);
+
+    if (!gImg || !matchEls.length) return;
+
+    function syncHeights() {
+      if (!mq.matches) {
+        matchEls.forEach(el => { el.style.height = ''; });
+        return;
+      }
+
+      const rect = gImg.getBoundingClientRect();
+      if (rect.height > 0) {
+        const h = rect.height + 'px';
+        matchEls.forEach(el => { el.style.height = h; });
+      }
+    }
+
+    gImg.addEventListener('load', syncHeights);
+    window.addEventListener('load', syncHeights);
+    window.addEventListener('resize', syncHeights);
+
+    setTimeout(syncHeights, 50);
+    setTimeout(syncHeights, 250);
+  })();
+</script>
+
 
 </SidebarLayout>
