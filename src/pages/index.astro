@@ -1,9 +1,37 @@
 ---
 import SidebarLayout from "../layouts/SidebarLayout.astro";
+import { execSync } from "node:child_process";
 
 const title = "La Régence — Bar-Brasserie à Mont-de-Marsan";
 const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspirée brasserie, conviviale et soignée.";
-const menuDate = "17 avril 2026";
+
+const menuFile = "public/menu-du-jour.png";
+const menuImage = "/menu-du-jour.png";
+
+function getMenuDate() {
+  try {
+    const gitDate = execSync(
+      `git log -1 --format=%cI -- "${menuFile}"`,
+      { encoding: "utf-8" }
+    ).trim();
+
+    if (!gitDate) throw new Error("No git date found");
+
+    return new Date(gitDate).toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  } catch {
+    return new Date().toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  }
+}
+
+const menuDate = getMenuDate();
 ---
 
 <SidebarLayout {title} {description} noScroll={true} active="home">
