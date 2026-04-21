@@ -8,6 +8,17 @@ const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspiré
 const menuFile = "public/menu-du-jour.png";
 const menuImage = "/menu-du-jour.png";
 
+// Format FR avec jour + sans année + majuscule
+function formatDateFR(date) {
+  const str = date.toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function getMenuDate() {
   try {
     const gitDate = execSync(
@@ -17,17 +28,9 @@ function getMenuDate() {
 
     if (!gitDate) throw new Error("No git date found");
 
-    return new Date(gitDate).toLocaleDateString("fr-FR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
+    return formatDateFR(new Date(gitDate));
   } catch {
-    return new Date().toLocaleDateString("fr-FR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
+    return formatDateFR(new Date());
   }
 }
 
