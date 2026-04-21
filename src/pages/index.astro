@@ -123,9 +123,9 @@ const menuDate = getMenuDate();
               />
 
               <div class="hidden xl:flex absolute inset-0 items-center justify-center pointer-events-none">
-                <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded text-center">
-                  Menu du {menuDate}
-                </span>
+            <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded text-center">
+            Menu du {menuDate}
+            </span>
               </div>
             </div>
 
@@ -143,17 +143,24 @@ const menuDate = getMenuDate();
               <img id="g-img" src="/grande.jpg" class="w-full h-auto object-contain" />
             </div>
 
-            <div class="relative rounded-2xl soft-border overflow-hidden js-menu-thumb cursor-pointer" data-img={menuImage}>
-              <div id="match-size-1" class="w-full">
-                <img src={menuImage} alt={`Menu du ${menuDate}`} class="w-full h-full object-cover" />
-              </div>
+            <div
+  class="relative rounded-2xl soft-border overflow-hidden js-menu-thumb cursor-pointer"
+  data-img={menuImage}
+>
+  <div id="match-size-1" class="w-full">
+    <img
+      src={menuImage}
+      alt={`Menu du ${menuDate}`}
+      class="w-full h-full object-cover object-center"
+    />
+  </div>
 
-              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <span class="text-white text-base font-bold bg-black/45 px-3 py-1.5 rounded">
-                  Menu du {menuDate}
-                </span>
-              </div>
-            </div>
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded text-center">
+      Menu du {menuDate}
+    </span>
+  </div>
+</div>
 
             <div class="rounded-2xl soft-border overflow-hidden">
               <div id="match-size-2" class="w-full">
