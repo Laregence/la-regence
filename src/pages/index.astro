@@ -86,10 +86,10 @@ const menuDate = "17 avril 2026";
             <div class="hidden xl:block xl:col-span-1 xl:row-span-2"></div>
 
             <!-- Menu du jour -->
-            <div class="relative group cursor-pointer rounded-2xl soft-border overflow-hidden xl:col-span-1 xl:row-span-4 js-menu-thumb" data-img="/menu-du-jour.jpg">
+            <div class="relative group cursor-pointer rounded-2xl soft-border overflow-hidden xl:col-span-1 xl:row-span-4 js-menu-thumb" data-img="/menu-du-jour.png">
               
               <img
-                src="/menu-du-jour.jpg"
+                src="/menu-du-jour.png"
                 alt={`Menu du ${menuDate}`}
                 class="w-full md:h-[28vh] xl:h-full object-cover transition duration-300 group-hover:scale-105"
               />
@@ -115,9 +115,9 @@ const menuDate = "17 avril 2026";
               <img id="g-img" src="/grande.jpg" class="w-full h-auto object-contain" />
             </div>
 
-            <div class="relative rounded-2xl soft-border overflow-hidden js-menu-thumb cursor-pointer" data-img="/menu-du-jour.jpg">
+            <div class="relative rounded-2xl soft-border overflow-hidden js-menu-thumb cursor-pointer" data-img="/menu-du-jour.png">
               <div id="match-size-1" class="w-full">
-                <img src="/menu-du-jour.jpg" alt={`Menu du ${menuDate}`} class="w-full h-full object-cover" />
+                <img src="/menu-du-jour.png" alt={`Menu du ${menuDate}`} class="w-full h-full object-cover" />
               </div>
 
               <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -143,7 +143,7 @@ const menuDate = "17 avril 2026";
     <div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]">
       <div id="lb-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
       <div id="lb-figure" class="relative">
-        <img id="lb-img" src="/menu-du-jour.jpg" class="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-xl" />
+        <img id="lb-img" src="/menu-du-jour.png" class="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-xl" />
       </div>
     </div>
 
@@ -202,7 +202,7 @@ const menuDate = "17 avril 2026";
     }
 
     thumbs.forEach(t => {
-      t.addEventListener("click", () => openLB(t.dataset.img || "/menu-du-jour.jpg"));
+      t.addEventListener("click", () => openLB(t.dataset.img || "/menu-du-jour.png"));
     });
 
     lightbox.addEventListener("click", (e) => {
