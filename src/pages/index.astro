@@ -6,9 +6,8 @@ const title = "La Régence — Bar-Brasserie à Mont-de-Marsan";
 const description = "Bar Restaurant au cœur de Mont-de-Marsan. Cuisine inspirée brasserie, conviviale et soignée.";
 
 const menuFile = "public/menu-du-jour.png";
-const menuImage = "/menu-du-jour.png";
 
-// Format FR avec jour + sans année + majuscule
+// Format FR affiché
 function formatDateFR(date) {
   const str = date.toLocaleDateString("fr-FR", {
     weekday: "long",
@@ -19,7 +18,7 @@ function formatDateFR(date) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function getMenuDate() {
+function getMenuGitDate() {
   try {
     const gitDate = execSync(
       `git log -1 --format=%cI -- "${menuFile}"`,
@@ -27,14 +26,15 @@ function getMenuDate() {
     ).trim();
 
     if (!gitDate) throw new Error("No git date found");
-
-    return formatDateFR(new Date(gitDate));
+    return gitDate;
   } catch {
-    return formatDateFR(new Date());
+    return new Date().toISOString();
   }
 }
 
-const menuDate = getMenuDate();
+const menuGitDate = getMenuGitDate();
+const menuDate = formatDateFR(new Date(menuGitDate));
+const menuImage = `/menu-du-jour.png?v=${encodeURIComponent(menuGitDate)}`;
 ---
 
 <SidebarLayout {title} {description} noScroll={true} active="home">
