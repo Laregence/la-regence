@@ -1,0 +1,469 @@
+---
+import SidebarLayout from "../../layouts/SidebarLayout.astro";
+
+const title = "Admin réservations — La Régence";
+const description = "Gestion des réservations La Régence.";
+---
+
+<SidebarLayout {title} {description}>
+  <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
+    <div class="max-w-6xl ml-auto text-right md:pr-12">
+      <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">
+        Réservations
+      </h1>
+
+      <!-- LOGIN -->
+      <div id="login-box" class="mt-10 max-w-md ml-auto text-left space-y-4">
+        <h2 class="font-limelight text-2xl text-brand text-right">Connexion admin</h2>
+
+        <input id="login-email" type="email" placeholder="Email"
+          class="w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3" />
+
+        <input id="login-password" type="password" placeholder="Mot de passe"
+          class="w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3" />
+
+        <button id="login-btn"
+          class="w-full font-limelight bg-brand text-white px-6 py-3 rounded-xl hover:bg-[var(--color-copper)] transition">
+          Se connecter
+        </button>
+
+        <p id="login-message" class="text-sm text-red-700 text-right"></p>
+      </div>
+
+      <!-- ADMIN -->
+      <div id="admin-box" class="hidden mt-10">
+        <div class="flex justify-end gap-3 mb-6">
+          <button id="refresh-btn"
+            class="font-limelight border border-brand text-brand px-4 py-2 rounded-xl hover:bg-brand hover:text-white transition">
+            Actualiser
+          </button>
+
+          <button id="logout-btn"
+            class="font-limelight border border-red-700 text-red-700 px-4 py-2 rounded-xl hover:bg-red-700 hover:text-white transition">
+            Déconnexion
+          </button>
+        </div>
+
+        <p id="count" class="mt-2 text-slate-600"></p>
+
+        <!-- CALENDRIER -->
+        <div class="mt-8 rounded-2xl soft-border bg-white/40 p-4">
+          <div class="flex items-center justify-between gap-4 mb-4">
+            <button id="prev-month"
+              class="rounded-xl border border-brand text-brand px-4 py-2 hover:bg-brand hover:text-white transition">
+              ←
+            </button>
+
+            <h2 id="calendar-title" class="font-limelight text-3xl text-brand"></h2>
+
+            <button id="next-month"
+              class="rounded-xl border border-brand text-brand px-4 py-2 hover:bg-brand hover:text-white transition">
+              →
+            </button>
+          </div>
+
+          <div class="grid grid-cols-7 gap-2 text-center text-sm uppercase text-slate-600 mb-2">
+            <div>Lun</div>
+            <div>Mar</div>
+            <div>Mer</div>
+            <div>Jeu</div>
+            <div>Ven</div>
+            <div>Sam</div>
+            <div>Dim</div>
+          </div>
+
+          <div id="calendar-grid" class="grid grid-cols-7 gap-2 text-left"></div>
+        </div>
+
+        <!-- JOUR SÉLECTIONNÉ -->
+        <div class="mt-10">
+          <h2 id="selected-day-title" class="font-limelight text-3xl text-brand uppercase"></h2>
+          <div id="day-details" class="mt-6 space-y-6 text-left"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { supabase } from "../../lib/supabaseClient.js";
+
+    const loginBox = document.getElementById("login-box");
+    const adminBox = document.getElementById("admin-box");
+    const loginBtn = document.getElementById("login-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+    const refreshBtn = document.getElementById("refresh-btn");
+    const loginMessage = document.getElementById("login-message");
+    const count = document.getElementById("count");
+
+    const calendarTitle = document.getElementById("calendar-title");
+    const calendarGrid = document.getElementById("calendar-grid");
+    const selectedDayTitle = document.getElementById("selected-day-title");
+    const dayDetails = document.getElementById("day-details");
+    const prevMonthBtn = document.getElementById("prev-month");
+    const nextMonthBtn = document.getElementById("next-month");
+
+    let reservations = [];
+    let currentMonth = new Date();
+    let selectedDate = toDateKey(new Date());
+
+    function toDateKey(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr + "T00:00:00");
+      return date.toLocaleDateString("fr-FR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+      });
+    }
+
+    function formatMonth(date) {
+      return date.toLocaleDateString("fr-FR", {
+        month: "long",
+        year: "numeric",
+      });
+    }
+
+    function formatHeure(heure) {
+      return String(heure || "").slice(0, 5).replace(":", "h");
+    }
+
+    function labelSalle(value) {
+      const labels = {
+        peu_importe: "Peu importe",
+        salle_bas: "Salle du bas",
+        etage: "Étage",
+        terrasse: "Terrasse",
+      };
+      return labels[value] || value || "-";
+    }
+
+    function labelStatut(value) {
+      const labels = {
+        nouvelle: "Nouvelle",
+        acceptee: "Acceptée",
+        deplacement_propose: "Déplacement proposé",
+        refusee: "Refusée",
+        annulee_client: "Annulée client",
+        no_show: "No show",
+      };
+      return labels[value] || value;
+    }
+
+    function statutStyle(statut) {
+      if (statut === "nouvelle") return "bg-red-100 text-red-800 border-red-200";
+      if (statut === "acceptee") return "bg-green-100 text-green-800 border-green-200";
+      if (statut === "deplacement_propose") return "bg-orange-100 text-orange-800 border-orange-200";
+      if (statut === "refusee") return "bg-slate-200 text-slate-700 border-slate-300";
+      return "bg-brand/10 text-brand border-brand/20";
+    }
+
+    async function checkSession() {
+      const { data } = await supabase.auth.getSession();
+
+      if (data.session) {
+        loginBox.classList.add("hidden");
+        adminBox.classList.remove("hidden");
+        await loadReservations();
+      } else {
+        loginBox.classList.remove("hidden");
+        adminBox.classList.add("hidden");
+      }
+    }
+
+    async function loadReservations() {
+      calendarGrid.innerHTML = "";
+      dayDetails.innerHTML = `<p class="text-right text-slate-600">Chargement...</p>`;
+
+      const { data, error } = await supabase
+        .from("reservations")
+        .select("*")
+        .order("date_service", { ascending: true })
+        .order("heure", { ascending: true });
+
+      if (error) {
+        console.error(error);
+        dayDetails.innerHTML = `<p class="text-right text-red-700">Erreur : ${error.message}</p>`;
+        return;
+      }
+
+      reservations = data || [];
+
+      const aTraiter = reservations.filter((r) => r.a_traiter).length;
+      count.textContent = `${aTraiter} réservation(s) à traiter — ${reservations.length} réservation(s) au total`;
+
+      renderCalendar();
+      renderSelectedDay();
+    }
+
+    function getReservationsForDate(dateKey) {
+      return reservations.filter((r) => r.date_service === dateKey);
+    }
+
+    function renderCalendar() {
+      calendarTitle.textContent = formatMonth(currentMonth).toUpperCase();
+      calendarGrid.innerHTML = "";
+
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+
+      let startOffset = firstDay.getDay() - 1;
+      if (startOffset < 0) startOffset = 6;
+
+      for (let i = 0; i < startOffset; i++) {
+        calendarGrid.insertAdjacentHTML("beforeend", `<div></div>`);
+      }
+
+      for (let day = 1; day <= lastDay.getDate(); day++) {
+        const date = new Date(year, month, day);
+        const dateKey = toDateKey(date);
+        const dayReservations = getReservationsForDate(dateKey);
+
+        const midiCouverts = dayReservations
+          .filter((r) => r.service === "midi" && r.statut !== "refusee")
+          .reduce((sum, r) => sum + Number(r.nb_personnes || 0), 0);
+
+        const soirCouverts = dayReservations
+          .filter((r) => r.service === "soir" && r.statut !== "refusee")
+          .reduce((sum, r) => sum + Number(r.nb_personnes || 0), 0);
+
+        const aTraiter = dayReservations.filter((r) => r.a_traiter).length;
+        const nbResas = dayReservations.filter(
+  (r) => r.statut !== "refusee"
+).length;
+
+        const isSelected = dateKey === selectedDate;
+
+        calendarGrid.insertAdjacentHTML("beforeend", `
+          <button
+            data-date="${dateKey}"
+            class="calendar-day min-h-[96px] rounded-xl border p-2 text-left transition
+                   ${isSelected ? "border-brand bg-brand text-white" : "border-brand/15 bg-white/50 hover:bg-brand/10"}"
+          >
+<div class="flex justify-between items-start gap-1">
+  <div class="font-bold text-lg">${day}</div>
+
+  ${
+    nbResas
+      ? `<div class="text-[11px] font-semibold ${
+          isSelected ? "text-white" : "text-brand"
+        }">
+          Résa : ${nbResas}
+        </div>`
+      : ""
+  }
+</div>
+            <div class="mt-1 text-xs ${isSelected ? "text-white" : "text-slate-700"}">
+              ${midiCouverts ? `<div>Midi : ${midiCouverts}</div>` : ""}
+              ${soirCouverts ? `<div>Soir : ${soirCouverts}</div>` : ""}
+              ${aTraiter ? `<div class="mt-1 font-bold ${isSelected ? "text-white" : "text-red-700"}">🔴 ${aTraiter}</div>` : ""}
+            </div>
+          </button>
+        `);
+      }
+
+      document.querySelectorAll(".calendar-day").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          selectedDate = btn.dataset.date;
+          renderCalendar();
+          renderSelectedDay();
+        });
+      });
+    }
+
+    function renderSelectedDay() {
+      const dayReservations = getReservationsForDate(selectedDate);
+      selectedDayTitle.textContent = formatDate(selectedDate);
+
+      if (!dayReservations.length) {
+        dayDetails.innerHTML = `
+          <div class="rounded-2xl soft-border bg-white/40 p-6 text-right">
+            Aucune réservation ce jour.
+          </div>
+        `;
+        return;
+      }
+
+      let html = "";
+
+      ["midi", "soir"].forEach((service) => {
+        const serviceReservations = dayReservations.filter((r) => r.service === service);
+
+        if (!serviceReservations.length) return;
+
+        const totalCouverts = serviceReservations
+          .filter((r) => r.statut !== "refusee")
+          .reduce((sum, r) => sum + Number(r.nb_personnes || 0), 0);
+
+        html += `
+          <div>
+            <div class="flex justify-end items-baseline gap-3 mb-3">
+              <span class="text-sm text-slate-600">${serviceReservations.length} résa · ${totalCouverts} couverts</span>
+              <h3 class="font-limelight text-xl text-[var(--color-copper)] uppercase">${service}</h3>
+            </div>
+        `;
+
+        serviceReservations.forEach((r) => {
+          const isNew = r.statut === "nouvelle";
+
+          html += `
+            <article class="rounded-2xl soft-border bg-white/50 p-5 mb-3 ${isNew ? "ring-2 ring-red-200" : ""}" data-id="${r.id}">
+              <div class="flex flex-col md:flex-row md:justify-between gap-3">
+                <div>
+                  <p class="font-limelight text-2xl text-brand">
+                    ${formatHeure(r.heure)} — ${r.nb_personnes} pers.
+                  </p>
+
+                  <p class="uppercase font-semibold mt-1">
+                    ${r.nom || ""} ${r.prenom || ""}
+                  </p>
+                </div>
+
+                <div class="text-right">
+                  <span class="inline-block rounded-full border px-3 py-1 text-sm ${statutStyle(r.statut)}">
+                    ${labelStatut(r.statut)}
+                  </span>
+                </div>
+              </div>
+
+              <div class="mt-4 text-slate-700 text-sm space-y-1">
+                <p><strong>Téléphone :</strong> ${r.telephone || "-"}</p>
+                <p><strong>Email :</strong> ${r.email || "-"}</p>
+                <p><strong>Préférence :</strong> ${labelSalle(r.preference_salle)}</p>
+                ${r.commentaire_client ? `<p><strong>Commentaire :</strong> ${r.commentaire_client}</p>` : ""}
+                ${r.motif_refus ? `<p><strong>Motif refus :</strong> ${r.motif_refus}</p>` : ""}
+                ${r.proposition_deplacement ? `<p><strong>Proposition :</strong> ${r.proposition_deplacement}</p>` : ""}
+              </div>
+
+              <div class="mt-5 flex flex-wrap justify-end gap-2">
+                ${r.statut === "nouvelle" ? `
+                  <button data-action="accepter" class="action-btn rounded-xl bg-brand text-white px-4 py-2 hover:bg-[var(--color-copper)] transition">
+                    ✓ Accepter
+                  </button>
+
+                  <button data-action="deplacer" class="action-btn rounded-xl border border-orange-700 text-orange-700 px-4 py-2 hover:bg-orange-700 hover:text-white transition">
+                    Déplacer
+                  </button>
+
+                  <button data-action="refuser" class="action-btn rounded-xl border border-red-700 text-red-700 px-4 py-2 hover:bg-red-700 hover:text-white transition">
+                    Refuser
+                  </button>
+                ` : ""}
+
+                ${r.statut === "acceptee" ? `
+                  <button data-action="refuser" class="action-btn rounded-xl border border-red-700 text-red-700 px-4 py-2 hover:bg-red-700 hover:text-white transition">
+                    Annuler / Refuser
+                  </button>
+                ` : ""}
+              </div>
+            </article>
+          `;
+        });
+
+        html += `</div>`;
+      });
+
+      dayDetails.innerHTML = html;
+
+      document.querySelectorAll(".action-btn").forEach((btn) => {
+        btn.addEventListener("click", handleAction);
+      });
+    }
+
+    async function handleAction(event) {
+      const button = event.currentTarget;
+      const article = button.closest("article");
+      const id = article.dataset.id;
+      const action = button.dataset.action;
+
+      let update = {};
+
+      if (action === "accepter") {
+        update = {
+          statut: "acceptee",
+          a_traiter: false,
+        };
+      }
+
+      if (action === "refuser") {
+        const motif = prompt("Motif du refus : complet, étage complet, terrasse indisponible, horaire indisponible, autre");
+        if (!motif) return;
+
+        update = {
+          statut: "refusee",
+          a_traiter: false,
+          motif_refus: motif,
+        };
+      }
+
+      if (action === "deplacer") {
+        const proposition = prompt("Proposition à envoyer au client : ex. Salle du bas à 20h30, terrasse demain midi...");
+        if (!proposition) return;
+
+        update = {
+          statut: "deplacement_propose",
+          a_traiter: false,
+          proposition_deplacement: proposition,
+        };
+      }
+
+      const { error } = await supabase
+        .from("reservations")
+        .update(update)
+        .eq("id", id);
+
+      if (error) {
+        alert("Erreur : " + error.message);
+        return;
+      }
+
+      await loadReservations();
+    }
+
+    loginBtn?.addEventListener("click", async () => {
+      loginMessage.textContent = "";
+
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        loginMessage.textContent = "Connexion impossible : " + error.message;
+        return;
+      }
+
+      await checkSession();
+    });
+
+    logoutBtn?.addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      await checkSession();
+    });
+
+    refreshBtn?.addEventListener("click", loadReservations);
+
+    prevMonthBtn?.addEventListener("click", () => {
+      currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
+      renderCalendar();
+    });
+
+    nextMonthBtn?.addEventListener("click", () => {
+      currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
+      renderCalendar();
+    });
+
+    checkSession();
+  </script>
+</SidebarLayout>
