@@ -215,9 +215,11 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         a_traiter: true,
       };
 
-      const { error } = await supabase
-        .from("reservations")
-        .insert(reservation);
+const { data, error } = await supabase
+  .from("reservations")
+  .insert(reservation)
+  .select()
+  .single();
 
       if (error) {
   console.error("Erreur Supabase :", error);
@@ -229,6 +231,30 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
   submitBtn.disabled = false;
   submitBtn.textContent = "Envoyer ma demande";
   return;
+}
+try {
+  const emailResponse = await fetch("/.netlify/functions/send-reservation-email", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      type: "new_reservation_admin",
+      reservation: data,
+    }),
+  });
+
+  const emailResult = await emailResponse.json();
+
+  console.log("Réponse fonction email :", emailResult);
+
+  if (!emailResponse.ok) {
+    console.error("Erreur fonction email :", emailResult);
+    alert("Réservation enregistrée, mais mail non envoyé : " + (emailResult.error || "erreur inconnue"));
+  }
+} catch (emailError) {
+  console.error("Erreur envoi mail admin :", emailError);
+  alert("Réservation enregistrée, mais erreur mail.");
 }
 
       form.reset();
