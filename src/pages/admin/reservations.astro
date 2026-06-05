@@ -84,6 +84,45 @@ const description = "Gestion des réservations La Régence.";
     </div>
   </section>
 
+  <div id="action-modal" class="fixed inset-0 hidden items-center justify-center z-[80]">
+  <div id="action-modal-backdrop" class="absolute inset-0 bg-black/50"></div>
+
+  <div class="relative bg-[var(--color-bg)] rounded-2xl soft-border p-6 w-[min(520px,92vw)] text-right">
+    <h2 id="action-modal-title" class="font-limelight text-3xl text-brand mb-4">
+      Choisir une action
+    </h2>
+
+    <div id="action-modal-options" class="space-y-2 text-left"></div>
+
+    <div class="mt-6 flex justify-end gap-3">
+      <button id="action-modal-cancel" class="rounded-xl border border-brand text-brand px-4 py-2">
+        Annuler
+      </button>
+
+      <button id="action-modal-confirm" class="rounded-xl bg-brand text-white px-4 py-2">
+        Valider
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="new-resa-alert" class="fixed bottom-5 right-5 z-[90] hidden max-w-sm rounded-2xl bg-red-700 text-white shadow-xl p-5 text-left">
+  <p class="font-limelight text-xl">Nouvelle réservation</p>
+  <p id="new-resa-alert-text" class="mt-1 text-sm">
+    Une nouvelle demande est à traiter.
+  </p>
+
+  <div class="mt-4 flex justify-end gap-2">
+    <button id="new-resa-alert-close" class="rounded-xl bg-white/20 px-3 py-2 text-sm">
+      Fermer
+    </button>
+
+    <button id="new-resa-alert-view" class="rounded-xl bg-white text-red-700 px-3 py-2 text-sm font-bold">
+      Voir
+    </button>
+  </div>
+</div>
+
   <script>
     import { supabase } from "../../lib/supabaseClient.js";
 
@@ -101,6 +140,14 @@ const description = "Gestion des réservations La Régence.";
     const dayDetails = document.getElementById("day-details");
     const prevMonthBtn = document.getElementById("prev-month");
     const nextMonthBtn = document.getElementById("next-month");
+
+    const newResaAlert = document.getElementById("new-resa-alert");
+    const newResaAlertText = document.getElementById("new-resa-alert-text");
+    const newResaAlertClose = document.getElementById("new-resa-alert-close");
+    const newResaAlertView = document.getElementById("new-resa-alert-view");
+
+    let knownReservationIds = new Set();
+    let firstLoadDone = false;
 
     let reservations = [];
     let currentMonth = new Date();
@@ -132,6 +179,19 @@ const description = "Gestion des réservations La Régence.";
     function formatHeure(heure) {
       return String(heure || "").slice(0, 5).replace(":", "h");
     }
+function formatCreatedAt(dateStr) {
+  if (!dateStr) return "-";
+
+  const date = new Date(dateStr);
+
+  return date.toLocaleString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
 
     function labelSalle(value) {
       const labels = {
@@ -175,6 +235,36 @@ const description = "Gestion des réservations La Régence.";
         adminBox.classList.add("hidden");
       }
     }
+    function detectNewReservations(currentReservations) {
+  const currentIds = new Set(currentReservations.map((r) => r.id));
+
+  if (!firstLoadDone) {
+    knownReservationIds = currentIds;
+    firstLoadDone = true;
+    return;
+  }
+
+  const nouvelles = currentReservations.filter(
+    (r) => !knownReservationIds.has(r.id) && r.a_traiter
+  );
+
+  knownReservationIds = currentIds;
+
+  if (nouvelles.length > 0) {
+    showNewReservationAlert(nouvelles.length);
+  }
+}
+
+function showNewReservationAlert(count) {
+  if (!newResaAlert || !newResaAlertText) return;
+
+  newResaAlertText.textContent =
+    count === 1
+      ? "Une nouvelle demande de réservation est à traiter."
+      : `${count} nouvelles demandes de réservation sont à traiter.`;
+
+  newResaAlert.classList.remove("hidden");
+}
 
     async function loadReservations() {
       calendarGrid.innerHTML = "";
@@ -193,6 +283,7 @@ const description = "Gestion des réservations La Régence.";
       }
 
       reservations = data || [];
+      detectNewReservations(reservations);
 
       const aTraiter = reservations.filter((r) => r.a_traiter).length;
       count.textContent = `${aTraiter} réservation(s) à traiter — ${reservations.length} réservation(s) au total`;
@@ -335,9 +426,10 @@ const description = "Gestion des réservations La Régence.";
               </div>
 
               <div class="mt-4 text-slate-700 text-sm space-y-1">
-                <p><strong>Téléphone :</strong> ${r.telephone || "-"}</p>
-                <p><strong>Email :</strong> ${r.email || "-"}</p>
-                <p><strong>Préférence :</strong> ${labelSalle(r.preference_salle)}</p>
+  <p><strong>Demande reçue :</strong> ${formatCreatedAt(r.created_at)}</p>
+  <p><strong>Téléphone :</strong> ${r.telephone || "-"}</p>
+  <p><strong>Email :</strong> ${r.email || "-"}</p>
+  <p><strong>Préférence :</strong> ${labelSalle(r.preference_salle)}</p>
                 ${r.commentaire_client ? `<p><strong>Commentaire :</strong> ${r.commentaire_client}</p>` : ""}
                 ${r.motif_refus ? `<p><strong>Motif refus :</strong> ${r.motif_refus}</p>` : ""}
                 ${r.proposition_deplacement ? `<p><strong>Proposition :</strong> ${r.proposition_deplacement}</p>` : ""}
@@ -378,56 +470,210 @@ const description = "Gestion des réservations La Régence.";
       });
     }
 
-    async function handleAction(event) {
-      const button = event.currentTarget;
-      const article = button.closest("article");
-      const id = article.dataset.id;
-      const action = button.dataset.action;
+    const refusOptions = {
+  restaurant_complet: "Le restaurant est complet pour le service demandé.",
+  salle_complete: "La salle demandée est complète à cet horaire.",
+  terrasse_complete: "La terrasse est complète à cet horaire.",
+  horaire_indisponible: "Nous n’avons pas de table disponible à l’horaire demandé.",
+  groupe_trop_important: "Nous ne pouvons malheureusement pas accueillir un groupe de cette taille sur ce service.",
+  reservations_en_ligne_completes: "Les réservations en ligne sont complètes pour ce service. Vous pouvez nous contacter par téléphone pour toute demande particulière.",
+  fermeture_exceptionnelle: "La Régence est exceptionnellement fermée à cette date.",
+  autre: "__AUTRE__",
+};
+    const deplacementOptions = {
+  decalage_15: "Nous pouvons vous accueillir 15 minutes plus tard que l’horaire demandé.",
+  decalage_30: "Nous pouvons vous accueillir 30 minutes plus tard que l’horaire demandé.",
+  decalage_60: "Nous pouvons vous accueillir 1 heure plus tard que l’horaire demandé.",
+  changement_salle: "Nous pouvons maintenir votre réservation dans un autre espace de l’établissement.",
+  terrasse_disponible: "Nous pouvons vous accueillir en terrasse.",
+  salle_bas_disponible: "Nous pouvons vous accueillir en salle du bas.",
+  etage_disponible: "Nous pouvons vous accueillir à l’étage.",
+  autre: "__AUTRE__",
+};
 
-      let update = {};
+let pendingAction = null;
 
-      if (action === "accepter") {
-        update = {
-          statut: "acceptee",
-          a_traiter: false,
-        };
-      }
+function openActionModal({ title, options, onConfirm }) {
+  const modal = document.getElementById("action-modal");
+  const titleEl = document.getElementById("action-modal-title");
+  const optionsEl = document.getElementById("action-modal-options");
 
-      if (action === "refuser") {
-        const motif = prompt("Motif du refus : complet, étage complet, terrasse indisponible, horaire indisponible, autre");
-        if (!motif) return;
+  if (!modal || !titleEl || !optionsEl) return;
 
-        update = {
-          statut: "refusee",
-          a_traiter: false,
-          motif_refus: motif,
-        };
-      }
+  pendingAction = onConfirm;
 
-      if (action === "deplacer") {
-        const proposition = prompt("Proposition à envoyer au client : ex. Salle du bas à 20h30, terrasse demain midi...");
-        if (!proposition) return;
+  titleEl.textContent = title;
 
-        update = {
-          statut: "deplacement_propose",
-          a_traiter: false,
-          proposition_deplacement: proposition,
-        };
-      }
+  optionsEl.innerHTML = Object.entries(options).map(([value, label], index) => `
+  <label class="flex items-start gap-3 rounded-xl border border-brand/20 bg-white/60 p-3 cursor-pointer hover:bg-brand/5">
+    <input
+      type="radio"
+      name="action-choice"
+      value="${value}"
+      ${index === 0 ? "checked" : ""}
+      class="mt-1"
+    />
+    <span>${value === "autre" ? "Autre — préciser" : label}</span>
+  </label>
+`).join("") + `
+  <textarea
+    id="action-custom-text"
+    rows="3"
+    class="hidden mt-4 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3"
+    placeholder="Écrivez votre message personnalisé..."
+  ></textarea>
+`;
 
-      const { error } = await supabase
-        .from("reservations")
-        .update(update)
-        .eq("id", id);
+document.querySelectorAll('input[name="action-choice"]').forEach((radio) => {
+  radio.addEventListener("change", () => {
+    const customText = document.getElementById("action-custom-text");
+    if (!customText) return;
 
-      if (error) {
-        alert("Erreur : " + error.message);
-        return;
-      }
-
-      await loadReservations();
+    if (radio.value === "autre" && radio.checked) {
+      customText.classList.remove("hidden");
+      customText.focus();
+    } else if (radio.checked) {
+      customText.classList.add("hidden");
+      customText.value = "";
     }
+  });
+});
 
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeActionModal() {
+  const modal = document.getElementById("action-modal");
+  if (!modal) return;
+
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+  pendingAction = null;
+}
+
+async function applyReservationUpdate(id, action, update) {
+  const { data, error } = await supabase
+    .from("reservations")
+    .update(update)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    alert("Erreur : " + error.message);
+    return;
+  }
+
+  if (action === "accepter") {
+    await sendReservationEmail("accepted_client", data);
+  }
+
+  if (action === "refuser") {
+    await sendReservationEmail("declined_client", data);
+  }
+
+  if (action === "deplacer") {
+    await sendReservationEmail("move_proposal_client", data);
+  }
+
+  await loadReservations();
+}
+
+async function handleAction(event) {
+  const button = event.currentTarget;
+  const article = button.closest("article");
+  const id = article.dataset.id;
+  const action = button.dataset.action;
+
+  if (action === "accepter") {
+    await applyReservationUpdate(id, action, {
+      statut: "acceptee",
+      a_traiter: false,
+    });
+    return;
+  }
+
+  if (action === "refuser") {
+    openActionModal({
+      title: "Motif du refus",
+      options: refusOptions,
+      onConfirm: async (motifCode, customText) => {
+  await applyReservationUpdate(id, action, {
+    statut: "refusee",
+    a_traiter: false,
+    motif_code: motifCode,
+    motif_refus: motifCode === "autre" ? customText : refusOptions[motifCode],
+  });
+},
+    });
+    return;
+  }
+
+  if (action === "deplacer") {
+    openActionModal({
+      title: "Proposition de déplacement",
+      options: deplacementOptions,
+      onConfirm: async (propositionCode, customText) => {
+  await applyReservationUpdate(id, action, {
+    statut: "deplacement_propose",
+    a_traiter: false,
+    proposition_code: propositionCode,
+    proposition_deplacement: propositionCode === "autre" ? customText : deplacementOptions[propositionCode],
+  });
+},
+    });
+  }
+}
+
+document.getElementById("action-modal-cancel")?.addEventListener("click", closeActionModal);
+document.getElementById("action-modal-backdrop")?.addEventListener("click", closeActionModal);
+
+document.getElementById("action-modal-confirm")?.addEventListener("click", async () => {
+  const checked = document.querySelector('input[name="action-choice"]:checked');
+  const customText = document.getElementById("action-custom-text");
+
+  if (!checked || !pendingAction) return;
+
+  if (checked.value === "autre" && !customText?.value.trim()) {
+    alert("Merci de préciser votre message.");
+    return;
+  }
+
+  const actionToRun = pendingAction;
+  const value = checked.value;
+  const customValue = customText?.value.trim() || "";
+
+  closeActionModal();
+
+  await actionToRun(value, customValue);
+});
+async function sendReservationEmail(type, reservation) {
+  console.log("Envoi email client demandé :", type, reservation);
+
+  try {
+    const response = await fetch("/.netlify/functions/send-reservation-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        type,
+        reservation,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.error("Erreur email :", result);
+      alert("Action enregistrée, mais email non envoyé : " + (result.error || "erreur inconnue"));
+    }
+  } catch (error) {
+    console.error("Erreur email :", error);
+    alert("Action enregistrée, mais erreur lors de l’envoi de l’email.");
+  }
+}
     loginBtn?.addEventListener("click", async () => {
       loginMessage.textContent = "";
 
@@ -463,6 +709,21 @@ const description = "Gestion des réservations La Régence.";
       currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
       renderCalendar();
     });
+
+    newResaAlertClose?.addEventListener("click", () => {
+  newResaAlert?.classList.add("hidden");
+});
+
+newResaAlertView?.addEventListener("click", async () => {
+  newResaAlert?.classList.add("hidden");
+  await loadReservations();
+});
+
+setInterval(() => {
+  if (!adminBox.classList.contains("hidden")) {
+    loadReservations();
+  }
+}, 30000);
 
     checkSession();
   </script>

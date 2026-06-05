@@ -26,6 +26,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
               required
               class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
             />
+            <p id="date-message" class="mt-2 text-sm text-red-700"></p>
           </label>
 
           <label class="block">
@@ -155,6 +156,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
     const heureSelect = document.getElementById("heure");
     const message = document.getElementById("form-message");
     const submitBtn = document.getElementById("submit-btn");
+    const dateMessage = document.getElementById("date-message");
 
     const horaires = {
       midi: ["12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30"],
@@ -167,27 +169,169 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
       dateInput.setAttribute("min", today);
     }
 
-    serviceSelect?.addEventListener("change", () => {
-      const service = serviceSelect.value;
-      heureSelect.innerHTML = "";
+    function updateHeures() {
+  const service = serviceSelect?.value;
 
-      if (!service || !horaires[service]) {
-        heureSelect.innerHTML = '<option value="">Choisissez d’abord un service</option>';
-        return;
-      }
+  if (!heureSelect) return;
 
-      heureSelect.innerHTML = '<option value="">Choisir une heure</option>';
+  heureSelect.innerHTML = "";
 
-      horaires[service].forEach((h) => {
-        const option = document.createElement("option");
-        option.value = h;
-        option.textContent = h.replace(":", "h");
-        heureSelect.appendChild(option);
-      });
-    });
+  if (!service || !horaires[service]) {
+    heureSelect.innerHTML = '<option value="">Choisissez d’abord un service</option>';
+    return;
+  }
 
-    form?.addEventListener("submit", async (event) => {
+  heureSelect.innerHTML = '<option value="">Choisir une heure</option>';
+
+  horaires[service].forEach((h) => {
+    const option = document.createElement("option");
+    option.value = h;
+    option.textContent = h.replace(":", "h");
+    heureSelect.appendChild(option);
+  });
+}
+
+let reservationExceptions = [];
+
+async function loadReservationExceptions() {
+  const { data, error } = await supabase
+    .from("reservation_exceptions")
+    .select("*");
+
+  if (error) {
+    console.error("Erreur chargement exceptions :", error);
+    reservationExceptions = [];
+    return;
+  }
+
+  reservationExceptions = data || [];
+  validateDateSelection();
+}
+
+function getExceptionForDate(dateStr) {
+  return reservationExceptions.find((e) => e.date_service === dateStr);
+}
+
+serviceSelect?.addEventListener("change", () => {
+  updateHeures();
+  validateDateSelection();
+});
+
+serviceSelect?.addEventListener("input", () => {
+  updateHeures();
+  validateDateSelection();
+});
+
+updateHeures();
+
+function isSunday(dateStr) {
+  if (!dateStr) return false;
+
+  const date = new Date(dateStr + "T00:00:00");
+  return date.getDay() === 0;
+}
+
+function isToday(dateStr) {
+  if (!dateStr) return false;
+
+  const today = new Date();
+  const selected = new Date(dateStr + "T00:00:00");
+
+  return (
+    selected.getFullYear() === today.getFullYear() &&
+    selected.getMonth() === today.getMonth() &&
+    selected.getDate() === today.getDate()
+  );
+}
+
+function isAfterMidiCutoff() {
+  const now = new Date();
+  return now.getHours() > 13 || (now.getHours() === 13 && now.getMinutes() >= 30);
+}
+
+function isAfterSoirCutoff() {
+  const now = new Date();
+  return now.getHours() > 21 || (now.getHours() === 21 && now.getMinutes() >= 30);
+}
+
+function validateDateSelection() {
+  const selectedDate = dateInput?.value;
+  const selectedService = serviceSelect?.value;
+  const exception = getExceptionForDate(selectedDate);
+
+  if (!dateMessage || !submitBtn) return true;
+
+  dateMessage.textContent = "";
+  submitBtn.disabled = false;
+
+  let midiOuvert = !isSunday(selectedDate);
+  let soirOuvert = !isSunday(selectedDate);
+
+  if (exception) {
+    midiOuvert = exception.midi_ouvert;
+    soirOuvert = exception.soir_ouvert;
+  }
+
+  if (selectedService === "midi" && !midiOuvert) {
+    dateMessage.textContent =
+      exception?.raison ||
+      "Les réservations du midi sont fermées ce jour-là. Merci de nous appeler au 05 58 85 92 72.";
+
+    submitBtn.disabled = true;
+    return false;
+  }
+
+  if (selectedService === "soir" && !soirOuvert) {
+    dateMessage.textContent =
+      exception?.raison ||
+      "Les réservations du soir sont fermées ce jour-là. Merci de nous appeler au 05 58 85 92 72.";
+
+    submitBtn.disabled = true;
+    return false;
+  }
+
+  if (!selectedService && isSunday(selectedDate) && !exception) {
+    dateMessage.textContent =
+      "Le restaurant est fermé le dimanche. Pour une demande particulière, merci de nous appeler au 05 58 85 92 72.";
+
+    submitBtn.disabled = true;
+    return false;
+  }
+
+  if (
+    selectedService === "midi" &&
+    isToday(selectedDate) &&
+    isAfterMidiCutoff()
+  ) {
+    dateMessage.textContent =
+      "Les réservations pour ce midi sont désormais fermées. Merci de nous appeler au 05 58 85 92 72.";
+
+    submitBtn.disabled = true;
+    return false;
+  }
+
+  if (
+    selectedService === "soir" &&
+    isToday(selectedDate) &&
+    isAfterSoirCutoff()
+  ) {
+    dateMessage.textContent =
+      "Les réservations pour ce soir sont désormais fermées. Merci de nous appeler au 05 58 85 92 72.";
+
+    submitBtn.disabled = true;
+    return false;
+  }
+
+  return true;
+}
+
+dateInput?.addEventListener("change", validateDateSelection);
+
+loadReservationExceptions();
+
+form?.addEventListener("submit", async (event) => {
       event.preventDefault();
+      if (!validateDateSelection()) return;
 
       message.textContent = "";
       message.className = "text-right text-sm";
@@ -215,23 +359,34 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         a_traiter: true,
       };
 
-const { data, error } = await supabase
-  .from("reservations")
-  .insert(reservation)
-  .select()
-  .single();
+const createResponse = await fetch(
+  "/.netlify/functions/create-reservation",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(reservation),
+  }
+);
 
-      if (error) {
-  console.error("Erreur Supabase :", error);
+const createResult = await createResponse.json();
+
+if (!createResponse.ok) {
+  console.error("Erreur création réservation :", createResult);
 
   message.textContent =
-    "Erreur Supabase : " + (error.message || "Erreur inconnue");
+    "Erreur Supabase : " +
+    (createResult.error || "Erreur inconnue");
 
   message.classList.add("text-red-700");
   submitBtn.disabled = false;
   submitBtn.textContent = "Envoyer ma demande";
   return;
 }
+
+const data = createResult.reservation;
+
 try {
   const emailResponse = await fetch("/.netlify/functions/send-reservation-email", {
     method: "POST",
