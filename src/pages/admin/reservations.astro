@@ -410,9 +410,27 @@ btn.addEventListener("click", () => {
         return;
       }
 
-      let html = "";
+let html = `
+  <div class="mb-6 flex flex-wrap justify-end gap-3">
+    <a
+      href="/admin/print-reservations?date=${selectedDate}&service=midi"
+      target="_blank"
+      class="rounded-xl border border-brand text-brand px-4 py-2 hover:bg-brand hover:text-white transition"
+    >
+      📄 Imprimer midi
+    </a>
 
-      ["midi", "soir"].forEach((service) => {
+    <a
+      href="/admin/print-reservations?date=${selectedDate}&service=soir"
+      target="_blank"
+      class="rounded-xl border border-brand text-brand px-4 py-2 hover:bg-brand hover:text-white transition"
+    >
+      📄 Imprimer soir
+    </a>
+  </div>
+`;
+
+["midi", "soir"].forEach((service) => {
         const serviceReservations = dayReservations.filter((r) => r.service === service);
 
         if (!serviceReservations.length) return;
