@@ -32,7 +32,12 @@ const description = "Gestion des réservations La Régence.";
 
       <!-- ADMIN -->
       <div id="admin-box" class="hidden mt-10">
-        <div class="flex justify-end gap-3 mb-6">
+        <div class="flex flex-wrap justify-end gap-3 mb-6">
+          <button id="enable-notifications-btn"
+          class="font-limelight border border-brand text-brand px-4 py-2 rounded-xl hover:bg-brand hover:text-white transition">
+          Activer les notifications
+          </button>
+          
           <button id="refresh-btn"
             class="font-limelight border border-brand text-brand px-4 py-2 rounded-xl hover:bg-brand hover:text-white transition">
             Actualiser
@@ -42,6 +47,7 @@ const description = "Gestion des réservations La Régence.";
             class="font-limelight border border-red-700 text-red-700 px-4 py-2 rounded-xl hover:bg-red-700 hover:text-white transition">
             Déconnexion
           </button>
+          
         </div>
 
         <p id="count" class="mt-2 text-slate-600"></p>
@@ -133,7 +139,7 @@ const description = "Gestion des réservations La Régence.";
     const refreshBtn = document.getElementById("refresh-btn");
     const loginMessage = document.getElementById("login-message");
     const count = document.getElementById("count");
-
+    const enableNotificationsBtn = document.getElementById("enable-notifications-btn");
     const calendarTitle = document.getElementById("calendar-title");
     const calendarGrid = document.getElementById("calendar-grid");
     const selectedDayTitle = document.getElementById("selected-day-title");
@@ -730,11 +736,24 @@ if ("serviceWorker" in navigator) {
     console.error("Erreur service worker :", error);
   });
 }
-if ("Notification" in window) {
-  Notification.requestPermission().then((permission) => {
-    console.log("Permission notifications :", permission);
-  });
-}
+enableNotificationsBtn?.addEventListener("click", async () => {
+  if (!("Notification" in window)) {
+    alert("Les notifications ne sont pas supportées sur cet appareil.");
+    return;
+  }
+
+  const permission = await Notification.requestPermission();
+
+  console.log("Permission notifications :", permission);
+
+  if (permission === "granted") {
+    alert("Notifications activées.");
+  }
+
+  if (permission === "denied") {
+    alert("Notifications refusées. Vérifiez les réglages de l’iPad.");
+  }
+});
     checkSession();
   </script>
 </SidebarLayout>
