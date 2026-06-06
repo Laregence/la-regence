@@ -725,6 +725,16 @@ setInterval(() => {
   }
 }, 30000);
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js").catch((error) => {
+    console.error("Erreur service worker :", error);
+  });
+}
+if ("Notification" in window) {
+  Notification.requestPermission().then((permission) => {
+    console.log("Permission notifications :", permission);
+  });
+}
     checkSession();
   </script>
 </SidebarLayout>
