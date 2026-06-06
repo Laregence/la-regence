@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PWA Test</title>
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#25471f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="PWA Test" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+</head>
+
+<body style="font-family: Arial; padding: 40px;">
+  <h1>PWA Test La Régence</h1>
+
+  <button onclick="diagnostic()" style="font-size:20px;padding:15px;">
+    Diagnostic PWA
+  </button>
+
+  <script>
+    function diagnostic() {
+      alert(`
+display-mode standalone: ${window.matchMedia("(display-mode: standalone)").matches}
+navigator.standalone: ${window.navigator.standalone}
+Notification: ${typeof Notification}
+ServiceWorker: ${"serviceWorker" in navigator}
+PushManager: ${"PushManager" in window}
+UserAgent: ${navigator.userAgent}
+      `);
+    }
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js");
+    }
+  </script>
+</body>
+</html>
