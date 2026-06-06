@@ -411,7 +411,21 @@ try {
   console.error("Erreur envoi mail admin :", emailError);
   alert("Réservation enregistrée, mais erreur mail.");
 }
-
+try {
+  await fetch("/.netlify/functions/send-push-notification", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: "Nouvelle réservation",
+      body: `${data.nb_personnes} pers. — ${data.service} — ${String(data.heure).slice(0, 5).replace(":", "h")}`,
+      url: "/admin/reservations",
+    }),
+  });
+} catch (pushError) {
+  console.error("Erreur notification push :", pushError);
+}
       form.reset();
       heureSelect.innerHTML = '<option value="">Choisissez d’abord un service</option>';
 
