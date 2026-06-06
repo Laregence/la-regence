@@ -33,6 +33,11 @@ const description = "Gestion des réservations La Régence.";
       <!-- ADMIN -->
       <div id="admin-box" class="hidden mt-10">
         <div class="flex flex-wrap justify-end gap-3 mb-6">
+
+          <button id="debug-pwa">
+          Diagnostic PWA
+          </button>
+
           <button id="enable-notifications-btn"
           class="font-limelight border border-brand text-brand px-4 py-2 rounded-xl hover:bg-brand hover:text-white transition">
           Activer les notifications
@@ -753,6 +758,15 @@ enableNotificationsBtn?.addEventListener("click", async () => {
   if (permission === "denied") {
     alert("Notifications refusées. Vérifiez les réglages de l’iPad.");
   }
+});
+document.getElementById("debug-pwa")?.addEventListener("click", () => {
+  alert(`
+Standalone: ${window.matchMedia('(display-mode: standalone)').matches}
+Notification: ${typeof Notification}
+ServiceWorker: ${'serviceWorker' in navigator}
+PushManager: ${'PushManager' in window}
+UserAgent: ${navigator.userAgent}
+  `);
 });
     checkSession();
   </script>
