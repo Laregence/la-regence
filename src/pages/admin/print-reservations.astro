@@ -91,16 +91,16 @@ const title = "Impression réservations — La Régence";
               · <strong>${totalCouverts}</strong> couvert(s)
             </div>
 
-            <table>
+            <table style="width:100%;border-collapse:collapse;font-size:15px;border:2px solid #25471f;">
               <thead>
                 <tr>
-                  <th>Heure</th>
-                  <th>Nom</th>
-                  <th>Couv.</th>
-                  <th>✓</th>
-                  <th>Salle</th>
-                  <th>Téléphone</th>
-                  <th>Commentaire</th>
+                <th style="background:#25471f;color:white;text-align:left;padding:10px;border:1px solid #25471f;">Heure</th>
+                <th style="background:#25471f;color:white;text-align:left;padding:10px;border:1px solid #25471f;">Nom</th>
+                <th style="background:#25471f;color:white;text-align:center;padding:10px;border:1px solid #25471f;">Couv.</th>
+                <th style="background:#25471f;color:white;text-align:center;padding:10px;border:1px solid #25471f;">✓</th>
+                <th style="background:#25471f;color:white;text-align:left;padding:10px;border:1px solid #25471f;">Salle</th>
+                <th style="background:#25471f;color:white;text-align:left;padding:10px;border:1px solid #25471f;">Téléphone</th>
+                <th style="background:#25471f;color:white;text-align:left;padding:10px;border:1px solid #25471f;">Commentaire</th>
                 </tr>
               </thead>
 
@@ -109,13 +109,13 @@ const title = "Impression réservations — La Régence";
                   reservations.length
                     ? reservations.map((r) => `
                       <tr>
-                        <td class="heure">${formatHeure(r.heure)}</td>
-                        <td>${(r.nom || "").toUpperCase()} ${r.prenom || ""}</td>
-                        <td class="center">${r.nb_personnes || ""}</td>
-                        <td class="check-cell"></td>
-                        <td>${labelSalle(r.preference_salle)}</td>
-                        <td>${r.telephone || ""}</td>
-                        <td>${r.commentaire_client || ""}</td>
+                        <td style="border:1px solid #cbd5e1;padding:12px 10px;font-weight:bold;color:#25471f;">${formatHeure(r.heure)}</td>
+                        <td style="border:1px solid #cbd5e1;padding:12px 10px;">${(r.nom || "").toUpperCase()} ${r.prenom || ""}</td>
+                        <td style="border:1px solid #cbd5e1;padding:12px 10px;text-align:center;font-weight:bold;">${r.nb_personnes || ""}</td>
+                        <td style="border:1px solid #cbd5e1;padding:12px 10px;text-align:center;">□</td>
+                        <td style="border:1px solid #cbd5e1;padding:12px 10px;">${labelSalle(r.preference_salle)}</td>
+                        <td style="border:1px solid #cbd5e1;padding:12px 10px;">${r.telephone || ""}</td>
+                        <td style="border:1px solid #cbd5e1;padding:12px 10px;">${r.commentaire_client || ""}</td>
                       </tr>
                     `).join("")
                     : `
