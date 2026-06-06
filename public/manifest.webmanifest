@@ -2,12 +2,13 @@
   "name": "La Régence Réservations",
   "short_name": "Réservations",
   "description": "Gestion des réservations La Régence",
-  "id": "/admin/reservations",
-  "start_url": "/admin/reservations",
+  "id": "/resa-app",
+  "start_url": "/resa-app",
   "scope": "/",
   "display": "standalone",
   "background_color": "#F5EFE6",
   "theme_color": "#25471f",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "/icon-192.png",

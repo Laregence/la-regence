@@ -1,0 +1,29 @@
+---
+import SidebarLayout from "../layouts/SidebarLayout.astro";
+
+const title = "Réservations — La Régence";
+const description = "Application réservations La Régence";
+---
+
+<SidebarLayout {title} {description}>
+  <section class="min-h-screen bg-[var(--color-bg)] px-6 py-10 flex items-center justify-center text-center">
+    <div>
+      <img src="/icon-192.png" alt="La Régence" class="w-32 mx-auto mb-6" />
+
+      <h1 class="font-limelight text-4xl text-brand uppercase">
+        Réservations
+      </h1>
+
+      <p class="mt-4 text-slate-700">
+        Application de gestion des réservations La Régence.
+      </p>
+
+      <a
+        href="/admin/reservations"
+        class="inline-block mt-8 font-limelight bg-brand text-white px-6 py-3 rounded-xl"
+      >
+        Ouvrir les réservations
+      </a>
+    </div>
+  </section>
+</SidebarLayout>
