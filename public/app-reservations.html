@@ -16,16 +16,18 @@
   <main style="text-align:center;padding:32px;max-width:420px;">
     <img src="/icon-192.png" alt="La Régence" style="width:120px;margin-bottom:24px;" />
 
-    <h1 style="font-size:32px;margin:0 0 12px;">
-      La Régence
-    </h1>
+    <h1 style="font-size:32px;margin:0 0 12px;">La Régence</h1>
 
     <p style="font-size:18px;margin-bottom:28px;color:#334155;">
       Application de gestion des réservations
     </p>
 
-    <button onclick="enableNotifications()" style="display:block;width:100%;margin-bottom:14px;background:#25471f;color:white;border:0;border-radius:12px;padding:16px;font-size:18px;font-weight:bold;">
+    <button id="enable-btn" style="display:block;width:100%;margin-bottom:14px;background:#25471f;color:white;border:0;border-radius:12px;padding:16px;font-size:18px;font-weight:bold;">
       Activer les notifications
+    </button>
+
+    <button id="diagnostic-btn" style="display:block;width:100%;margin-bottom:14px;background:white;color:#25471f;border:1px solid #25471f;border-radius:12px;padding:16px;font-size:16px;font-weight:bold;">
+      Diagnostic
     </button>
 
     <a href="/admin/reservations" style="display:block;background:#a3742c;color:white;text-decoration:none;border-radius:12px;padding:16px;font-size:18px;font-weight:bold;">
@@ -34,94 +36,101 @@
   </main>
 
   <script>
-<script>
-  const VAPID_PUBLIC_KEY =
-    "BJgk1b6pXi6nF5-EcytZxzU72giY63BjqU2RYq1_lASGeKXZuaAMqNvHH-gwI2NELPjiPu3dm6wkV_8eu92_rxY";
+    const VAPID_PUBLIC_KEY =
+      "BJgk1b6pXi6nF5-EcytZxzU72giY63BjqU2RYq1_lASGeKXZuaAMqNvHH-gwI2NELPjiPu3dm6wkV_8eu92_rxY";
 
-  function urlBase64ToUint8Array(base64String) {
-    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding)
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
+    function urlBase64ToUint8Array(base64String) {
+      const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+      const base64 = (base64String + padding)
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
 
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
+      const rawData = window.atob(base64);
+      const outputArray = new Uint8Array(rawData.length);
 
-    for (let i = 0; i < rawData.length; ++i) {
-      outputArray[i] = rawData.charCodeAt(i);
+      for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+      }
+
+      return outputArray;
     }
 
-    return outputArray;
-  }
-
-  async function enableNotifications() {
-    alert("Début activation notifications");
-
-    if (!("Notification" in window)) {
-      alert("Les notifications ne sont pas supportées sur cet appareil.");
-      return;
+    function diagnostic() {
+      alert(
+        "Notification: " + typeof Notification + "\\n" +
+        "ServiceWorker: " + ("serviceWorker" in navigator) + "\\n" +
+        "PushManager: " + ("PushManager" in window) + "\\n" +
+        "Permission: " + (typeof Notification !== "undefined" ? Notification.permission : "indisponible") + "\\n" +
+        "Standalone: " + window.navigator.standalone
+      );
     }
 
-    if (!("serviceWorker" in navigator)) {
-      alert("Service worker non supporté.");
-      return;
+    async function enableNotifications() {
+      alert("Début activation notifications");
+
+      if (!("Notification" in window)) {
+        alert("Les notifications ne sont pas supportées sur cet appareil.");
+        return;
+      }
+
+      if (!("serviceWorker" in navigator)) {
+        alert("Service worker non supporté.");
+        return;
+      }
+
+      if (!("PushManager" in window)) {
+        alert("Push non supporté sur cet appareil.");
+        return;
+      }
+
+      const permission = await Notification.requestPermission();
+
+      if (permission !== "granted") {
+        alert("Notifications refusées.");
+        return;
+      }
+
+      const registration = await navigator.serviceWorker.register("/sw.js");
+      await navigator.serviceWorker.ready;
+
+      const existing = await registration.pushManager.getSubscription();
+      if (existing) {
+        await existing.unsubscribe();
+      }
+
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+      });
+
+      const response = await fetch("/.netlify/functions/save-push-subscription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subscription,
+          userAgent: navigator.userAgent,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error(result);
+        alert("Notifications autorisées, mais abonnement non enregistré.");
+        return;
+      }
+
+      alert("Notifications activées et enregistrées.");
     }
 
-    if (!("PushManager" in window)) {
-      alert("Push non supporté sur cet appareil.");
-      return;
+    document.getElementById("enable-btn").addEventListener("click", enableNotifications);
+    document.getElementById("diagnostic-btn").addEventListener("click", diagnostic);
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js");
     }
-
-    const permission = await Notification.requestPermission();
-
-    if (permission !== "granted") {
-      alert("Notifications refusées.");
-      return;
-    }
-
-    const registration = await navigator.serviceWorker.register("/sw.js");
-
-    const subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
-    });
-
-    const response = await fetch("/.netlify/functions/save-push-subscription", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        subscription,
-        userAgent: navigator.userAgent,
-      }),
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      console.error(result);
-      alert("Notifications autorisées, mais abonnement non enregistré.");
-      return;
-    }
-
-    alert("Notifications activées et enregistrées.");
-  }
-
-  function diagnostic() {
-    alert(`
-Notification: ${typeof Notification}
-ServiceWorker: ${"serviceWorker" in navigator}
-PushManager: ${"PushManager" in window}
-Permission: ${Notification?.permission}
-Standalone: ${window.navigator.standalone}
-    `);
-  }
-
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js");
-  }
-</script>
   </script>
 </body>
 </html>
