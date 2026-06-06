@@ -761,10 +761,11 @@ enableNotificationsBtn?.addEventListener("click", async () => {
 });
 document.getElementById("debug-pwa")?.addEventListener("click", () => {
   alert(`
-Standalone: ${window.matchMedia('(display-mode: standalone)').matches}
+display-mode standalone: ${window.matchMedia("(display-mode: standalone)").matches}
+navigator.standalone: ${window.navigator.standalone}
 Notification: ${typeof Notification}
-ServiceWorker: ${'serviceWorker' in navigator}
-PushManager: ${'PushManager' in window}
+ServiceWorker: ${"serviceWorker" in navigator}
+PushManager: ${"PushManager" in window}
 UserAgent: ${navigator.userAgent}
   `);
 });
