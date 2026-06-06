@@ -193,24 +193,51 @@ const title = "Impression réservations — La Régence";
         font-size: 20px;
       }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 15px;
-      }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  border: 2px solid #25471f;
+}
 
-      th {
-        background: #25471f;
-        color: white;
-        text-align: left;
-        padding: 10px;
-      }
+th {
+  background: #25471f;
+  color: white;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #25471f;
+}
 
-      td {
-        border-bottom: 1px solid #ddd;
-        padding: 10px;
-        vertical-align: top;
-      }
+td {
+  border: 1px solid #cbd5e1;
+  padding: 12px 10px;
+  vertical-align: middle;
+}
+
+tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+tbody tr:nth-child(odd) {
+  background: #ffffff;
+}
+
+tbody tr {
+  min-height: 42px;
+}
+
+.heure {
+  font-weight: bold;
+  color: #25471f;
+  white-space: nowrap;
+  font-size: 17px;
+}
+
+.center {
+  text-align: center;
+  font-weight: bold;
+  font-size: 17px;
+}
 
       .heure {
         font-weight: bold;
@@ -253,23 +280,35 @@ const title = "Impression réservations — La Régence";
         font-weight: bold;
         cursor: pointer;
       }
+@media print {
+  body {
+    background: white;
+  }
 
-      @media print {
-        body {
-          background: white;
-        }
+  .page {
+    margin: 0;
+    max-width: none;
+    padding: 0;
+    border-radius: 0;
+  }
 
-        .page {
-          margin: 0;
-          max-width: none;
-          padding: 0;
-          border-radius: 0;
-        }
+  #print-btn {
+    display: none;
+  }
 
-        #print-btn {
-          display: none;
-        }
-      }
+  tbody tr:nth-child(even) {
+    background: #f1f5f9 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  th {
+    background: #25471f !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
     </style>
   </body>
 </html>
