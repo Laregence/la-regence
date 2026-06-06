@@ -22,14 +22,6 @@
       Application de gestion des réservations
     </p>
 
-    <button id="enable-btn" style="display:block;width:100%;margin-bottom:14px;background:#25471f;color:white;border:0;border-radius:12px;padding:16px;font-size:18px;font-weight:bold;">
-      Activer les notifications
-    </button>
-
-    <button id="diagnostic-btn" style="display:block;width:100%;margin-bottom:14px;background:white;color:#25471f;border:1px solid #25471f;border-radius:12px;padding:16px;font-size:16px;font-weight:bold;">
-      Diagnostic
-    </button>
-
     <a href="/admin/reservations" style="display:block;background:#a3742c;color:white;text-decoration:none;border-radius:12px;padding:16px;font-size:18px;font-weight:bold;">
       Ouvrir les réservations
     </a>
@@ -54,79 +46,6 @@
 
       return outputArray;
     }
-
-    function diagnostic() {
-      alert(
-        "Notification: " + typeof Notification + "\\n" +
-        "ServiceWorker: " + ("serviceWorker" in navigator) + "\\n" +
-        "PushManager: " + ("PushManager" in window) + "\\n" +
-        "Permission: " + (typeof Notification !== "undefined" ? Notification.permission : "indisponible") + "\\n" +
-        "Standalone: " + window.navigator.standalone
-      );
-    }
-
-    async function enableNotifications() {
-      alert("Début activation notifications");
-
-      if (!("Notification" in window)) {
-        alert("Les notifications ne sont pas supportées sur cet appareil.");
-        return;
-      }
-
-      if (!("serviceWorker" in navigator)) {
-        alert("Service worker non supporté.");
-        return;
-      }
-
-      if (!("PushManager" in window)) {
-        alert("Push non supporté sur cet appareil.");
-        return;
-      }
-
-      const permission = await Notification.requestPermission();
-
-      if (permission !== "granted") {
-        alert("Notifications refusées.");
-        return;
-      }
-
-      const registration = await navigator.serviceWorker.register("/sw.js");
-      await navigator.serviceWorker.ready;
-
-      const existing = await registration.pushManager.getSubscription();
-      if (existing) {
-        await existing.unsubscribe();
-      }
-
-      const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
-      });
-
-      const response = await fetch("/.netlify/functions/save-push-subscription", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          subscription,
-          userAgent: navigator.userAgent,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        console.error(result);
-        alert("Notifications autorisées, mais abonnement non enregistré.");
-        return;
-      }
-
-      alert("Notifications activées et enregistrées.");
-    }
-
-    document.getElementById("enable-btn").addEventListener("click", enableNotifications);
-    document.getElementById("diagnostic-btn").addEventListener("click", diagnostic);
 
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js");

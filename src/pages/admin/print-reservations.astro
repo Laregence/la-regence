@@ -10,7 +10,6 @@ const title = "Impression réservations — La Régence";
   </head>
 
   <body>
-  <h1 style="color:red">TEST ROUGE</h1>
     <main id="print-root">
       Chargement...
     </main>
@@ -112,7 +111,7 @@ const title = "Impression réservations — La Régence";
                         <td style="border:1px solid #cbd5e1;padding:12px 10px;font-weight:bold;color:#25471f;">${formatHeure(r.heure)}</td>
                         <td style="border:1px solid #cbd5e1;padding:12px 10px;">${(r.nom || "").toUpperCase()} ${r.prenom || ""}</td>
                         <td style="border:1px solid #cbd5e1;padding:12px 10px;text-align:center;font-weight:bold;">${r.nb_personnes || ""}</td>
-                        <td style="border:1px solid #cbd5e1;padding:12px 10px;text-align:center;">□</td>
+                        <td style="border:1px solid #cbd5e1;padding:12px 10px;text-align:center;">☐</td>
                         <td style="border:1px solid #cbd5e1;padding:12px 10px;">${labelSalle(r.preference_salle)}</td>
                         <td style="border:1px solid #cbd5e1;padding:12px 10px;">${r.telephone || ""}</td>
                         <td style="border:1px solid #cbd5e1;padding:12px 10px;">${r.commentaire_client || ""}</td>
@@ -150,11 +149,6 @@ const title = "Impression réservations — La Régence";
 
 <style>
 
-table,
-th,
-td {
-  border: 2px solid red !important;
-}
 
 body {
   margin: 0;
