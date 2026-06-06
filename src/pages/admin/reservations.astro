@@ -373,11 +373,27 @@ function showNewReservationAlert(count) {
       }
 
       document.querySelectorAll(".calendar-day").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          selectedDate = btn.dataset.date;
-          renderCalendar();
-          renderSelectedDay();
-        });
+btn.addEventListener("click", () => {
+  selectedDate = btn.dataset.date;
+  renderCalendar();
+  renderSelectedDay();
+
+  const dayReservations = getReservationsForDate(selectedDate);
+  const hasATraiter = dayReservations.some((r) => r.a_traiter);
+
+  if (hasATraiter) {
+    setTimeout(() => {
+      const firstPending = document.querySelector(
+        `article[data-a-traiter="true"]`
+      );
+
+      firstPending?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 100);
+  }
+});
       });
     }
 
@@ -417,7 +433,7 @@ function showNewReservationAlert(count) {
           const isNew = r.statut === "nouvelle";
 
           html += `
-            <article class="rounded-2xl soft-border bg-white/50 p-5 mb-3 ${isNew ? "ring-2 ring-red-200" : ""}" data-id="${r.id}">
+            <article class="rounded-2xl soft-border bg-white/50 p-5 mb-3 ${isNew ? "ring-2 ring-red-200" : ""}" data-id="${r.id}" data-a-traiter="${r.a_traiter}">
               <div class="flex flex-col md:flex-row md:justify-between gap-3">
                 <div>
                   <p class="font-limelight text-2xl text-brand">
