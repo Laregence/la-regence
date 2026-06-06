@@ -1,5 +1,3 @@
-import { createClient } from "@supabase/supabase-js";
-
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
     return {
@@ -17,36 +15,28 @@ export async function handler(event) {
     if (!supabaseUrl || !supabaseSecretKey) {
       return {
         statusCode: 500,
-        body: JSON.stringify({
-          error: "Configuration Supabase serveur manquante",
-        }),
+        body: JSON.stringify({ error: "Configuration Supabase serveur manquante" }),
       };
     }
-
-    const supabase = createClient(supabaseUrl, supabaseSecretKey);
 
     const dateService = reservation.date_service;
     const service = reservation.service;
 
-    if (!dateService || !service) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({
-          error: "Date ou service manquant.",
-        }),
-      };
-    }
+    const exceptionRes = await fetch(
+      `${supabaseUrl}/rest/v1/reservation_exceptions?date_service=eq.${dateService}&select=*`,
+      {
+        headers: {
+          apikey: supabaseSecretKey,
+          Authorization: `Bearer ${supabaseSecretKey}`,
+        },
+      }
+    );
 
-    const { data: exception } = await supabase
-      .from("reservation_exceptions")
-      .select("*")
-      .eq("date_service", dateService)
-      .maybeSingle();
+    const exceptions = await exceptionRes.json();
+    const exception = exceptions?.[0];
 
     const requestedDate = new Date(`${dateService}T00:00:00`);
-    const dayOfWeek = requestedDate.getDay(); // 0 = dimanche
-
-    const isSunday = dayOfWeek === 0;
+    const isSunday = requestedDate.getDay() === 0;
 
     let midiOuvert = !isSunday;
     let soirOuvert = !isSunday;
@@ -82,45 +72,50 @@ export async function handler(event) {
         }),
       };
     }
+
     if (service === "soir" && isTodayInFrance(dateService) && isAfterSoirCutoffInFrance()) {
-  return {
-    statusCode: 400,
-    body: JSON.stringify({
-      error: "Les réservations pour ce soir sont désormais fermées. Merci de nous appeler au 05 58 85 92 72.",
-    }),
-  };
-}
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: "Les réservations pour ce soir sont désormais fermées. Merci de nous appeler au 05 58 85 92 72.",
+        }),
+      };
+    }
 
     const cleanedReservation = {
       date_service: dateService,
       service,
       heure: reservation.heure,
       nb_personnes: Number(reservation.nb_personnes),
-
       nom: String(reservation.nom || "").trim(),
       prenom: String(reservation.prenom || "").trim(),
       telephone: String(reservation.telephone || "").trim(),
       email: String(reservation.email || "").trim(),
-
       preference_salle: reservation.preference_salle || "peu_importe",
       commentaire_client: String(reservation.commentaire_client || "").trim(),
-
       origine: "site",
       statut: "nouvelle",
       a_traiter: true,
     };
 
-    const { data, error } = await supabase
-      .from("reservations")
-      .insert(cleanedReservation)
-      .select()
-      .single();
+    const insertRes = await fetch(`${supabaseUrl}/rest/v1/reservations?select=*`, {
+      method: "POST",
+      headers: {
+        apikey: supabaseSecretKey,
+        Authorization: `Bearer ${supabaseSecretKey}`,
+        "Content-Type": "application/json",
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify(cleanedReservation),
+    });
 
-    if (error) {
+    const insertData = await insertRes.json();
+
+    if (!insertRes.ok) {
       return {
         statusCode: 400,
         body: JSON.stringify({
-          error: error.message,
+          error: insertData.message || "Erreur Supabase",
         }),
       };
     }
@@ -129,7 +124,7 @@ export async function handler(event) {
       statusCode: 200,
       body: JSON.stringify({
         success: true,
-        reservation: data,
+        reservation: insertData[0],
       }),
     };
   } catch (error) {
@@ -164,23 +159,15 @@ function getFranceParts(date = new Date()) {
 }
 
 function isTodayInFrance(dateService) {
-  const nowFrance = getFranceParts();
-  return nowFrance.date === dateService;
+  return getFranceParts().date === dateService;
 }
 
 function isAfterMidiCutoffInFrance() {
   const nowFrance = getFranceParts();
-
-  if (nowFrance.hour > 13) return true;
-  if (nowFrance.hour === 13 && nowFrance.minute >= 30) return true;
-
-  return false;
+  return nowFrance.hour > 13 || (nowFrance.hour === 13 && nowFrance.minute >= 30);
 }
+
 function isAfterSoirCutoffInFrance() {
   const nowFrance = getFranceParts();
-
-  if (nowFrance.hour > 21) return true;
-  if (nowFrance.hour === 21 && nowFrance.minute >= 30) return true;
-
-  return false;
+  return nowFrance.hour > 21 || (nowFrance.hour === 21 && nowFrance.minute >= 30);
 }
