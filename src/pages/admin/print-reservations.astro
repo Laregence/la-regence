@@ -95,7 +95,8 @@ const title = "Impression réservations — La Régence";
                 <tr>
                   <th>Heure</th>
                   <th>Nom</th>
-                  <th>Pers.</th>
+                  <th>Couv.</th>
+                  <th>✓</th>
                   <th>Salle</th>
                   <th>Téléphone</th>
                   <th>Commentaire</th>
@@ -110,6 +111,7 @@ const title = "Impression réservations — La Régence";
                         <td class="heure">${formatHeure(r.heure)}</td>
                         <td>${(r.nom || "").toUpperCase()} ${r.prenom || ""}</td>
                         <td class="center">${r.nb_personnes || ""}</td>
+                        <td class="check-cell"></td>
                         <td>${labelSalle(r.preference_salle)}</td>
                         <td>${r.telephone || ""}</td>
                         <td>${r.commentaire_client || ""}</td>
@@ -117,7 +119,7 @@ const title = "Impression réservations — La Régence";
                     `).join("")
                     : `
                       <tr>
-                        <td colspan="6" class="empty">
+                        <td colspan="7" class="empty">
                           Aucune réservation pour ce service.
                         </td>
                       </tr>
@@ -144,171 +146,198 @@ const title = "Impression réservations — La Régence";
     </script>
 
     <style>
-      body {
-        margin: 0;
-        background: #f5efe6;
-        font-family: Arial, sans-serif;
-        color: #111827;
-      }
-
-      .page {
-        max-width: 1100px;
-        margin: 30px auto;
-        background: white;
-        padding: 32px;
-        border-radius: 16px;
-      }
-
-      header {
-        display: flex;
-        justify-content: space-between;
-        gap: 24px;
-        border-bottom: 3px solid #25471f;
-        padding-bottom: 16px;
-        margin-bottom: 20px;
-      }
-
-      h1 {
-        margin: 0;
-        color: #25471f;
-        font-size: 34px;
-        text-transform: uppercase;
-      }
-
-      header p {
-        margin: 4px 0 0;
-        font-size: 20px;
-        text-transform: uppercase;
-      }
-
-      .date {
-        font-size: 22px;
-        font-weight: bold;
-        text-align: right;
-        color: #25471f;
-      }
-
-      .summary {
-        margin: 16px 0 24px;
-        font-size: 20px;
-      }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 15px;
-  border: 2px solid #25471f;
-}
-
-th {
-  background: #25471f;
-  color: white;
-  text-align: left;
-  padding: 10px;
-  border: 1px solid #25471f;
-}
-
-td {
-  border: 1px solid #cbd5e1;
-  padding: 12px 10px;
-  vertical-align: middle;
-}
-
-tbody tr:nth-child(even) {
-  background: #f8fafc;
-}
-
-tbody tr:nth-child(odd) {
-  background: #ffffff;
-}
-
-tbody tr {
-  min-height: 42px;
-}
-
-.heure {
-  font-weight: bold;
-  color: #25471f;
-  white-space: nowrap;
-  font-size: 17px;
-}
-
-.center {
-  text-align: center;
-  font-weight: bold;
-  font-size: 17px;
-}
-
-      .heure {
-        font-weight: bold;
-        color: #25471f;
-        white-space: nowrap;
-      }
-
-      .center {
-        text-align: center;
-        font-weight: bold;
-      }
-
-      .empty {
-        text-align: center;
-        padding: 24px;
-        color: #64748b;
-      }
-
-      .notes {
-        margin-top: 32px;
-      }
-
-      .notes h2 {
-        color: #25471f;
-        font-size: 20px;
-      }
-
-      .notes div {
-        height: 38px;
-        border-bottom: 1px solid #ccc;
-      }
-
-      #print-btn {
-        margin-top: 24px;
-        background: #25471f;
-        color: white;
-        border: 0;
-        padding: 14px 22px;
-        border-radius: 10px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-@media print {
   body {
-    background: white;
+    margin: 0;
+    background: #f5efe6;
+    font-family: Arial, sans-serif;
+    color: #111827;
   }
 
   .page {
+    max-width: 1100px;
+    margin: 30px auto;
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    border-bottom: 3px solid #25471f;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
     margin: 0;
-    max-width: none;
-    padding: 0;
-    border-radius: 0;
+    color: #25471f;
+    font-size: 34px;
+    text-transform: uppercase;
   }
 
-  #print-btn {
-    display: none;
+  header p {
+    margin: 4px 0 0;
+    font-size: 20px;
+    text-transform: uppercase;
   }
 
-  tbody tr:nth-child(even) {
-    background: #f1f5f9 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  .date {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: right;
+    color: #25471f;
+  }
+
+  .summary {
+    margin: 16px 0 24px;
+    font-size: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    border: 2px solid #25471f;
   }
 
   th {
-    background: #25471f !important;
-    color: white !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    background: #25471f;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #25471f;
   }
-}
-    </style>
+
+  td {
+    border: 1px solid #cbd5e1;
+    padding: 12px 10px;
+    vertical-align: middle;
+  }
+
+  tbody tr:nth-child(even) {
+    background: #f8fafc;
+  }
+
+  tbody tr:nth-child(odd) {
+    background: #ffffff;
+  }
+
+  tbody tr {
+    min-height: 42px;
+  }
+
+  /* Largeurs colonnes */
+
+  th:nth-child(1),
+  td:nth-child(1) {
+    width: 90px;
+  }
+
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 70px;
+    text-align: center;
+  }
+
+  th:nth-child(4),
+  td:nth-child(4) {
+    width: 42px;
+    text-align: center;
+  }
+
+  th:nth-child(6),
+  td:nth-child(6) {
+    width: 140px;
+  }
+
+  .heure {
+    font-weight: bold;
+    color: #25471f;
+    white-space: nowrap;
+    font-size: 17px;
+  }
+
+  .center {
+    text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+  }
+
+  .check-cell {
+    text-align: center;
+  }
+
+  .check-cell::before {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #25471f;
+    border-radius: 3px;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 24px;
+    color: #64748b;
+  }
+
+  .notes {
+    margin-top: 32px;
+  }
+
+  .notes h2 {
+    color: #25471f;
+    font-size: 20px;
+  }
+
+  .notes div {
+    height: 38px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  #print-btn {
+    margin-top: 24px;
+    background: #25471f;
+    color: white;
+    border: 0;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  @media print {
+    body {
+      background: white;
+    }
+
+    .page {
+      margin: 0;
+      max-width: none;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    #print-btn {
+      display: none;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f1f5f9 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    th {
+      background: #25471f !important;
+      color: white !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
   </body>
 </html>
