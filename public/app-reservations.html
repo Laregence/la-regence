@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Réservations — La Régence</title>
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#25471f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Réservations" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+</head>
+
+<body style="margin:0;font-family:Arial;background:#F5EFE6;color:#25471f;display:flex;align-items:center;justify-content:center;min-height:100vh;">
+  <main style="text-align:center;padding:32px;max-width:420px;">
+    <img src="/icon-192.png" alt="La Régence" style="width:120px;margin-bottom:24px;" />
+
+    <h1 style="font-size:32px;margin:0 0 12px;">
+      La Régence
+    </h1>
+
+    <p style="font-size:18px;margin-bottom:28px;color:#334155;">
+      Application de gestion des réservations
+    </p>
+
+    <button onclick="enableNotifications()" style="display:block;width:100%;margin-bottom:14px;background:#25471f;color:white;border:0;border-radius:12px;padding:16px;font-size:18px;font-weight:bold;">
+      Activer les notifications
+    </button>
+
+    <a href="/admin/reservations" style="display:block;background:#a3742c;color:white;text-decoration:none;border-radius:12px;padding:16px;font-size:18px;font-weight:bold;">
+      Ouvrir les réservations
+    </a>
+  </main>
+
+  <script>
+    async function enableNotifications() {
+      if (!("Notification" in window)) {
+        alert("Les notifications ne sont pas supportées sur cet appareil.");
+        return;
+      }
+
+      const permission = await Notification.requestPermission();
+
+      if (permission === "granted") {
+        alert("Notifications activées.");
+      } else {
+        alert("Notifications refusées.");
+      }
+    }
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js");
+    }
+  </script>
+</body>
+</html>
