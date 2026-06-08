@@ -78,6 +78,7 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
               <span class="text-sm uppercase text-slate-600">Date</span>
               <input id="date-service" type="date" required
                 class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+                <p id="selected-date-label" class="mt-2 text-sm font-semibold text-brand"></p>
             </label>
 
             <label>
@@ -131,6 +132,7 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
 
     const form = document.getElementById("exception-form");
     const dateInput = document.getElementById("date-service");
+    const selectedDateLabel = document.getElementById("selected-date-label");
     const midiInput = document.getElementById("midi-ouvert");
     const soirInput = document.getElementById("soir-ouvert");
     const raisonInput = document.getElementById("raison");
@@ -317,6 +319,18 @@ closeDinnerBtn?.addEventListener("click", () => {
 openAllBtn?.addEventListener("click", () => {
   midiInput.checked = true;
   soirInput.checked = true;
+});
+dateInput?.addEventListener("change", () => {
+  if (!dateInput.value || !selectedDateLabel) return;
+
+  selectedDateLabel.textContent = new Date(
+    dateInput.value + "T00:00:00"
+  ).toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 });
     checkSession();
   </script>
