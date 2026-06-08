@@ -51,6 +51,28 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
             Ajouter une exception
           </h2>
 
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+  <button type="button" id="close-day"
+    class="rounded-xl bg-red-700 text-white px-4 py-3">
+    Fermer journée
+  </button>
+
+  <button type="button" id="close-lunch"
+    class="rounded-xl bg-orange-600 text-white px-4 py-3">
+    Fermer midi
+  </button>
+
+  <button type="button" id="close-dinner"
+    class="rounded-xl bg-orange-600 text-white px-4 py-3">
+    Fermer soir
+  </button>
+
+  <button type="button" id="open-all"
+    class="rounded-xl bg-green-700 text-white px-4 py-3">
+    Tout ouvrir
+  </button>
+</div>
+
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <label>
               <span class="text-sm uppercase text-slate-600">Date</span>
@@ -112,6 +134,10 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
     const midiInput = document.getElementById("midi-ouvert");
     const soirInput = document.getElementById("soir-ouvert");
     const raisonInput = document.getElementById("raison");
+    const closeDayBtn = document.getElementById("close-day");
+    const closeLunchBtn = document.getElementById("close-lunch");
+    const closeDinnerBtn = document.getElementById("close-dinner");
+    const openAllBtn = document.getElementById("open-all");
     const formMessage = document.getElementById("form-message");
     const list = document.getElementById("exceptions-list");
 
@@ -263,7 +289,25 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
       await supabase.auth.signOut();
       await checkSession();
     });
+closeDayBtn?.addEventListener("click", () => {
+  midiInput.checked = false;
+  soirInput.checked = false;
+});
 
+closeLunchBtn?.addEventListener("click", () => {
+  midiInput.checked = false;
+  soirInput.checked = true;
+});
+
+closeDinnerBtn?.addEventListener("click", () => {
+  midiInput.checked = true;
+  soirInput.checked = false;
+});
+
+openAllBtn?.addEventListener("click", () => {
+  midiInput.checked = true;
+  soirInput.checked = true;
+});
     checkSession();
   </script>
 </SidebarLayout>
