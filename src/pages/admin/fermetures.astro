@@ -191,8 +191,18 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
           <div class="flex flex-col md:flex-row md:justify-between gap-3">
             <div>
               <p class="font-limelight text-2xl text-brand">
-                ${formatDate(e.date_service)}
-              </p>
+  ${new Date(e.date_service + "T00:00:00").toLocaleDateString("fr-FR", {
+    weekday: "long"
+  }).toUpperCase()}
+</p>
+
+<p class="text-lg text-slate-700">
+  ${new Date(e.date_service + "T00:00:00").toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  })}
+</p>
               <p class="text-slate-700 mt-1">
                 Midi : <strong>${e.midi_ouvert ? "ouvert" : "fermé"}</strong>
                 · Soir : <strong>${e.soir_ouvert ? "ouvert" : "fermé"}</strong>
