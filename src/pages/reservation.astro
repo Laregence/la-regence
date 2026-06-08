@@ -184,11 +184,15 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
   heureSelect.innerHTML = '<option value="">Choisir une heure</option>';
 
   horaires[service].forEach((h) => {
-    const option = document.createElement("option");
-    option.value = h;
-    option.textContent = h.replace(":", "h");
-    heureSelect.appendChild(option);
-  });
+  if (isToday(dateInput?.value) && isPastSlot(h)) {
+    return;
+  }
+
+  const option = document.createElement("option");
+  option.value = h;
+  option.textContent = h.replace(":", "h");
+  heureSelect.appendChild(option);
+});
 }
 
 let reservationExceptions = [];
@@ -242,6 +246,18 @@ function isToday(dateStr) {
     selected.getMonth() === today.getMonth() &&
     selected.getDate() === today.getDate()
   );
+}
+
+function isPastSlot(heure) {
+  if (!heure) return true;
+
+  const now = new Date();
+  const [hour, minute] = heure.split(":").map(Number);
+
+  if (hour < now.getHours()) return true;
+  if (hour === now.getHours() && minute <= now.getMinutes()) return true;
+
+  return false;
 }
 
 function isAfterMidiCutoff() {
@@ -325,7 +341,10 @@ function validateDateSelection() {
   return true;
 }
 
-dateInput?.addEventListener("change", validateDateSelection);
+dateInput?.addEventListener("change", () => {
+  updateHeures();
+  validateDateSelection();
+});
 
 loadReservationExceptions();
 
