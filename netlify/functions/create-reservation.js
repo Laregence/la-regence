@@ -80,6 +80,14 @@ export async function handler(event) {
           error: "Les réservations pour ce soir sont désormais fermées. Merci de nous appeler au 05 58 85 92 72.",
         }),
       };
+      if (isTodayInFrance(dateService) && isPastSlotInFrance(reservation.heure)) {
+      return {
+      statusCode: 400,
+      body: JSON.stringify({
+        error: "Ce créneau horaire n’est plus disponible. Merci de choisir un horaire plus tardif.",
+      }),
+  };
+}
     }
 
     const cleanedReservation = {
@@ -170,4 +178,19 @@ function isAfterMidiCutoffInFrance() {
 function isAfterSoirCutoffInFrance() {
   const nowFrance = getFranceParts();
   return nowFrance.hour > 21 || (nowFrance.hour === 21 && nowFrance.minute >= 30);
+}
+function isPastSlotInFrance(heure) {
+  if (!heure) return true;
+
+  const nowFrance = getFranceParts();
+
+  const [hour, minute] = String(heure)
+    .slice(0, 5)
+    .split(":")
+    .map(Number);
+
+  if (hour < nowFrance.hour) return true;
+  if (hour === nowFrance.hour && minute <= nowFrance.minute) return true;
+
+  return false;
 }
