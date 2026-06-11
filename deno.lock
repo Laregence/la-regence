@@ -15,7 +15,9 @@
         "npm:@supabase/supabase-js@^2.106.2",
         "npm:@tailwindcss/vite@^4.1.13",
         "npm:astro@^5.14.1",
-        "npm:tailwindcss@^4.1.13"
+        "npm:tailwindcss@^4.1.13",
+        "npm:web-push@^3.6.7",
+        "npm:ws@^8.21.0"
       ]
     }
   }

@@ -63,10 +63,13 @@ const description = "Gestion des réservations La Régence.";
 
             <h2 id="calendar-title" class="font-limelight text-3xl text-brand"></h2>
 
-            <button id="next-month"
-              class="rounded-xl border border-brand text-brand px-4 py-2 hover:bg-brand hover:text-white transition">
-              →
-            </button>
+<button id="next-month"
+  class="relative rounded-xl border border-brand text-brand px-4 py-2 hover:bg-brand hover:text-white transition">
+  →
+  <span id="next-month-alert"
+    class="hidden absolute -top-2 -right-2 min-w-6 h-6 rounded-full bg-red-700 text-white text-xs font-bold items-center justify-center px-1">
+  </span>
+</button>
           </div>
 
           <div class="grid grid-cols-7 gap-2 text-center text-sm uppercase text-slate-600 mb-2">
@@ -147,7 +150,7 @@ const description = "Gestion des réservations La Régence.";
     const dayDetails = document.getElementById("day-details");
     const prevMonthBtn = document.getElementById("prev-month");
     const nextMonthBtn = document.getElementById("next-month");
-
+    const nextMonthAlert = document.getElementById("next-month-alert");
     const newResaAlert = document.getElementById("new-resa-alert");
     const newResaAlertText = document.getElementById("new-resa-alert-text");
     const newResaAlertClose = document.getElementById("new-resa-alert-close");
@@ -302,10 +305,41 @@ function showNewReservationAlert(count) {
     function getReservationsForDate(dateKey) {
       return reservations.filter((r) => r.date_service === dateKey);
     }
+function updateFutureMonthAlert() {
+  if (!nextMonthAlert) return;
 
+  const currentYear = currentMonth.getFullYear();
+  const currentMonthIndex = currentMonth.getMonth();
+
+  const futurePendingCount = reservations.filter((r) => {
+    if (!r.a_traiter) return false;
+
+    const reservationDate = new Date(r.date_service + "T00:00:00");
+
+    return (
+      reservationDate.getFullYear() > currentYear ||
+      (
+        reservationDate.getFullYear() === currentYear &&
+        reservationDate.getMonth() > currentMonthIndex
+      )
+    );
+  }).length;
+
+  if (futurePendingCount > 0) {
+    nextMonthAlert.textContent = futurePendingCount;
+    nextMonthAlert.classList.remove("hidden");
+    nextMonthAlert.classList.add("flex");
+  } else {
+    nextMonthAlert.textContent = "";
+    nextMonthAlert.classList.add("hidden");
+    nextMonthAlert.classList.remove("flex");
+  }
+}
     function renderCalendar() {
       calendarTitle.textContent = formatMonth(currentMonth).toUpperCase();
       calendarGrid.innerHTML = "";
+
+      updateFutureMonthAlert();
 
       const year = currentMonth.getFullYear();
       const month = currentMonth.getMonth();
