@@ -45,6 +45,33 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
             Déconnexion
           </button>
         </div>
+<div class="mt-8 rounded-2xl soft-border bg-white/40 p-4">
+  <div class="flex items-center justify-between gap-4 mb-4">
+    <button id="prev-month"
+      class="rounded-xl border border-brand text-brand px-4 py-2 hover:bg-brand hover:text-white transition">
+      ←
+    </button>
+
+    <h2 id="calendar-title" class="font-limelight text-3xl text-brand"></h2>
+
+    <button id="next-month"
+      class="rounded-xl border border-brand text-brand px-4 py-2 hover:bg-brand hover:text-white transition">
+      →
+    </button>
+  </div>
+
+  <div class="grid grid-cols-7 gap-2 text-center text-sm uppercase text-slate-600 mb-2">
+    <div>Lun</div>
+    <div>Mar</div>
+    <div>Mer</div>
+    <div>Jeu</div>
+    <div>Ven</div>
+    <div>Sam</div>
+    <div>Dim</div>
+  </div>
+
+  <div id="calendar-grid" class="grid grid-cols-7 gap-2 text-left"></div>
+</div>
 
         <form id="exception-form" class="rounded-2xl soft-border bg-white/50 p-5 text-left">
           <h2 class="font-limelight text-2xl text-brand text-right mb-5">
@@ -142,6 +169,13 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
     const openAllBtn = document.getElementById("open-all");
     const formMessage = document.getElementById("form-message");
     const list = document.getElementById("exceptions-list");
+    const calendarTitle = document.getElementById("calendar-title");
+    const calendarGrid = document.getElementById("calendar-grid");
+    const prevMonthBtn = document.getElementById("prev-month");
+    const nextMonthBtn = document.getElementById("next-month");
+
+    let exceptions = [];
+    let currentMonth = new Date();
 
     function formatDate(dateStr) {
       const date = new Date(dateStr + "T00:00:00");
@@ -165,7 +199,94 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
         adminBox.classList.add("hidden");
       }
     }
+function toDateKey(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
 
+function formatMonth(date) {
+  return date.toLocaleDateString("fr-FR", {
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function getExceptionForDate(dateKey) {
+  return exceptions.find((e) => e.date_service === dateKey);
+}
+
+function renderCalendar() {
+  if (!calendarTitle || !calendarGrid) return;
+
+  calendarTitle.textContent = formatMonth(currentMonth).toUpperCase();
+  calendarGrid.innerHTML = "";
+
+  const year = currentMonth.getFullYear();
+  const month = currentMonth.getMonth();
+
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+
+  let startOffset = firstDay.getDay() - 1;
+  if (startOffset < 0) startOffset = 6;
+
+  for (let i = 0; i < startOffset; i++) {
+    calendarGrid.insertAdjacentHTML("beforeend", `<div></div>`);
+  }
+
+  for (let day = 1; day <= lastDay.getDate(); day++) {
+    const date = new Date(year, month, day);
+    const dateKey = toDateKey(date);
+    const exception = getExceptionForDate(dateKey);
+
+    let status = "";
+    let statusClass = "border-brand/15 bg-white/50 text-slate-700";
+
+    if (exception) {
+      if (!exception.midi_ouvert && !exception.soir_ouvert) {
+        status = "Fermé";
+        statusClass = "border-red-300 bg-red-100 text-red-800";
+      } else if (!exception.midi_ouvert) {
+        status = "Midi fermé";
+        statusClass = "border-orange-300 bg-orange-100 text-orange-800";
+      } else if (!exception.soir_ouvert) {
+        status = "Soir fermé";
+        statusClass = "border-orange-300 bg-orange-100 text-orange-800";
+      } else {
+        status = "Ouvert";
+        statusClass = "border-green-300 bg-green-100 text-green-800";
+      }
+    }
+
+    calendarGrid.insertAdjacentHTML("beforeend", `
+      <button
+        type="button"
+        data-date="${dateKey}"
+        class="calendar-day min-h-[86px] rounded-xl border p-2 text-left transition ${statusClass}"
+      >
+        <div class="font-bold text-lg">${day}</div>
+        ${status ? `<div class="mt-2 text-xs font-bold">${status}</div>` : ""}
+        ${exception?.raison ? `<div class="mt-1 text-[11px] line-clamp-2">${exception.raison}</div>` : ""}
+      </button>
+    `);
+  }
+
+  document.querySelectorAll(".calendar-day").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      dateInput.value = btn.dataset.date;
+
+      const exception = getExceptionForDate(btn.dataset.date);
+
+      if (exception) {
+        midiInput.checked = exception.midi_ouvert;
+        soirInput.checked = exception.soir_ouvert;
+        raisonInput.value = exception.raison || "";
+      }
+    });
+  });
+}
     async function loadExceptions() {
       list.innerHTML = `<p class="text-right text-slate-600">Chargement...</p>`;
 
@@ -178,7 +299,8 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
         list.innerHTML = `<p class="text-right text-red-700">Erreur : ${error.message}</p>`;
         return;
       }
-
+        exceptions = data || [];
+        renderCalendar();
       if (!data.length) {
         list.innerHTML = `
           <div class="rounded-2xl soft-border bg-white/40 p-5 text-right">
@@ -331,6 +453,15 @@ dateInput?.addEventListener("change", () => {
     month: "long",
     year: "numeric",
   });
+});
+prevMonthBtn?.addEventListener("click", () => {
+  currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
+  renderCalendar();
+});
+
+nextMonthBtn?.addEventListener("click", () => {
+  currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
+  renderCalendar();
 });
     checkSession();
   </script>
