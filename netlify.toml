@@ -1,3 +1,7 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
 [[scheduled.functions]]
 name = "send-review-requests"
 schedule = "0 8 * * *"
