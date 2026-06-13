@@ -1,0 +1,3 @@
+[[scheduled.functions]]
+name = "send-review-requests"
+schedule = "0 8 * * *"
