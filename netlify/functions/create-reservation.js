@@ -21,6 +21,29 @@ export async function handler(event) {
 
     const dateService = reservation.date_service;
     const service = reservation.service;
+const settingsRes = await fetch(
+  `${supabaseUrl}/rest/v1/reservation_settings?key=eq.online_booking&select=*`,
+  {
+    headers: {
+      apikey: supabaseSecretKey,
+      Authorization: `Bearer ${supabaseSecretKey}`,
+    },
+  }
+);
+
+const settingsData = await settingsRes.json();
+const bookingSettings = settingsData?.[0]?.value;
+
+if (bookingSettings?.enabled === false) {
+  return {
+    statusCode: 400,
+    body: JSON.stringify({
+      error:
+        bookingSettings.message ||
+        "La réservation en ligne est actuellement en maintenance. Veuillez nous appeler au 05 58 85 92 72 pour toute réservation. Merci.",
+    }),
+  };
+}
 
     const exceptionRes = await fetch(
       `${supabaseUrl}/rest/v1/reservation_exceptions?date_service=eq.${dateService}&select=*`,
