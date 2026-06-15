@@ -45,6 +45,32 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
             Déconnexion
           </button>
         </div>
+
+        <div class="rounded-2xl soft-border bg-white/50 p-5 text-left mb-8">
+  <h2 class="font-limelight text-2xl text-brand text-right mb-4">
+    Réservation en ligne
+  </h2>
+
+  <label class="flex items-center justify-between rounded-xl border border-brand/20 bg-white/60 px-4 py-3">
+    <span>Réservations activées</span>
+    <input id="booking-enabled" type="checkbox" class="w-5 h-5" />
+  </label>
+
+  <label class="block mt-4">
+    <span class="text-sm uppercase text-slate-600">Message affiché si désactivé</span>
+    <textarea id="booking-message" rows="3"
+      class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3"></textarea>
+  </label>
+
+  <div class="mt-5 text-right">
+    <button id="save-booking-settings" type="button"
+      class="font-limelight bg-brand text-white px-6 py-3 rounded-xl hover:bg-[var(--color-copper)] transition">
+      Enregistrer le réglage
+    </button>
+  </div>
+
+  <p id="booking-settings-message" class="mt-3 text-sm text-right"></p>
+</div>
 <div class="mt-8 rounded-2xl soft-border bg-white/40 p-4">
   <div class="flex items-center justify-between gap-4 mb-4">
     <button id="prev-month"
@@ -173,6 +199,10 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
     const calendarGrid = document.getElementById("calendar-grid");
     const prevMonthBtn = document.getElementById("prev-month");
     const nextMonthBtn = document.getElementById("next-month");
+    const bookingEnabledInput = document.getElementById("booking-enabled");
+const bookingMessageInput = document.getElementById("booking-message");
+const saveBookingSettingsBtn = document.getElementById("save-booking-settings");
+const bookingSettingsMessage = document.getElementById("booking-settings-message");
 
     let exceptions = [];
     let currentMonth = new Date();
@@ -193,7 +223,8 @@ const description = "Gestion des jours ouverts et fermés aux réservations.";
       if (data.session) {
         loginBox.classList.add("hidden");
         adminBox.classList.remove("hidden");
-        await loadExceptions();
+        await loadBookingSettings();
+await loadExceptions();
       } else {
         loginBox.classList.remove("hidden");
         adminBox.classList.add("hidden");
@@ -286,6 +317,51 @@ function renderCalendar() {
       }
     });
   });
+}
+async function loadBookingSettings() {
+  const { data, error } = await supabase
+    .from("reservation_settings")
+    .select("*")
+    .eq("key", "online_booking")
+    .single();
+
+  if (error) {
+    console.error("Erreur réglages réservation :", error);
+    return;
+  }
+
+  const value = data?.value || {};
+
+  bookingEnabledInput.checked = value.enabled !== false;
+  bookingMessageInput.value =
+    value.message ||
+    "La réservation en ligne est actuellement en maintenance. Veuillez nous appeler au 05 58 85 92 72 pour toute réservation. Merci.";
+}
+
+async function saveBookingSettings() {
+  bookingSettingsMessage.textContent = "";
+
+  const payload = {
+    key: "online_booking",
+    value: {
+      enabled: bookingEnabledInput.checked,
+      message: bookingMessageInput.value.trim(),
+    },
+    updated_at: new Date().toISOString(),
+  };
+
+  const { error } = await supabase
+    .from("reservation_settings")
+    .upsert(payload, { onConflict: "key" });
+
+  if (error) {
+    bookingSettingsMessage.textContent = "Erreur : " + error.message;
+    bookingSettingsMessage.className = "mt-3 text-sm text-right text-red-700";
+    return;
+  }
+
+  bookingSettingsMessage.textContent = "Réglage enregistré.";
+  bookingSettingsMessage.className = "mt-3 text-sm text-right text-green-700";
 }
     async function loadExceptions() {
       list.innerHTML = `<p class="text-right text-slate-600">Chargement...</p>`;
@@ -463,6 +539,7 @@ nextMonthBtn?.addEventListener("click", () => {
   currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
   renderCalendar();
 });
+saveBookingSettingsBtn?.addEventListener("click", saveBookingSettings);
     checkSession();
   </script>
 </SidebarLayout>
