@@ -1,0 +1,104 @@
+---
+import SidebarLayout from "../layouts/SidebarLayout.astro";
+
+const title = "Recrutement — La Régence";
+const description = "Candidature spontanée et offres d'emploi à La Régence, bar-brasserie à Mont-de-Marsan.";
+---
+
+<SidebarLayout {title} {description} active="recrutement">
+  <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
+    <div class="max-w-3xl ml-auto text-right md:pr-12">
+      <h1 class="font-limelight text-5xl text-brand uppercase">
+        Recrutement
+      </h1>
+
+      <p class="mt-4 text-slate-700">
+        Vous souhaitez rejoindre l’équipe de La Régence ? Envoyez-nous votre candidature.
+      </p>
+
+      <form
+        name="recrutement"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        enctype="multipart/form-data"
+        class="mt-10 rounded-2xl soft-border bg-white/50 p-6 text-left space-y-5"
+      >
+        <input type="hidden" name="form-name" value="recrutement" />
+
+        <p class="hidden">
+          <label>Ne pas remplir : <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label>
+            <span class="text-sm uppercase text-slate-600">Prénom</span>
+            <input name="prenom" type="text" required
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+          </label>
+
+          <label>
+            <span class="text-sm uppercase text-slate-600">Nom</span>
+            <input name="nom" type="text" required
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+          </label>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label>
+            <span class="text-sm uppercase text-slate-600">Téléphone</span>
+            <input name="telephone" type="tel" required
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+          </label>
+
+          <label>
+            <span class="text-sm uppercase text-slate-600">Email</span>
+            <input name="email" type="email" required
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="text-sm uppercase text-slate-600">Poste recherché</span>
+          <select name="poste" required
+            class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3">
+            <option value="">Choisir un poste</option>
+            <option>Serveur / Serveuse</option>
+            <option>Barman / Barmaid</option>
+            <option>Cuisinier / Cuisinière</option>
+            <option>Commis de cuisine</option>
+            <option>Plonge</option>
+            <option>Candidature spontanée</option>
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="text-sm uppercase text-slate-600">Message</span>
+          <textarea name="message" rows="5"
+            placeholder="Disponibilités, expérience, type de contrat recherché..."
+            class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3"></textarea>
+        </label>
+
+        <label class="block">
+          <span class="text-sm uppercase text-slate-600">CV / lettre de motivation</span>
+          <input
+            name="document"
+            type="file"
+            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+            class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3"
+          />
+          <p class="mt-2 text-sm text-slate-500">
+            Formats acceptés : PDF, Word ou image.
+          </p>
+        </label>
+
+        <div class="text-right">
+          <button type="submit"
+            class="font-limelight bg-brand text-white px-6 py-3 rounded-xl hover:bg-[var(--color-copper)] transition">
+            Envoyer ma candidature
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</SidebarLayout>
