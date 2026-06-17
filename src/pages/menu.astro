@@ -38,14 +38,18 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
   <!-- Colonne droite : menu / formule midi -->
   <div class="justify-self-end w-full max-w-5xl text-right">
     <button
-      type="button"
-      id="open-midi"
-      class="text-lg text-slate-700 uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer hover:text-brand transition"
-      aria-haspopup="dialog"
-      aria-controls="menu-du-jour-lightbox"
-    >
-      Formule midi
-    </button>
+  type="button"
+  id="open-midi"
+  class="text-lg uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer
+         text-brand font-semibold underline decoration-[var(--color-copper)]
+         decoration-2 underline-offset-4
+         hover:text-[var(--color-copper)] hover:scale-105 transition"
+  aria-haspopup="dialog"
+  aria-controls="menu-du-jour-lightbox"
+>
+  Formule midi
+  <span aria-hidden="true">↗</span>
+</button>
 
     <div class="mt-4 space-y-4">
       <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
