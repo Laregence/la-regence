@@ -1,8 +1,8 @@
 ---
 import SidebarLayout from "../layouts/SidebarLayout.astro";
 
-const title = "La Régence — Contact";
-const description = "Horaires, réservation et contact de La Régence à Mont-de-Marsan.";
+const title = "Restaurant centre-ville Mont-de-Marsan | Contact La Régence";
+const description = "Contact, horaires et réservation du restaurant brasserie La Régence à Mont-de-Marsan. Menu du midi, dîner, tapas, cocktails et bières pression du lundi au samedi.";
 ---
 
 <SidebarLayout {title} {description} active="contact">
@@ -26,7 +26,8 @@ const description = "Horaires, réservation et contact de La Régence à Mont-de
                 <p class="font-bold">HORAIRES</p>
                 <p class="mt-2">DU LUNDI AU SAMEDI</p>
                 <p class="text-xl font-semibold">7H30 – 00H00</p>
-                <p class="font-bold">REPAS</p>
+
+                <p class="font-bold mt-4">REPAS</p>
                 <p class="mt-2">DU LUNDI AU SAMEDI</p>
                 <p class="text-xl font-semibold">12H00 – 14H00</p>
                 <p class="text-xl font-semibold">19H00 – 22H00</p>
@@ -44,6 +45,10 @@ const description = "Horaires, réservation et contact de La Régence à Mont-de
               <div>
                 <p class="font-bold">Réservation</p>
                 <p class="mt-2">
+                  La Régence, <strong>restaurant brasserie en centre-ville de Mont-de-Marsan</strong>, vous accueille du lundi au samedi pour le déjeuner, le dîner, l’apéritif ou un verre entre amis.
+                </p>
+
+                <p class="mt-3">
                   Si vous êtes un groupe de plus de 8 personnes, vous pouvez également nous contacter directement par écrit
                   <a
                     href="mailto:laregencemdm@gmail.com"
@@ -65,7 +70,11 @@ const description = "Horaires, réservation et contact de La Régence à Mont-de
               </div>
 
               <div>
-                <p>2 rue Léon Gambetta, 40 000 Mont de Marsan</p>
+                <p>
+                  <strong>La Régence</strong><br />
+                  2 rue Léon Gambetta<br />
+                  40000 Mont-de-Marsan
+                </p>
               </div>
             </div>
           </div>
@@ -75,7 +84,7 @@ const description = "Horaires, réservation et contact de La Régence à Mont-de
             <figure class="rounded-2xl soft-border overflow-hidden">
               <img
                 src="/contact-grande.jpg"
-                alt="La Régence — Contact — grande photo"
+                alt="Restaurant brasserie La Régence à Mont-de-Marsan"
                 class="w-full h-[55vh] md:h-[70vh] object-cover object-center"
                 loading="eager"
                 decoding="async"
@@ -85,7 +94,7 @@ const description = "Horaires, réservation et contact de La Régence à Mont-de
             <figure class="hidden md:block self-start rounded-2xl soft-border overflow-hidden">
               <img
                 src="/contact-petite.jpg"
-                alt="La Régence — Contact — photo secondaire"
+                alt="Salle et ambiance du restaurant La Régence à Mont-de-Marsan"
                 class="w-[min(22vw,420px)] min-w-[280px] h-[28vh] object-cover object-center"
                 loading="lazy"
                 decoding="async"
