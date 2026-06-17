@@ -85,6 +85,11 @@ const restaurantSchema = {
 ---
 
 <SidebarLayout {title} {description} active="accueil">
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(restaurantSchema)}
+  ></script>
 
 
   <!-- ========= SPLASH ========= -->
