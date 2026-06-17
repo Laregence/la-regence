@@ -10,47 +10,49 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
   <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
     <div class="max-w-[1400px] ml-auto">
 
-<p class="text-slate-700 leading-relaxed text-base">
-  Découvrez la carte du restaurant La Régence à Mont-de-Marsan : formule du midi, tapas, entrées, plats de brasserie, burgers, tartares, salades et desserts. Service le midi et le soir du lundi au samedi.
-</p>
+
 
       <!-- Titre -->
       <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase text-right">MENU</h1>
       <div class="h-8"></div>
 
       <!-- ===== FORMULE MIDI (cliquable) ===== -->
-      <div class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
-        <!-- Colonne gauche (vide sur cette section) -->
-        <div class="hidden md:block"></div>
+<div class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
+  <!-- Colonne gauche : texte descriptif -->
+  <div class="hidden md:block">
+    <p class="max-w-sm text-slate-700 leading-relaxed text-base text-left">
+      Découvrez la carte du restaurant La Régence à Mont-de-Marsan : formule du midi, tapas, entrées, plats de brasserie, burgers, tartares, salades et desserts. Service le midi et le soir du lundi au samedi.
+    </p>
+  </div>
 
-        <!-- Colonne texte -->
-        <div class="justify-self-end w-full max-w-5xl text-right">
-          <button
-            type="button"
-            id="open-midi"
-            class="text-lg text-slate-700 uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer hover:text-brand transition"
-            aria-haspopup="dialog"
-            aria-controls="menu-du-jour-lightbox"
-          >
-            Formule midi
-          </button>
+  <!-- Colonne droite : menu / formule midi -->
+  <div class="justify-self-end w-full max-w-5xl text-right">
+    <button
+      type="button"
+      id="open-midi"
+      class="text-lg text-slate-700 uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer hover:text-brand transition"
+      aria-haspopup="dialog"
+      aria-controls="menu-du-jour-lightbox"
+    >
+      Formule midi
+    </button>
 
-          <div class="mt-4 space-y-4">
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p class=" uppercase">Plat</p></div>
-              <div class="text-right font-medium">12 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p class="uppercase">Entrée / Plat ou Plat / Dessert</p></div>
-              <div class="text-right font-medium">15 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p class="uppercase">Entrée / Plat / Dessert</p></div>
-              <div class="text-right font-medium">18 €</div>
-            </div>
-          </div>
-        </div>
+    <div class="mt-4 space-y-4">
+      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+        <div class="text-right"><p class="uppercase">Plat</p></div>
+        <div class="text-right font-medium">12 €</div>
       </div>
+      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+        <div class="text-right"><p class="uppercase">Entrée / Plat ou Plat / Dessert</p></div>
+        <div class="text-right font-medium">15 €</div>
+      </div>
+      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+        <div class="text-right"><p class="uppercase">Entrée / Plat / Dessert</p></div>
+        <div class="text-right font-medium">18 €</div>
+      </div>
+    </div>
+  </div>
+</div>
 
       <!-- Séparateur (uniquement sous la colonne texte) -->
       <div class="my-8 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] items-center">
