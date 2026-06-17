@@ -15,6 +15,18 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
       <p class="mt-4 text-slate-700">
         Votre demande sera étudiée par notre équipe. Vous recevrez une confirmation après validation.
       </p>
+<div id="booking-disabled-box" class="hidden rounded-2xl soft-border bg-white/60 p-8 text-right">
+  <h2 class="font-limelight text-3xl text-brand uppercase">
+    Réservation en ligne indisponible
+  </h2>
+
+  <p id="booking-disabled-message" class="mt-4 text-lg text-slate-700"></p>
+
+  <a href="tel:+33558859272"
+    class="inline-block mt-6 font-limelight bg-brand text-white px-6 py-3 rounded-xl hover:bg-[var(--color-copper)] transition">
+    Appeler La Régence
+  </a>
+</div>
 
       <form id="reservation-form" class="mt-10 space-y-6 text-left">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -151,6 +163,8 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
   <script>
     import { supabase } from "../lib/supabaseClient.js";
 
+const bookingDisabledBox = document.getElementById("booking-disabled-box");
+const bookingDisabledMessage = document.getElementById("booking-disabled-message");
     const form = document.getElementById("reservation-form");
     const serviceSelect = document.getElementById("service");
     const heureSelect = document.getElementById("heure");
