@@ -35,9 +35,59 @@ function getMenuGitDate() {
 const menuGitDate = getMenuGitDate();
 const menuDate = formatDateFR(new Date(menuGitDate));
 const menuImage = `/menu-du-jour.png?v=${encodeURIComponent(menuGitDate)}`;
+const restaurantSchema = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "@id": "https://laregencemdm.fr/#restaurant",
+  "name": "La Régence",
+  "url": "https://laregencemdm.fr/",
+  "telephone": "+33558859272",
+  "image": [
+    "https://laregencemdm.fr/contact-grande.jpg",
+    "https://laregencemdm.fr/contact-petite.jpg"
+  ],
+  "description": "La Régence est un restaurant brasserie situé en centre-ville de Mont-de-Marsan. Cuisine de brasserie, menu du midi, tapas, cocktails, bières pression et vins du lundi au samedi.",
+  "servesCuisine": [
+    "Cuisine française",
+    "Brasserie",
+    "Tapas"
+  ],
+  "priceRange": "€€",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2 rue Léon Gambetta",
+    "postalCode": "40000",
+    "addressLocality": "Mont-de-Marsan",
+    "addressCountry": "FR"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "07:30",
+      "closes": "00:00"
+    }
+  ],
+  "menu": "https://laregencemdm.fr/menu/",
+  "acceptsReservations": true,
+  "sameAs": [
+    "https://www.instagram.com/la_regence_mdm/",
+    "https://www.facebook.com/LaRegenceMDM/"
+  ]
+};
 ---
 
-<SidebarLayout {title} {description} noScroll={true} active="home">
+<SidebarLayout {title} {description} active="accueil">
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(restaurantSchema)}
 
   <!-- ========= SPLASH ========= -->
   <div
