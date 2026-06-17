@@ -6,109 +6,100 @@ const description = "Contact, horaires et réservation du restaurant brasserie L
 ---
 
 <SidebarLayout {title} {description} active="contact">
-  <!-- Conteneur général sur la hauteur de l'écran -->
-  <section class="h-screen w-full bg-[var(--color-bg)] px-4 sm:px-6 md:px-8">
-    <!-- Wrapper principal : relatif + plein écran -->
+  <!-- Page contact compacte : tout visible sur écran desktop -->
+  <section class="min-h-screen md:h-screen w-full bg-[var(--color-bg)] px-4 sm:px-6 md:px-8 md:overflow-hidden">
     <div class="relative w-full h-full">
-      <!-- CONTENU (même logique que la-regence) -->
       <section class="md:h-full flex items-stretch relative">
-        <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-6 md:py-8">
+        <div class="w-full flex flex-col md:grid md:grid-cols-2 md:h-full relative z-10 gap-6 py-4 md:py-6">
 
-          <!-- COLONNE GAUCHE (texte) — alignée à droite -->
-          <div class="md:w-1/2 flex flex-col items-end text-right justify-start pt-8 md:pt-24 pr-0 md:pr-10">
-            <h1 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4 text-right">
+          <!-- COLONNE GAUCHE : infos compactes -->
+          <div class="flex flex-col items-end text-right justify-center pr-0 md:pr-8">
+            <h1 class="font-limelight text-brand text-4xl md:text-5xl leading-none inline-block relative pt-4 text-right">
               <span class="absolute top-0 right-0 h-[3px] w-full bg-copper rounded-full"></span>
               Contact
             </h1>
 
-            <div class="mt-6 text-slate-800 leading-relaxed text-lg space-y-6">
-              <div>
-                <p class="font-bold">HORAIRES</p>
-                <p class="mt-2">DU LUNDI AU SAMEDI</p>
-                <p class="text-xl font-semibold">7H30 – 00H00</p>
+            <div class="mt-5 w-full max-w-xl text-slate-800 leading-relaxed text-base space-y-4">
 
-                <p class="font-bold mt-4">REPAS</p>
-                <p class="mt-2">DU LUNDI AU SAMEDI</p>
-                <p class="text-xl font-semibold">12H00 – 14H00</p>
-                <p class="text-xl font-semibold">19H00 – 22H00</p>
+              <!-- Petite phrase SEO locale -->
+              <p>
+                La Régence, <strong>restaurant brasserie en centre-ville de Mont-de-Marsan</strong>, vous accueille du lundi au samedi pour le déjeuner, le dîner, l’apéritif ou un verre entre amis.
+              </p>
 
-                <p class="mt-5 font-bold">
-                  <a
-                    href="tel:+33558859272"
-                    class="font-limelight text-brand hover:text-[var(--color-copper)] transition-colors duration-300"
-                  >
-                    05 58 85 92 72
-                  </a>
-                </p>
+              <!-- Horaires en 2 blocs côte à côte -->
+              <div class="grid grid-cols-2 gap-3">
+                <div class="rounded-2xl soft-border bg-white/50 p-4">
+                  <p class="font-bold text-brand">HORAIRES</p>
+                  <p class="mt-1 text-sm">DU LUNDI AU SAMEDI</p>
+                  <p class="mt-1 text-xl font-semibold">7H30 – 00H00</p>
+                </div>
+
+                <div class="rounded-2xl soft-border bg-white/50 p-4">
+                  <p class="font-bold text-brand">REPAS</p>
+                  <p class="mt-1 text-sm">DU LUNDI AU SAMEDI</p>
+                  <p class="mt-1 text-xl font-semibold">12H – 14H</p>
+                  <p class="text-xl font-semibold">19H – 22H</p>
+                </div>
               </div>
 
-              <div>
-                <p class="font-bold">Réservation</p>
-                <p class="mt-2">
-                  La Régence, <strong>restaurant brasserie en centre-ville de Mont-de-Marsan</strong>, vous accueille du lundi au samedi pour le déjeuner, le dîner, l’apéritif ou un verre entre amis.
-                </p>
-
-                <p class="mt-3">
-                  Si vous êtes un groupe de plus de 8 personnes, vous pouvez également nous contacter directement par écrit
-                  <a
-                    href="mailto:laregencemdm@gmail.com"
-                    class="font-limelight text-brand hover:text-[var(--color-copper)] transition-colors duration-300"
-                  >
-                    laregencemdm@gmail.com
-                  </a>.
-                </p>
-
-                <p class="mt-3">
-                  Pour toute demande presse, autre requête ou si vous souhaitez vous joindre à notre équipe, n’hésitez pas à nous contacter en envoyant un message à
-                  <a
-                    href="mailto:laregencemdm@gmail.com"
-                    class="font-limelight text-brand hover:text-[var(--color-copper)] transition-colors duration-300"
-                  >
-                    laregencemdm@gmail.com
-                  </a>.
-                </p>
+              <!-- Téléphone -->
+              <div class="rounded-2xl soft-border bg-white/50 p-4">
+                <p class="font-bold text-brand">Réservation par téléphone</p>
+                <a
+                  href="tel:+33558859272"
+                  class="mt-1 inline-block font-limelight text-brand text-2xl hover:text-[var(--color-copper)] transition-colors duration-300"
+                >
+                  05 58 85 92 72
+                </a>
               </div>
 
-              <div>
-  <p>
-    <strong>La Régence</strong><br />
-    2 rue Léon Gambetta<br />
-    40000 Mont-de-Marsan
-  </p>
+              <!-- Mail compact -->
+              <div class="rounded-2xl soft-border bg-white/50 p-4">
+                <p class="font-bold text-brand">Groupes, presse & recrutement</p>
+                <p class="mt-1">
+                  Pour les groupes de plus de 8 personnes, une demande presse, une autre requête ou une candidature, contactez-nous par écrit :
+                </p>
 
-  <div class="mt-4 w-full max-w-md rounded-2xl soft-border overflow-hidden bg-white">
-    <iframe
-      title="Carte Google Maps de La Régence à Mont-de-Marsan"
-      src="https://www.google.com/maps?q=La%20R%C3%A9gence%2C%202%20rue%20L%C3%A9on%20Gambetta%2C%2040000%20Mont-de-Marsan&output=embed"
-      class="w-full h-[220px]"
-      style="border:0;"
-      loading="lazy"
-      allowfullscreen
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
-  </div>
-</div>
+                <a
+                  href="mailto:laregencemdm@gmail.com"
+                  class="mt-1 inline-block font-limelight text-brand hover:text-[var(--color-copper)] transition-colors duration-300"
+                >
+                  laregencemdm@gmail.com
+                </a>
+              </div>
+
+              <!-- Adresse + mini Google Maps -->
+              <div class="rounded-2xl soft-border overflow-hidden bg-white/50">
+                <div class="p-4">
+                  <p>
+                    <strong>La Régence</strong><br />
+                    2 rue Léon Gambetta<br />
+                    40000 Mont-de-Marsan
+                  </p>
+                </div>
+
+                <iframe
+                  title="Carte Google Maps de La Régence à Mont-de-Marsan"
+                  src="https://www.google.com/maps?q=La%20R%C3%A9gence%2C%202%20rue%20L%C3%A9on%20Gambetta%2C%2040000%20Mont-de-Marsan&output=embed"
+                  class="w-full h-[145px] md:h-[150px]"
+                  style="border:0;"
+                  loading="lazy"
+                  allowfullscreen
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+
             </div>
           </div>
 
-          <!-- COLONNE DROITE (images) -->
-          <div class="md:w-1/2 flex flex-col gap-4 pr-0 md:pr-[3vw]">
-            <figure class="rounded-2xl soft-border overflow-hidden">
+          <!-- COLONNE DROITE : une seule grande image -->
+          <div class="flex items-center pr-0 md:pr-[3vw]">
+            <figure class="w-full rounded-2xl soft-border overflow-hidden">
               <img
                 src="/contact-grande.jpg"
                 alt="Restaurant brasserie La Régence à Mont-de-Marsan"
-                class="w-full h-[55vh] md:h-[70vh] object-cover object-center"
+                class="w-full h-[42vh] md:h-[calc(100vh-3rem)] object-cover object-center"
                 loading="eager"
-                decoding="async"
-              />
-            </figure>
-
-            <figure class="hidden md:block self-start rounded-2xl soft-border overflow-hidden">
-              <img
-                src="/contact-petite.jpg"
-                alt="Salle et ambiance du restaurant La Régence à Mont-de-Marsan"
-                class="w-[min(22vw,420px)] min-w-[280px] h-[28vh] object-cover object-center"
-                loading="lazy"
                 decoding="async"
               />
             </figure>
