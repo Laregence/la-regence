@@ -183,6 +183,33 @@ const bookingDisabledMessage = document.getElementById("booking-disabled-message
       dateInput.setAttribute("min", today);
     }
 
+    async function checkBookingAvailability() {
+  const { data, error } = await supabase
+    .from("reservation_settings")
+    .select("*")
+    .eq("key", "online_booking")
+    .single();
+
+  if (error) {
+    console.error("Erreur réglage réservation :", error);
+    return;
+  }
+
+  const value = data?.value || {};
+
+  if (value.enabled === false) {
+    bookingDisabledMessage.textContent =
+      value.message ||
+      "La réservation en ligne est actuellement en maintenance. Veuillez nous appeler au 05 58 85 92 72 pour toute réservation. Merci.";
+
+    bookingDisabledBox.classList.remove("hidden");
+    form.classList.add("hidden");
+  } else {
+    bookingDisabledBox.classList.add("hidden");
+    form.classList.remove("hidden");
+  }
+}
+
     function updateHeures() {
   const service = serviceSelect?.value;
 
@@ -240,6 +267,7 @@ serviceSelect?.addEventListener("input", () => {
   validateDateSelection();
 });
 
+checkBookingAvailability();
 updateHeures();
 
 function isSunday(dateStr) {
