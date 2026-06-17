@@ -20,6 +20,14 @@ const ogImageUrl = Astro.site
 
 <html lang="fr">
   <head>
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Réservations" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#25471f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Réservations" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
@@ -180,6 +188,18 @@ const ogImageUrl = Astro.site
             : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
       >Contact</a>
     </li>
+    <li>
+  <a
+    href="/recrutement"
+    aria-current={active === "recrutement" ? "page" : undefined}
+    class={`block px-2 py-1 transition
+      ${active === "recrutement"
+        ? "text-[var(--color-copper)] font-semibold"
+        : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+  >
+    Recrutement
+  </a>
+</li>
   </ul>
 </nav>
 
@@ -295,6 +315,18 @@ const ogImageUrl = Astro.site
             : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
       >Contact</a>
     </li>
+    <li>
+  <a
+    href="/recrutement"
+    aria-current={active === "recrutement" ? "page" : undefined}
+    class={`block px-2 py-1 transition
+      ${active === "recrutement"
+        ? "text-[var(--color-copper)] font-semibold"
+        : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+  >
+    Recrutement
+  </a>
+</li>
   </ul>
 </nav>
 
