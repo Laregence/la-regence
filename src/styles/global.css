@@ -119,3 +119,8 @@
     margin-top: 0;
   }
 }
+.regence-title {
+  text-shadow:
+    0 0 1px var(--color-copper),
+    0 0 2px rgba(163, 116, 44, 0.3);
+}
