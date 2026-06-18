@@ -281,42 +281,6 @@ function isSunday(dateStr) {
   const date = new Date(dateStr + "T00:00:00");
   return date.getDay() === 0;
 }
-const exception = getExceptionForDate(selectedDate);
-
-if (exception && !exception.midi_ouvert && !exception.soir_ouvert) {
-  dateMessage.textContent =
-    exception.raison ||
-    "Les réservations sont fermées ce jour-là. Merci de nous appeler au 05 58 85 92 72.";
-
-  submitBtn.disabled = true;
-  return false;
-}
-
-if (
-  exception &&
-  selectedService === "midi" &&
-  !exception.midi_ouvert
-) {
-  dateMessage.textContent =
-    exception.raison ||
-    "Le service du midi est fermé ce jour-là. Merci de nous appeler au 05 58 85 92 72.";
-
-  submitBtn.disabled = true;
-  return false;
-}
-
-if (
-  exception &&
-  selectedService === "soir" &&
-  !exception.soir_ouvert
-) {
-  dateMessage.textContent =
-    exception.raison ||
-    "Le service du soir est fermé ce jour-là. Merci de nous appeler au 05 58 85 92 72.";
-
-  submitBtn.disabled = true;
-  return false;
-}
 
 function isToday(dateStr) {
   if (!dateStr) return false;
