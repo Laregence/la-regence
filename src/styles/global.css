@@ -13,7 +13,6 @@
 }
 
 @layer base {
-  @layer base {
   ::selection {
     background-color: var(--color-brand); /* ton vert foncé défini dans ton thème */
     color: #ffffff; /* texte blanc */
