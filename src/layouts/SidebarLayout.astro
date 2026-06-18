@@ -144,13 +144,16 @@ const ogImageUrl = Astro.site
   <ul class="font-limelight space-y-6 text-4xl uppercase text-center tracking-wide">
     <li>
       <a
-        href="/menu"
-        aria-current={active === "carte" ? "page" : undefined}
-        class={`block px-2 py-1 transition
-          ${active === "carte"
-            ? "text-[var(--color-copper)] font-semibold"
-            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
-      >Carte</a>
+  href="/menu"
+  style="font-family: 'Limelight', cursive;"
+  aria-current={active === "carte" ? "page" : undefined}
+  class={`block px-2 py-1 transition
+    ${active === "carte"
+      ? "text-[var(--color-copper)] font-semibold"
+      : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+>
+  Carte
+</a>
     </li>
     <li>
       <a
@@ -261,7 +264,7 @@ const ogImageUrl = Astro.site
   <!-- MILIEU : menu centré verticalement -->
   <div class="flex-1 flex items-center justify-center px-4">
     <nav class="flex flex-col items-center mt-6">
-  <ul class="space-y-5 text-2xl uppercase text-center">
+  <ul class="font-limelight space-y-6 text-2xl uppercase text-center tracking-wide">
     <!-- CARTE -->
     <li>
       <a
