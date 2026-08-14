@@ -146,9 +146,9 @@ const ogImageUrl = Astro.site
       <a
   href="/menu"
   style="font-family: 'Limelight', cursive;"
-  aria-current={active === "carte" ? "page" : undefined}
+  aria-current={active === "menu" ? "page" : undefined}
   class={`block px-2 py-1 transition
-    ${active === "carte"
+    ${active === "menu"
       ? "text-[var(--color-copper)] font-semibold"
       : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
 >
@@ -269,9 +269,9 @@ const ogImageUrl = Astro.site
     <li>
       <a
         href="/menu"
-        aria-current={active === "carte" ? "page" : undefined}
+        aria-current={active === "menu" ? "page" : undefined}
         class={`block px-2 py-1 transition
-          ${active === "carte"
+          ${active === "menu"
             ? "text-[var(--color-copper)] font-semibold"
             : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
       >Carte</a>
