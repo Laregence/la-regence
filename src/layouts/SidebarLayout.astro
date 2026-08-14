@@ -97,7 +97,7 @@ const ogImageUrl = Astro.site
         class="font-limelight uppercase text-3xl sm:text-4xl text-white"
         style="text-shadow: 1px 1px 2px black, -1px -1px 2px black;"
       >
-        LA RÉGENCE
+        <span translate="no" class="notranslate">LA RÉGENCE</span>
       </a>
       <a href="/" aria-label="Accueil">
         <img src="/logo.png" alt="La Régence" class="h-20 w-auto" /> <!-- Taille doublée -->
@@ -173,7 +173,7 @@ const ogImageUrl = Astro.site
           ${active === "la-regence"
             ? "text-[var(--color-copper)] font-semibold"
             : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
-      >La Régence</a>
+      ><span translate="no" class="notranslate">La Régence</span></a>
     </li>
     <li>
       <a
@@ -239,7 +239,7 @@ const ogImageUrl = Astro.site
       <div class="w-full h-[3px] bg-[var(--color-copper)]"></div>
       <div class="flex flex-col items-center py-3 opacity-90 text-sm">
         <img src="/logo.png" alt="La Régence" class="w-6 h-6 mb-1 opacity-90" />
-        <p>© La Régence 2025</p>
+        <p>© <span translate="no" class="notranslate">La Régence</span> 2025</p>
       </div>
     </div>
   </aside>
@@ -298,7 +298,7 @@ const ogImageUrl = Astro.site
           ${active === "la-regence"
             ? "text-[var(--color-copper)] font-semibold"
             : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
-      >La Régence</a>
+      ><span translate="no" class="notranslate">La Régence</span></a>
     </li>
 
     <!-- CONTACT -->
@@ -366,7 +366,7 @@ const ogImageUrl = Astro.site
       <div class="w-full h-[3px] bg-[var(--color-copper)]"></div>
       <div class="flex flex-col items-center py-3 opacity-90 text-sm">
         <img src="/logo.png" alt="La Régence" class="w-6 h-6 mb-1 opacity-90" />
-        <p>© La Régence 2025</p>
+        <p>© <span translate="no" class="notranslate">La Régence</span> 2025</p>
       </div>
     </footer>
   </div>
