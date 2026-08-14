@@ -24,7 +24,7 @@
 }
 
   html, body { color: var(--color-ink); background: var(--color-bg); }
-}
+
 
 /* 🔧 Composants utilitaires */
 @layer components {
