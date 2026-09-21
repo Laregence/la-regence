@@ -119,7 +119,92 @@ const restaurantSchema = {
 
   <!-- ========= CONTENU ========= -->
   <div id="page-wrap">
-    <section class="w-full md:h-[calc(100dvh-24px)] px-4 xl:px-6 py-3 overflow-hidden">
+
+    <!-- ===== MOBILE : images plein écran, sans bord ni recadrage ===== -->
+    <div class="md:hidden relative left-1/2 w-screen -translate-x-1/2 overflow-x-hidden">
+
+      <!-- 1. Grande image -->
+      <img
+        src="/grande.jpg"
+        alt="La Régence"
+        class="block w-full h-auto object-contain"
+      />
+
+      <!-- 2. Texte -->
+      <section class="w-full px-6 py-10 text-center">
+        <div class="space-y-4">
+          <h1 class="font-limelight text-3xl text-brand leading-tight uppercase regence-title">
+            Bar Restaurant
+          </h1>
+
+          <h1
+            translate="no"
+            class="notranslate font-limelight text-4xl text-brand leading-tight uppercase regence-title"
+          >
+            La Régence
+          </h1>
+
+          <p class="text-slate-700 italic text-base leading-snug">
+            « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
+          </p>
+
+          <p class="text-slate-700 leading-relaxed text-base">
+            <span translate="no" class="notranslate">La Régence</span> est un
+            <strong>bar restaurant brasserie</strong> situé en
+            <strong>centre-ville de Mont-de-Marsan</strong>, au 2 rue Léon Gambetta.
+            Depuis 1988, cette adresse fait partie du quotidien des Montois.
+            En 2024, deux frères reprennent l’établissement et lui donnent un nouveau souffle,
+            fidèle à son esprit convivial et chaleureux.
+          </p>
+
+          <p class="text-slate-700 leading-relaxed text-base">
+            Notre cuisine, inspirée de la tradition brasserie, se veut généreuse,
+            accessible et préparée avec soin, à partir de produits frais et de recettes
+            travaillées sur place. Le midi, nous vous accueillons pour une pause déjeuner
+            autour de notre <strong>menu du jour</strong> et de notre carte.
+            Le soir, <span translate="no" class="notranslate">La Régence</span> devient
+            une adresse idéale pour dîner, partager des tapas, boire un verre,
+            découvrir nos cocktails, nos bières pression et nos vins.
+          </p>
+
+          <p class="text-slate-700 leading-relaxed text-base">
+            Que ce soit pour un café le matin, un déjeuner en centre-ville,
+            un apéritif entre amis ou un dîner à Mont-de-Marsan, notre équipe vous accueille
+            du lundi au samedi dans une ambiance simple, conviviale et authentique.
+          </p>
+
+          <p class="text-slate-700">
+            <a href="tel:+33558859272" class="underline">
+              Réservez votre table en ligne ou par téléphone au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <!-- 3. Menu du jour : image entière, cliquable -->
+      <button
+        type="button"
+        class="js-menu-thumb block w-full m-0 p-0 border-0 bg-transparent cursor-pointer"
+        data-img={menuImage}
+        aria-label={`Ouvrir le menu du ${menuDate}`}
+      >
+        <img
+          src={menuImage}
+          alt={`Menu du ${menuDate}`}
+          class="block w-full h-auto object-contain"
+        />
+      </button>
+
+      <!-- 4. Petite image -->
+      <img
+        src="/petite2.jpg"
+        alt="La Régence"
+        class="block w-full h-auto object-contain"
+      />
+    </div>
+
+    <!-- ===== TABLETTE / DESKTOP : mise en page actuelle conservée ===== -->
+    <section class="hidden md:block w-full md:h-[calc(100dvh-24px)] px-4 xl:px-6 py-3 overflow-hidden">
 
       <div class="grid h-full grid-cols-[minmax(280px,1fr)_minmax(0,1fr)] gap-4 xl:gap-6">
 
@@ -129,21 +214,23 @@ const restaurantSchema = {
 
             <div class="space-y-4">
               <h1 class="font-limelight text-3xl sm:text-3xl md:text-3xl text-brand leading-tight uppercase regence-title">
-  Bar Restaurant
-</h1>
-<h1
-  translate="no"
-  class="notranslate font-limelight text-3xl sm:text-4xl md:text-5xl text-brand leading-tight uppercase regence-title"
->
-  La Régence
-</h1>
+                Bar Restaurant
+              </h1>
+
+              <h1
+                translate="no"
+                class="notranslate font-limelight text-3xl sm:text-4xl md:text-5xl text-brand leading-tight uppercase regence-title"
+              >
+                La Régence
+              </h1>
+
               <p class="text-slate-700 italic text-base leading-snug">
                 « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
               </p>
 
               <p class="text-slate-700 leading-relaxed text-base">
-  <span translate="no" class="notranslate">La Régence</span> est un <strong>bar restaurant brasserie</strong> situé en <strong>centre-ville de Mont-de-Marsan</strong>, au 2 rue Léon Gambetta. Depuis 1988, cette adresse fait partie du quotidien des Montois. En 2024, deux frères reprennent l’établissement et lui donnent un nouveau souffle, fidèle à son esprit convivial et chaleureux.
-</p>
+                <span translate="no" class="notranslate">La Régence</span> est un <strong>bar restaurant brasserie</strong> situé en <strong>centre-ville de Mont-de-Marsan</strong>, au 2 rue Léon Gambetta. Depuis 1988, cette adresse fait partie du quotidien des Montois. En 2024, deux frères reprennent l’établissement et lui donnent un nouveau souffle, fidèle à son esprit convivial et chaleureux.
+              </p>
 
               <p class="text-slate-700 leading-relaxed text-base">
                 Notre cuisine, inspirée de la tradition brasserie, se veut généreuse, accessible et préparée avec soin, à partir de produits frais et de recettes travaillées sur place. Le midi, nous vous accueillons pour une pause déjeuner autour de notre <strong> menu du jour </strong>et de notre carte. Le soir, <span translate="no" class="notranslate">La Régence</span> devient une adresse idéale pour dîner, partager des tapas, boire un verre, découvrir nos cocktails, nos bières pression et nos vins.
@@ -176,8 +263,10 @@ const restaurantSchema = {
             <div class="hidden xl:block xl:col-span-1 xl:row-span-2"></div>
 
             <!-- Menu du jour -->
-            <div class="relative group cursor-pointer rounded-2xl soft-border overflow-hidden xl:col-span-1 xl:row-span-4 js-menu-thumb" data-img={menuImage}>
-              
+            <div
+              class="relative group cursor-pointer rounded-2xl soft-border overflow-hidden xl:col-span-1 xl:row-span-4 js-menu-thumb"
+              data-img={menuImage}
+            >
               <img
                 src={menuImage}
                 alt={`Menu du ${menuDate}`}
@@ -185,9 +274,9 @@ const restaurantSchema = {
               />
 
               <div class="hidden xl:flex absolute inset-0 items-center justify-center pointer-events-none">
-            <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded text-center">
-            Menu du {menuDate}
-            </span>
+                <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded text-center">
+                  Menu du {menuDate}
+                </span>
               </div>
             </div>
 
@@ -197,41 +286,6 @@ const restaurantSchema = {
             </div>
 
           </div>
-
-          <!-- MOBILE -->
-          <div class="xl:hidden flex flex-col gap-4">
-
-            <div id="g-wrap" class="rounded-2xl soft-border overflow-hidden">
-              <img id="g-img" src="/grande.jpg" class="w-full h-auto object-contain" />
-            </div>
-
-            <div
-  class="relative rounded-2xl soft-border overflow-hidden js-menu-thumb cursor-pointer"
-  data-img={menuImage}
->
-  <div id="match-size-1" class="w-full">
-    <img
-      src={menuImage}
-      alt={`Menu du ${menuDate}`}
-      class="w-full h-full object-cover object-center"
-    />
-  </div>
-
-  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-    <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded text-center">
-      Menu du {menuDate}
-    </span>
-  </div>
-</div>
-
-            <div class="rounded-2xl soft-border overflow-hidden">
-              <div id="match-size-2" class="w-full">
-                <img src="/petite2.jpg" class="w-full h-full object-cover" />
-              </div>
-            </div>
-
-          </div>
-
         </div>
       </div>
     </section>
@@ -312,37 +366,6 @@ const restaurantSchema = {
     });
   })();
 
-  // Égaliser les hauteurs sous 1280px
-  (function () {
-    const mq = window.matchMedia('(max-width: 1279px)');
-    const gImg = document.getElementById('g-img');
-    const matchEls = [
-      document.getElementById('match-size-1'),
-      document.getElementById('match-size-2'),
-    ].filter(Boolean);
-
-    if (!gImg || !matchEls.length) return;
-
-    function syncHeights() {
-      if (!mq.matches) {
-        matchEls.forEach(el => { el.style.height = ''; });
-        return;
-      }
-
-      const rect = gImg.getBoundingClientRect();
-      if (rect.height > 0) {
-        const h = rect.height + 'px';
-        matchEls.forEach(el => { el.style.height = h; });
-      }
-    }
-
-    gImg.addEventListener('load', syncHeights);
-    window.addEventListener('load', syncHeights);
-    window.addEventListener('resize', syncHeights);
-
-    setTimeout(syncHeights, 50);
-    setTimeout(syncHeights, 250);
-  })();
 </script>
 
 
