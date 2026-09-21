@@ -146,9 +146,9 @@ const ogImageUrl = Astro.site
       <a
   href="/menu"
   style="font-family: 'Limelight', cursive;"
-  aria-current={active === "menu" ? "page" : undefined}
+  aria-current={active === "carte" ? "page" : undefined}
   class={`block px-2 py-1 transition
-    ${active === "menu"
+    ${active === "carte"
       ? "text-[var(--color-copper)] font-semibold"
       : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
 >
@@ -269,9 +269,9 @@ const ogImageUrl = Astro.site
     <li>
       <a
         href="/menu"
-        aria-current={active === "menu" ? "page" : undefined}
+        aria-current={active === "carte" ? "page" : undefined}
         class={`block px-2 py-1 transition
-          ${active === "menu"
+          ${active === "carte"
             ? "text-[var(--color-copper)] font-semibold"
             : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
       >Carte</a>
@@ -376,12 +376,28 @@ const ogImageUrl = Astro.site
       <!-- Contenu (colonne droite) -->
      <main
   class={`bg-main min-h-screen px-4 sm:px-6 md:px-8
-          pt-24 md:pt-0 md:h-dvh ${noScroll ? "md:overflow-hidden" : "md:overflow-y-auto"}`}
+          pt-24 pb-24 md:pt-0 md:pb-0 md:h-dvh ${noScroll ? "md:overflow-hidden" : "md:overflow-y-auto"}`}
 >
   <slot />
 </main>
 
 
+    </div>
+
+    <!-- ===== BANDEAU RÉSERVER MOBILE FIXE ===== -->
+    <div class="md:hidden fixed inset-x-0 bottom-0 z-40">
+      <a
+        href="/reservation"
+        aria-label="Réserver une table"
+        class="h-24 w-full flex items-center justify-center
+               bg-brand/95 backdrop-blur
+               border-t-[3px] border-[var(--color-copper)]
+               font-limelight text-3xl uppercase tracking-[0.12em]
+               text-[var(--color-bg)]
+               hover:text-[var(--color-copper)] transition"
+      >
+        Réserver
+      </a>
     </div>
 
     <!-- ===== Scripts : drawer mobile ===== -->
