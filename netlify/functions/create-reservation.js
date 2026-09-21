@@ -124,6 +124,9 @@ if (bookingSettings?.enabled === false) {
       email: String(reservation.email || "").trim(),
       preference_salle: reservation.preference_salle || "peu_importe",
       commentaire_client: String(reservation.commentaire_client || "").trim(),
+      marketing_email: reservation.marketing_email === true,
+      marketing_consent_at:
+      reservation.marketing_email === true ? new Date().toISOString() : null,
       origine: "site",
       statut: "nouvelle",
       a_traiter: true,
