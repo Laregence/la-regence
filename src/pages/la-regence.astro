@@ -7,18 +7,23 @@ const description = "Présentation du Bar & Restaurant La Régence à Mont-de-Ma
 
 <SidebarLayout {title} {description} active="la-regence">
   <!-- Conteneur général sur la hauteur de l'écran -->
-  <section class="h-screen w-full bg-[var(--color-bg)] px-4 sm:px-6 md:px-8">
+  <section class="min-h-screen md:h-screen w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)] md:w-full -mx-4 sm:-mx-6 md:mx-0 bg-[var(--color-bg)] px-0 md:px-8 overflow-x-hidden">
     <!-- Wrapper principal : relatif + plein écran -->
     <div class="relative w-full h-full">
       <!-- BARRE D’ONGLETS : fixe visuellement sur desktop, normale sur mobile -->
       <div
-        class="w-full md:w-1/2 pr-0 md:pr-10 mb-4
-               md:absolute md:top-4 md:left-0 md:z-30"
+        class="fixed top-24 inset-x-0 z-30 h-14
+               flex items-center justify-center
+               bg-[var(--color-bg)]/95 backdrop-blur
+               border-b-2 border-[var(--color-copper)]
+               md:absolute md:top-4 md:left-0 md:right-auto md:w-1/2 md:h-auto
+               md:block md:bg-transparent md:backdrop-blur-none md:border-b-0
+               md:pr-10 md:mb-4"
       >
-        <nav class="bg-[var(--color-bg)]/95 md:inline-block px-4 py-2 rounded-xl">
+        <nav class="w-full md:w-auto md:inline-block px-2 md:px-4 py-2 md:rounded-xl bg-[var(--color-bg)]/95">
           <ul
-            class="flex justify-center md:justify-start gap-4 md:gap-6
-                   font-limelight text-xl md:text-2xl tracking-wide text-brand"
+            class="flex justify-center md:justify-start gap-3 sm:gap-5 md:gap-6
+                   font-limelight text-base sm:text-lg md:text-2xl tracking-wide text-brand"
           >
             <li>
               <a
@@ -52,7 +57,7 @@ const description = "Présentation du Bar & Restaurant La Régence à Mont-de-Ma
       </div>
 
       <!-- CONTENEUR SCROLLABLE + SNAP POUR LES 3 PAGES -->
-      <div class="h-full md:overflow-y-scroll md:snap-y md:snap-mandatory">
+      <div class="h-full pt-14 md:pt-0 md:overflow-y-scroll md:snap-y md:snap-mandatory">
 
         <!-- ====== PAGE 1 : LE BAR ====== -->
         <section id="bar" class="md:snap-start md:h-full flex items-stretch relative">
@@ -63,10 +68,10 @@ const description = "Présentation du Bar & Restaurant La Régence à Mont-de-Ma
                    w-[min(28vw,500px)] min-w-[300px] bg-brand"
           ></div>
 
-          <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-6 md:py-8">
+          <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-0 md:py-8">
             <!-- COLONNE GAUCHE (texte) : droite + bas -->
-            <div class="md:w-1/2 flex flex-col items-end text-right justify-end pb-12 md:pb-20 pr-10">
-              <h2 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
+            <div class="order-2 md:order-1 md:w-1/2 flex flex-col items-center md:items-end text-center md:text-right justify-end px-6 md:pl-0 md:pr-10 py-10 md:pt-0 md:pb-20">
+              <h2 class="font-limelight text-brand text-4xl md:text-6xl leading-none inline-block relative pt-4">
                 <span class="absolute top-0 right-0 h-[3px] w-full bg-[var(--color-copper)] rounded-full"></span>
                 Le Bar
               </h2>
@@ -82,12 +87,12 @@ const description = "Présentation du Bar & Restaurant La Régence à Mont-de-Ma
             </div>
 
             <!-- COLONNE DROITE (images) -->
-            <div class="md:w-1/2 flex items-start gap-4 pr-[3vw]">
-              <figure class="rounded-2xl soft-border overflow-hidden w-[65%]">
+            <div class="order-1 md:order-2 w-full md:w-1/2 flex items-start gap-4 md:pr-[3vw]">
+              <figure class="w-full md:w-[65%] overflow-hidden rounded-none md:rounded-2xl md:soft-border">
                 <img
                   src="/regence-bar-grande.jpg"
                   alt="Le Bar — grande photo"
-                  class="h-[90vh] w-full object-cover object-center"
+                  class="block w-full h-auto object-contain md:h-[90vh] md:object-cover md:object-center"
                 />
               </figure>
 
@@ -115,11 +120,11 @@ const description = "Présentation du Bar & Restaurant La Régence à Mont-de-Ma
         </section>
 
         <!-- ====== PAGE 2 : LE RESTAURANT ====== -->
-        <section id="restaurant" class="md:snap-start md:min-h-full flex items-stretch py-6 md:py-8">
+        <section id="restaurant" class="md:snap-start md:min-h-full flex items-stretch py-0 md:py-8">
           <div class="w-full flex flex-col md:flex-row md:h-full">
             <!-- COLONNE GAUCHE : droite + bas -->
-            <div class="md:w-1/2 flex flex-col items-end text-right justify-end pb-12 md:pb-20 pr-10">
-              <h2 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
+            <div class="order-2 md:order-1 md:w-1/2 flex flex-col items-center md:items-end text-center md:text-right justify-end px-6 md:pl-0 md:pr-10 py-10 md:pt-0 md:pb-20">
+              <h2 class="font-limelight text-brand text-4xl md:text-6xl leading-none inline-block relative pt-4">
                 <span class="absolute top-0 right-0 h-[3px] w-full bg-[var(--color-copper)] rounded-full"></span>
                 Le Restaurant
               </h2>
@@ -135,12 +140,12 @@ const description = "Présentation du Bar & Restaurant La Régence à Mont-de-Ma
             </div>
 
             <!-- COLONNE DROITE -->
-            <div class="md:w-1/2 flex flex-col gap-4 pr-[3vw]">
-              <figure class="rounded-2xl soft-border overflow-hidden">
+            <div class="order-1 md:order-2 w-full md:w-1/2 flex flex-col gap-4 md:pr-[3vw]">
+              <figure class="w-full overflow-hidden rounded-none md:rounded-2xl md:soft-border">
                 <img
                   src="/regence-restaurant-grande.jpg"
                   alt="Le Restaurant — grande photo"
-                  class="w-full h-[55vh] object-cover object-center"
+                  class="block w-full h-auto object-contain md:h-[55vh] md:object-cover md:object-center"
                 />
               </figure>
 
@@ -164,10 +169,10 @@ const description = "Présentation du Bar & Restaurant La Régence à Mont-de-Ma
                    w-[min(28vw,500px)] min-w-[300px] bg-[var(--color-copper)]"
           ></div>
 
-          <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-6 md:py-8">
+          <div class="w-full flex flex-col md:flex-row md:h-full relative z-10 py-0 md:py-8">
             <!-- COLONNE GAUCHE : droite + bas -->
-            <div class="md:w-1/2 flex flex-col items-end text-right justify-end pb-12 md:pb-20 pr-10">
-              <h2 class="font-limelight text-brand text-5xl md:text-6xl leading-none inline-block relative pt-4">
+            <div class="order-2 md:order-1 md:w-1/2 flex flex-col items-center md:items-end text-center md:text-right justify-end px-6 md:pl-0 md:pr-10 py-10 md:pt-0 md:pb-20">
+              <h2 class="font-limelight text-brand text-4xl md:text-6xl leading-none inline-block relative pt-4">
                 <span class="absolute top-0 right-0 h-[3px] w-full bg-[var(--color-copper)] rounded-full"></span>
                 La Terrasse
               </h2>
@@ -183,12 +188,12 @@ const description = "Présentation du Bar & Restaurant La Régence à Mont-de-Ma
             </div>
 
             <!-- COLONNE DROITE -->
-            <div class="md:w-1/2 flex flex-col gap-4 pr-[3vw]">
-              <figure class="rounded-2xl soft-border overflow-hidden">
+            <div class="order-1 md:order-2 w-full md:w-1/2 flex flex-col gap-4 md:pr-[3vw]">
+              <figure class="w-full overflow-hidden rounded-none md:rounded-2xl md:soft-border">
                 <img
                   src="/regence-terrasse-grande.jpg"
                   alt="La Terrasse — grande photo"
-                  class="w-full h-[55vh] object-cover object-center"
+                  class="block w-full h-auto object-contain md:h-[55vh] md:object-cover md:object-center"
                 />
               </figure>
 
