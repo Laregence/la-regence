@@ -178,6 +178,13 @@ const restaurantSchema = {
               Réservez votre table en ligne ou par téléphone au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72
             </a>
           </p>
+          <!-- Avis Google -->
+          <section class="google-reviews-widget mt-8 text-left" aria-label="Avis Google">
+            <div class="google-reviews-loading text-sm text-slate-500 text-center">
+              Chargement des avis Google…
+            </div>
+          </section>
+
         </div>
       </section>
 
@@ -245,6 +252,13 @@ const restaurantSchema = {
                   Réservez votre table en ligne ou par téléphone au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72
                 </a>
               </p>
+              <!-- Avis Google -->
+              <section class="google-reviews-widget mt-5 text-left" aria-label="Avis Google">
+                <div class="google-reviews-loading text-sm text-slate-500 text-right">
+                  Chargement des avis Google…
+                </div>
+              </section>
+
             </div>
 
           </div>
@@ -368,5 +382,235 @@ const restaurantSchema = {
 
 </script>
 
+
+
+  <!-- AVIS GOOGLE -->
+  <script is:inline>
+    (function () {
+      const widgets = Array.from(document.querySelectorAll(".google-reviews-widget"));
+      if (!widgets.length) return;
+
+      const monthNames = [
+        "janvier", "février", "mars", "avril", "mai", "juin",
+        "juillet", "août", "septembre", "octobre", "novembre", "décembre"
+      ];
+
+      function make(tag, className, text) {
+        const el = document.createElement(tag);
+        if (className) el.className = className;
+        if (typeof text === "string") el.textContent = text;
+        return el;
+      }
+
+      function formatVisitDate(visitDate) {
+        if (!visitDate?.year || !visitDate?.month) return "";
+        return `Visite en ${monthNames[visitDate.month - 1]} ${visitDate.year}`;
+      }
+
+      function stars(rating) {
+        const value = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+        return "★".repeat(value) + "☆".repeat(5 - value);
+      }
+
+      function renderWidget(root, data) {
+        root.innerHTML = "";
+
+        const header = make(
+          "div",
+          "rounded-2xl border border-brand/20 bg-white/55 p-4"
+        );
+
+        const top = make(
+          "div",
+          "flex flex-wrap items-center justify-between gap-3"
+        );
+
+        const titleWrap = make("div", "");
+        const title = make(
+          "h2",
+          "font-limelight text-xl md:text-2xl text-brand uppercase",
+          "Nos avis Google"
+        );
+        const summary = make("p", "mt-1 text-sm text-slate-700");
+
+        const ratingStrong = make(
+          "strong",
+          "text-brand",
+          data.rating ? `${Number(data.rating).toFixed(1)}/5` : "—"
+        );
+        summary.appendChild(ratingStrong);
+        summary.append(
+          document.createTextNode(
+            ` · ${Number(data.userRatingCount || 0).toLocaleString("fr-FR")} avis`
+          )
+        );
+
+        titleWrap.append(title, summary);
+
+        const mapsLink = document.createElement("a");
+        mapsLink.href = data.googleMapsUri || "#";
+        mapsLink.target = "_blank";
+        mapsLink.rel = "noopener";
+        mapsLink.className =
+          "text-sm font-semibold text-brand underline decoration-[var(--color-copper)] underline-offset-4";
+        mapsLink.textContent = "Voir sur Google Maps";
+
+        top.append(titleWrap, mapsLink);
+        header.appendChild(top);
+
+        const reviewList = make("div", "mt-3 space-y-3");
+
+        (data.reviews || []).forEach((review, index) => {
+          const card = make(
+            "article",
+            "rounded-xl border border-brand/15 bg-[var(--color-bg)]/70 p-3"
+          );
+
+          // Sur desktop, deux avis suffisent pour préserver la mise en page plein écran.
+          if (index >= 2) card.classList.add("md:hidden");
+
+          const authorRow = make("div", "flex items-center gap-3");
+
+          if (review.author?.photoUri) {
+            const avatar = document.createElement("img");
+            avatar.src = review.author.photoUri;
+            avatar.alt = "";
+            avatar.width = 36;
+            avatar.height = 36;
+            avatar.referrerPolicy = "no-referrer";
+            avatar.className =
+              "w-9 h-9 rounded-full object-cover flex-shrink-0";
+            authorRow.appendChild(avatar);
+          }
+
+          const authorInfo = make("div", "min-w-0");
+          const authorLink = document.createElement("a");
+          authorLink.href = review.author?.uri || review.googleMapsUri || "#";
+          authorLink.target = "_blank";
+          authorLink.rel = "noopener";
+          authorLink.className =
+            "font-semibold text-slate-800 hover:text-[var(--color-copper)]";
+          authorLink.textContent =
+            review.author?.name || "Utilisateur Google";
+          authorInfo.appendChild(authorLink);
+
+          const visit = formatVisitDate(review.visitDate);
+          if (visit) {
+            authorInfo.appendChild(
+              make("p", "text-xs text-slate-500", visit)
+            );
+          }
+
+          authorRow.appendChild(authorInfo);
+
+          const starLine = make(
+            "div",
+            "mt-2 text-[var(--color-copper)] tracking-wide text-sm",
+            stars(review.rating)
+          );
+
+          const body = make(
+            "p",
+            "mt-2 text-sm leading-relaxed text-slate-700",
+            review.text || ""
+          );
+
+          card.append(authorRow, starLine, body);
+
+          if (review.translated) {
+            card.appendChild(
+              make(
+                "p",
+                "mt-1 text-[11px] text-slate-500",
+                "Avis traduit par Google."
+              )
+            );
+          }
+
+          if (review.googleMapsUri) {
+            const source = document.createElement("a");
+            source.href = review.googleMapsUri;
+            source.target = "_blank";
+            source.rel = "noopener";
+            source.className =
+              "inline-block mt-2 text-xs text-brand underline underline-offset-2";
+            source.textContent = "Voir l’avis sur Google Maps";
+            card.appendChild(source);
+          }
+
+          reviewList.appendChild(card);
+        });
+
+        const notice = make(
+          "p",
+          "mt-3 text-[11px] leading-relaxed text-slate-500",
+          "Avis fournis par Google Maps, classés par pertinence. Aucun filtrage par note."
+        );
+
+        const attribution = make(
+          "p",
+          "mt-1 text-xs font-semibold text-slate-600",
+          "Google Maps"
+        );
+
+        header.append(reviewList, notice, attribution);
+        root.appendChild(header);
+      }
+
+      async function loadGoogleReviews() {
+        try {
+          const response = await fetch("/.netlify/functions/google-reviews", {
+            method: "GET",
+            cache: "no-store",
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data?.error || "Avis Google indisponibles");
+          }
+
+          widgets.forEach((widget) => renderWidget(widget, data));
+        } catch (error) {
+          console.error("Avis Google :", error);
+          widgets.forEach((widget) => {
+            widget.innerHTML = "";
+            const fallback = document.createElement("p");
+            fallback.className = "text-sm text-slate-500 text-center";
+            fallback.textContent = "Les avis Google sont momentanément indisponibles.";
+            widget.appendChild(fallback);
+          });
+        }
+      }
+
+      let loaded = false;
+
+      const visibleWidgets = widgets.filter((widget) => {
+        const style = window.getComputedStyle(widget);
+        return style.display !== "none";
+      });
+
+      if ("IntersectionObserver" in window && visibleWidgets.length) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            if (loaded) return;
+
+            const shouldLoad = entries.some((entry) => entry.isIntersecting);
+            if (!shouldLoad) return;
+
+            loaded = true;
+            observer.disconnect();
+            loadGoogleReviews();
+          },
+          { rootMargin: "250px 0px" }
+        );
+
+        visibleWidgets.forEach((widget) => observer.observe(widget));
+      } else {
+        loaded = true;
+        loadGoogleReviews();
+      }
+    })();
+  </script>
 
 </SidebarLayout>
