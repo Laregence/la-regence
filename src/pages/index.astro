@@ -2,12 +2,9 @@
 import SidebarLayout from "../layouts/SidebarLayout.astro";
 import { execSync } from "node:child_process";
 
-const title = "Restaurant & brasserie à Mont-de-Marsan | La Régence";
-const description =
-  "La Régence, restaurant brasserie au centre-ville de Mont-de-Marsan : menu du midi, cuisine généreuse, tapas, cocktails, bières pression et vins.";
-
+const title = "La Régence — Bar Brasserie Restaurant à Mont-de-Marsan";
+const description = "La Régence est un restaurant brasserie à Mont-de-Marsan, situé en centre-ville. Menu du midi, carte de brasserie, tapas, cocktails, bières pression et vins du lundi au samedi.";
 const menuFile = "public/menu-du-jour.png";
-const currentYear = new Date().getFullYear();
 
 // Format FR affiché
 function formatDateFR(date) {
@@ -37,35 +34,24 @@ function getMenuGitDate() {
 const menuGitDate = getMenuGitDate();
 const menuDate = formatDateFR(new Date(menuGitDate));
 const menuImage = `/menu-du-jour.png?v=${encodeURIComponent(menuGitDate)}`;
-
 const restaurantSchema = {
   "@context": "https://schema.org",
   "@type": "Restaurant",
   "@id": "https://laregencemdm.fr/#restaurant",
-
   "name": "La Régence",
   "url": "https://laregencemdm.fr/",
-  "logo": "https://laregencemdm.fr/logo.png",
-
   "telephone": "+33558859272",
-
   "image": [
-    "https://laregencemdm.fr/grande.jpg",
     "https://laregencemdm.fr/contact-grande.jpg",
     "https://laregencemdm.fr/contact-petite.jpg"
   ],
-
-  "description":
-    "La Régence est un restaurant brasserie situé au centre-ville de Mont-de-Marsan. Cuisine de brasserie, menu du midi, tapas, cocktails, bières pression et vins du lundi au samedi.",
-
+  "description": "La Régence est un restaurant brasserie situé en centre-ville de Mont-de-Marsan. Cuisine de brasserie, menu du midi, tapas, cocktails, bières pression et vins du lundi au samedi.",
   "servesCuisine": [
     "Cuisine française",
     "Brasserie",
     "Tapas"
   ],
-
   "priceRange": "€€",
-
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "2 rue Léon Gambetta",
@@ -73,7 +59,6 @@ const restaurantSchema = {
     "addressLocality": "Mont-de-Marsan",
     "addressCountry": "FR"
   },
-
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
@@ -89,10 +74,8 @@ const restaurantSchema = {
       "closes": "00:00"
     }
   ],
-
   "menu": "https://laregencemdm.fr/menu/",
   "acceptsReservations": true,
-
   "sameAs": [
     "https://www.instagram.com/la_regence_mdm/",
     "https://www.facebook.com/LaRegenceMDM/"
@@ -101,8 +84,6 @@ const restaurantSchema = {
 ---
 
 <SidebarLayout {title} {description} active="accueil">
-
-  <!-- ========= DONNÉES STRUCTURÉES ========= -->
   <script
     is:inline
     type="application/ld+json"
@@ -117,64 +98,454 @@ const restaurantSchema = {
            flex flex-col items-center justify-center
            transform-gpu translate-y-0 transition-transform duration-[1800ms] ease-out"
   >
-    <div
-      class="absolute left-0 right-0"
-      style="top:90%; height:3px; background:#a3742c;"
-    ></div>
+    <div class="absolute left-0 right-0" style="top:90%; height:3px; background:#a3742c;"></div>
 
-    <div
-      class="absolute w-full text-center text-sm opacity-80 flex flex-col items-center"
-      style="top:92%;"
-    >
-      <img
-        src="/logo.png"
-        alt=""
-        width="24"
-        height="24"
-        class="w-6 h-6 mb-1 opacity-90"
-      />
-
-      <p>
-        ©
-        <span translate="no" class="notranslate">La Régence</span>
-        {currentYear}
-      </p>
+    <div class="absolute w-full text-center text-sm opacity-80 flex flex-col items-center" style="top:92%;">
+      <img src="/logo.png" alt="La Régence" class="w-6 h-6 mb-1 opacity-90" />
+      <p>© <span translate="no" class="notranslate">La Régence</span> 2025</p>
     </div>
 
     <div class="flex flex-col items-center gap-5 font-splash fade-in-contents">
-      <img
-        src="/logo.png"
-        alt="Logo La Régence"
-        class="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain"
+      <img 
+        src="/logo.png" 
+        alt="La Régence" 
+        class="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" 
       />
-
       <p class="text-2xl md:text-3xl text-center">
-        Restaurant & Brasserie à Mont-de-Marsan
+        Bar-Brasserie à Mont-de-Marsan
       </p>
     </div>
   </div>
 
-
   <!-- ========= CONTENU ========= -->
   <div id="page-wrap">
 
-    <section
-      class="w-full md:h-[calc(100dvh-24px)] md:px-0 md:py-3 md:overflow-hidden"
-    >
+    <!-- ===== MOBILE : images plein écran, sans bord ni recadrage ===== -->
+    <div class="md:hidden relative left-1/2 w-screen -translate-x-1/2 -mt-24 overflow-x-hidden">
 
-      <div
-        class="md:grid md:h-full
-               md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]
-               md:gap-3 xl:gap-4"
+      <!-- 1. Grande image -->
+      <img
+        src="/grande.jpg"
+        alt="La Régence"
+        class="block w-full h-auto object-contain"
+      />
+
+      <!-- 2. Texte -->
+      <section class="w-full px-6 py-10 text-center">
+        <div class="space-y-4">
+          <h1 class="font-limelight text-3xl text-brand leading-tight uppercase regence-title">
+            Bar Restaurant
+          </h1>
+
+          <h1
+            translate="no"
+            class="notranslate font-limelight text-4xl text-brand leading-tight uppercase regence-title"
+          >
+            La Régence
+          </h1>
+
+          <p class="text-slate-700 italic text-base leading-snug">
+            « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
+          </p>
+
+          <p class="text-slate-700 leading-relaxed text-base">
+            <span translate="no" class="notranslate">La Régence</span> est un
+            <strong>bar restaurant brasserie</strong> situé en
+            <strong>centre-ville de Mont-de-Marsan</strong>, au 2 rue Léon Gambetta.
+            Depuis 1988, cette adresse fait partie du quotidien des Montois.
+            En 2024, deux frères reprennent l’établissement et lui donnent un nouveau souffle,
+            fidèle à son esprit convivial et chaleureux.
+          </p>
+
+          <p class="text-slate-700 leading-relaxed text-base">
+            Notre cuisine, inspirée de la tradition brasserie, se veut généreuse,
+            accessible et préparée avec soin, à partir de produits frais et de recettes
+            travaillées sur place. Le midi, nous vous accueillons pour une pause déjeuner
+            autour de notre <strong>menu du jour</strong> et de notre carte.
+            Le soir, <span translate="no" class="notranslate">La Régence</span> devient
+            une adresse idéale pour dîner, partager des tapas, boire un verre,
+            découvrir nos cocktails, nos bières pression et nos vins.
+          </p>
+
+          <p class="text-slate-700 leading-relaxed text-base">
+            Que ce soit pour un café le matin, un déjeuner en centre-ville,
+            un apéritif entre amis ou un dîner à Mont-de-Marsan, notre équipe vous accueille
+            du lundi au samedi dans une ambiance simple, conviviale et authentique.
+          </p>
+
+          <p class="text-slate-700">
+            <a href="tel:+33558859272" class="underline">
+              Réservez votre table en ligne ou par téléphone au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72
+            </a>
+          </p>
+          <!-- Avis Google -->
+          <section class="google-reviews-widget mt-2 text-left" aria-label="Avis Google">
+            <div class="rounded-md border border-brand/20 bg-white/50 p-2">
+              <div>
+                <h2 class="font-limelight text-sm md:text-base text-brand uppercase leading-none">
+                  Avis Google
+                </h2>
+                <p class="text-[var(--color-copper)] tracking-wide text-[10px] leading-none mt-1">
+                  ★★★★★
+                </p>
+              </div>
+
+              <article class="mt-1 rounded border border-brand/10 bg-[var(--color-bg)]/60 px-2 py-1.5">
+                <p class="text-[10px] md:text-[11px] leading-[1.25] text-slate-700">
+                  « Excellent bistro en centre ville ! J'y viens plusieurs fois par semaine que ça soit pour un chaï latte du matin, un déjeuner ou un cidre le weekend ! Équipe très sympa et cadre très agréable avec une belle vue sur la rivière 🌊 »
+                </p>
+
+                <div class="mt-1">
+                  <p class="font-semibold text-[11px] leading-none text-slate-800">Marie</p>
+                  <p class="text-[9px] leading-none mt-0.5 text-slate-500">Avis Google · il y a 4 mois</p>
+                </div>
+              </article>
+
+              <div class="mt-1.5 text-center">
+                <button
+                  type="button"
+                  class="load-google-reviews rounded border border-brand px-2 py-0.5 text-[10px] font-semibold text-brand hover:bg-brand hover:text-white transition"
+                >
+                  Afficher d’autres avis Google
+                </button>
+              </div>
+
+              <div class="google-reviews-live mt-4 hidden"></div>
+            </div>
+          </section>
+
+        </div>
+      </section>
+
+      <!-- 3. Menu du jour : image entière, cliquable -->
+      <button
+        type="button"
+        class="js-menu-thumb block w-full m-0 p-0 border-0 bg-transparent cursor-pointer"
+        data-img={menuImage}
+        aria-label={`Ouvrir le menu du ${menuDate}`}
       >
+        <img
+          src={menuImage}
+          alt={`Menu du ${menuDate}`}
+          class="block w-full h-auto object-contain"
+        />
+      </button>
+
+      <!-- 4. Petite image -->
+      <img
+        src="/petite2.jpg"
+        alt="La Régence"
+        class="block w-full h-auto object-contain"
+      />
+    </div>
+
+    <!-- ===== TABLETTE / DESKTOP : mise en page actuelle conservée ===== -->
+    <section class="hidden md:block w-full md:h-[calc(100dvh-24px)] px-0 py-3 overflow-hidden">
+
+      <div class="grid h-full grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3 xl:gap-4">
+
+        <!-- ===== TEXTE ===== -->
+        <div class="min-h-0 flex">
+          <div class="w-full text-center md:text-right px-0 md:pr-3 flex flex-col justify-end pb-6 md:pb-8">
+
+            <div class="space-y-3">
+              <h1 class="font-limelight text-3xl sm:text-3xl md:text-3xl text-brand leading-tight uppercase regence-title">
+                Bar Restaurant
+              </h1>
+
+              <h1
+                translate="no"
+                class="notranslate font-limelight text-3xl sm:text-4xl md:text-5xl text-brand leading-tight uppercase regence-title"
+              >
+                La Régence
+              </h1>
+
+              <p class="text-slate-700 italic text-base leading-snug">
+                « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
+              </p>
+
+              <p class="text-slate-700 leading-relaxed text-base">
+                <span translate="no" class="notranslate">La Régence</span> est un <strong>bar restaurant brasserie</strong> situé en <strong>centre-ville de Mont-de-Marsan</strong>, au 2 rue Léon Gambetta. Depuis 1988, cette adresse fait partie du quotidien des Montois. En 2024, deux frères reprennent l’établissement et lui donnent un nouveau souffle, fidèle à son esprit convivial et chaleureux.
+              </p>
+
+              <p class="text-slate-700 leading-relaxed text-base">
+                Notre cuisine, inspirée de la tradition brasserie, se veut généreuse, accessible et préparée avec soin, à partir de produits frais et de recettes travaillées sur place. Le midi, nous vous accueillons pour une pause déjeuner autour de notre <strong> menu du jour </strong>et de notre carte. Le soir, <span translate="no" class="notranslate">La Régence</span> devient une adresse idéale pour dîner, partager des tapas, boire un verre, découvrir nos cocktails, nos bières pression et nos vins.
+              </p>
+
+              <p class="text-slate-700 leading-relaxed text-base">
+                Que ce soit pour un café le matin, un déjeuner en centre-ville, un apéritif entre amis ou un dîner à Mont-de-Marsan, notre équipe vous accueille du lundi au samedi dans une ambiance simple, conviviale et authentique.
+              </p>
+
+              <p class="text-slate-700">
+                <a href="tel:+33558859272" class="underline">
+                  Réservez votre table en ligne ou par téléphone au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72
+                </a>
+              </p>
+              <!-- Avis Google -->
+          <section class="google-reviews-widget mt-3 text-left" aria-label="Avis Google">
+            <div class="rounded-xl border border-brand/20 bg-white/55 p-3">
+              <div>
+                <h2 class="font-limelight text-lg text-brand uppercase leading-tight">
+                  Avis Google
+                </h2>
+                <p class="mt-1 text-[var(--color-copper)] tracking-wide text-xs leading-none">
+                  ★★★★★
+                </p>
+              </div>
+
+              <article class="mt-2 rounded-lg border border-brand/15 bg-[var(--color-bg)]/70 px-3 py-2">
+                <p class="text-xs leading-snug text-slate-700">
+                  « Excellent bistro en centre ville ! J'y viens plusieurs fois par semaine que ça soit pour un chaï latte du matin, un déjeuner ou un cidre le weekend ! Équipe très sympa et cadre très agréable avec une belle vue sur la rivière 🌊 »
+                </p>
+
+                <div class="mt-1">
+                  <p class="font-semibold text-xs leading-tight text-slate-800">Marie</p>
+                  <p class="text-[10px] leading-tight mt-0.5 text-slate-500">Avis Google · il y a 4 mois</p>
+                </div>
+              </article>
+
+              <div class="mt-2 text-center">
+                <button
+                  type="button"
+                  class="load-google-reviews rounded-lg border border-brand px-3 py-1 text-[11px] font-semibold text-brand hover:bg-brand hover:text-white transition"
+                >
+                  Afficher d’autres avis Google
+                </button>
+              </div>
+
+              <div class="google-reviews-live mt-4 hidden"></div>
+            </div>
+          </section>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ===== IMAGES ===== -->
+        <div class="min-h-0 md:min-w-0 md:overflow-hidden">
+
+          <div class="hidden md:grid md:gap-6 md:grid-cols-1 xl:grid-cols-3 xl:grid-rows-10 md:h-full">
+
+            <!-- Grande image -->
+            <div class="xl:col-span-2 xl:row-span-10 rounded-2xl soft-border overflow-hidden">
+              <img src="/grande.jpg" class="w-full md:h-[60vh] xl:h-full object-cover" />
+            </div>
+
+            <div class="hidden xl:block xl:col-span-1 xl:row-span-2"></div>
+
+            <!-- Menu du jour -->
+            <div
+              class="relative group cursor-pointer rounded-2xl soft-border overflow-hidden xl:col-span-1 xl:row-span-4 js-menu-thumb"
+              data-img={menuImage}
+            >
+              <img
+                src={menuImage}
+                alt={`Menu du ${menuDate}`}
+                class="w-full md:h-[28vh] xl:h-full object-cover transition duration-300 group-hover:scale-105"
+              />
+
+              <div class="hidden xl:flex absolute inset-0 items-center justify-center pointer-events-none">
+                <span class="text-white text-base md:text-lg font-bold bg-black/45 px-3 py-1.5 rounded text-center">
+                  Menu du {menuDate}
+                </span>
+              </div>
+            </div>
+
+            <!-- Petite image -->
+            <div class="rounded-2xl soft-border overflow-hidden xl:col-span-1 xl:row-span-4">
+              <img src="/petite2.jpg" class="w-full md:h-[28vh] xl:h-full object-cover" />
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]">
+      <div id="lb-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+      <div id="lb-figure" class="relative">
+        <img id="lb-img" src={menuImage} class="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-xl" />
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCRIPT LIGHTBOX -->
+  <script is:inline>
+  // Splash
+  (function () {
+    const s = document.getElementById('splash');
+    if (!s) return;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const go = () => {
+      if (prefersReduced) {
+        s.remove();
+        return;
+      }
+      s.classList.add('slide-up-out');
+      s.addEventListener('transitionend', () => s.remove(), { once: true });
+    };
+
+    window.addEventListener('load', () => setTimeout(go, 1500));
+  })();
+
+  // Lightbox (multi-vignettes)
+  (function () {
+    const thumbs   = Array.from(document.querySelectorAll(".js-menu-thumb"));
+    const lightbox = document.getElementById("menu-du-jour-lightbox");
+    const backdrop = document.getElementById("lb-backdrop");
+    const figure   = document.getElementById("lb-figure");
+    const img      = document.getElementById("lb-img");
+    if (!thumbs.length || !lightbox || !backdrop || !figure || !img) return;
+
+    function openLB(src) {
+      if (src) img.src = src;
+      lightbox.classList.remove("hidden");
+      lightbox.classList.add("flex");
+      img.style.filter = "none";
+      img.style.webkitFilter = "none";
+      requestAnimationFrame(() => {
+        backdrop.classList.add("opacity-100");
+        figure.classList.remove("opacity-0", "scale-95", "translate-y-1");
+        figure.classList.add("opacity-100", "scale-100", "translate-y-0");
+      });
+    }
+
+    function closeLB() {
+      figure.classList.add("opacity-0", "scale-95", "translate-y-1");
+      figure.classList.remove("opacity-100", "scale-100", "translate-y-0");
+      backdrop.classList.remove("opacity-100");
+      setTimeout(() => {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+      }, 300);
+    }
+
+    thumbs.forEach(t => {
+      t.addEventListener("click", () => openLB(t.dataset.img || "/menu-du-jour.png"));
+    });
+
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === img) return;
+      closeLB();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !lightbox.classList.contains("hidden")) closeLB();
+    });
+  })();
+
+</script>
 
 
-        <!-- ================================================= -->
-        <!-- MOBILE : GRANDE IMAGE AVANT LE TEXTE              -->
-        <!-- ================================================= -->
 
-        <div
-          class="md:hidden relative left-1/2 w-screen
-                 -translate-x-1/2 -mt-24 overflow-x-hidden"
-        >
-          <
+  <!-- AVIS GOOGLE -->
+  <script is:inline>
+    (function () {
+      const widgets = Array.from(document.querySelectorAll(".google-reviews-widget"));
+      if (!widgets.length) return;
+
+      function make(tag, className, text) {
+        const el = document.createElement(tag);
+        if (className) el.className = className;
+        if (typeof text === "string") el.textContent = text;
+        return el;
+      }
+
+      function stars(rating) {
+        const value = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+        return "★".repeat(value) + "☆".repeat(5 - value);
+      }
+
+      function renderReviews(target, data) {
+        target.innerHTML = "";
+        target.classList.remove("hidden");
+
+        const summary = make("p", "mb-3 text-sm text-slate-700");
+        summary.textContent = `${data.rating ? Number(data.rating).toFixed(1) + "/5" : "—"} · ${Number(data.userRatingCount || 0).toLocaleString("fr-FR")} avis Google`;
+        target.appendChild(summary);
+
+        const reviewList = make("div", "space-y-3");
+
+        (data.reviews || []).forEach((review) => {
+          const card = make("article", "rounded-xl border border-brand/15 bg-[var(--color-bg)]/70 p-3");
+
+          const author = make("p", "font-semibold text-slate-800", review.author?.name || "Utilisateur Google");
+          const starLine = make("div", "mt-1 text-[var(--color-copper)] tracking-wide text-sm", stars(review.rating));
+          const body = make("p", "mt-2 text-sm leading-relaxed text-slate-700", review.text || "");
+
+          card.append(author, starLine, body);
+
+          if (review.googleMapsUri) {
+            const source = document.createElement("a");
+            source.href = review.googleMapsUri;
+            source.target = "_blank";
+            source.rel = "noopener";
+            source.className = "inline-block mt-2 text-xs text-brand underline underline-offset-2";
+            source.textContent = "Voir l’avis sur Google Maps";
+            card.appendChild(source);
+          }
+
+          reviewList.appendChild(card);
+        });
+
+        target.appendChild(reviewList);
+
+        if (data.googleMapsUri) {
+          const mapsLink = document.createElement("a");
+          mapsLink.href = data.googleMapsUri;
+          mapsLink.target = "_blank";
+          mapsLink.rel = "noopener";
+          mapsLink.className = "inline-block mt-4 text-sm font-semibold text-brand underline decoration-[var(--color-copper)] underline-offset-4";
+          mapsLink.textContent = "Voir tous les avis sur Google Maps";
+          target.appendChild(mapsLink);
+        }
+      }
+
+      let loadingPromise = null;
+
+      function fetchGoogleReviews() {
+        if (!loadingPromise) {
+          loadingPromise = fetch("/.netlify/functions/google-reviews", {
+            method: "GET",
+            cache: "no-store",
+          }).then(async (response) => {
+            const data = await response.json();
+            if (!response.ok) {
+              throw new Error(data?.error || "Avis Google indisponibles");
+            }
+            return data;
+          });
+        }
+        return loadingPromise;
+      }
+
+      widgets.forEach((widget) => {
+        const button = widget.querySelector(".load-google-reviews");
+        const target = widget.querySelector(".google-reviews-live");
+        if (!button || !target) return;
+
+        button.addEventListener("click", async () => {
+          button.disabled = true;
+          button.textContent = "Chargement…";
+
+          try {
+            const data = await fetchGoogleReviews();
+            renderReviews(target, data);
+            button.classList.add("hidden");
+          } catch (error) {
+            console.error("Avis Google :", error);
+            target.classList.remove("hidden");
+            target.innerHTML = '<p class="text-sm text-slate-500 text-center">Les avis Google sont momentanément indisponibles.</p>';
+            button.disabled = false;
+            button.textContent = "Réessayer";
+          }
+        });
+      });
+    })();
+  </script>
+
+</SidebarLayout> 
