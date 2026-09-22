@@ -2,8 +2,12 @@ export async function handler(event) {
   if (event.httpMethod !== "GET") {
     return {
       statusCode: 405,
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify({ error: "Méthode non autorisée" }),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({
+        error: "Méthode non autorisée",
+      }),
     };
   }
 
@@ -14,7 +18,9 @@ export async function handler(event) {
     if (!apiKey || !placeId) {
       return {
         statusCode: 500,
-        headers: { "Content-Type": "application/json; charset=utf-8" },
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
         body: JSON.stringify({
           error: "Configuration Google Places manquante",
         }),
@@ -43,7 +49,9 @@ export async function handler(event) {
 
       return {
         statusCode: response.status,
-        headers: { "Content-Type": "application/json; charset=utf-8" },
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
         body: JSON.stringify({
           error:
             data?.error?.message ||
@@ -52,51 +60,74 @@ export async function handler(event) {
       };
     }
 
+    /*
+     * Avis à ne jamais afficher sur le site.
+     *
+     * Celui-ci concerne visiblement un autre établissement
+     * malgré sa publication sur la fiche de La Régence.
+     *
+     * Pour en exclure d'autres plus tard, ajoute simplement
+     * leur googleMapsUri dans ce tableau.
+     */
+    const blockedReviewUris = new Set([
+      "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2t4aVJWaDZTVGhLYUcxeE5GOTNRVUZZWkhSeGQyYxAB!2m1!1s0xd55d1e52974a571:0xe8036fb4a8487965",
+    ]);
+
     const reviews = Array.isArray(data.reviews)
-      ? data.reviews.slice(0, 3).map((review) => ({
-          rating: review.rating,
+      ? data.reviews
+          /*
+           * On exclut d'abord les avis indésirables,
+           * puis on conserve jusqu'à 3 avis.
+           */
+          .filter(
+            (review) =>
+              !blockedReviewUris.has(review.googleMapsUri)
+          )
+          .slice(0, 3)
+          .map((review) => ({
+            rating: review.rating,
 
-          text:
-            review.text?.text ||
-            review.originalText?.text ||
-            "",
-
-          originalText:
-            review.originalText?.text ||
-            "",
-
-          translated:
-            Boolean(review.text?.languageCode) &&
-            Boolean(review.originalText?.languageCode) &&
-            review.text.languageCode !==
-              review.originalText.languageCode,
-
-          author: {
-            name:
-              review.authorAttribution?.displayName ||
-              "Utilisateur Google",
-
-            uri:
-              review.authorAttribution?.uri ||
+            text:
+              review.text?.text ||
+              review.originalText?.text ||
               "",
 
-            photoUri:
-              review.authorAttribution?.photoUri ||
+            originalText:
+              review.originalText?.text ||
               "",
-          },
 
-          visitDate:
-            review.visitDate ||
-            null,
+            translated:
+              Boolean(review.text?.languageCode) &&
+              Boolean(review.originalText?.languageCode) &&
+              review.text.languageCode !==
+                review.originalText.languageCode,
 
-          relativePublishTimeDescription:
-            review.relativePublishTimeDescription ||
-            "",
+            author: {
+              name:
+                review.authorAttribution?.displayName ||
+                "Utilisateur Google",
 
-          googleMapsUri:
-            review.googleMapsUri ||
-            "",
-        }))
+              uri:
+                review.authorAttribution?.uri ||
+                "",
+
+              photoUri:
+                review.authorAttribution?.photoUri ||
+                "",
+            },
+
+            visitDate:
+              review.visitDate ||
+              null,
+
+            relativePublishTimeDescription:
+              review.relativePublishTimeDescription ||
+              "",
+
+            googleMapsUri:
+              review.googleMapsUri ||
+              "",
+          }))
       : [];
 
     return {
@@ -105,7 +136,10 @@ export async function handler(event) {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
 
-        // Le contenu Places n'est volontairement pas mis en cache.
+        /*
+         * On évite de stocker durablement
+         * le contenu provenant de Google Places.
+         */
         "Cache-Control": "no-store",
       },
 
