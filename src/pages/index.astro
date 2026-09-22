@@ -180,8 +180,37 @@ const restaurantSchema = {
           </p>
           <!-- Avis Google -->
           <section class="google-reviews-widget mt-8 text-left" aria-label="Avis Google">
-            <div class="google-reviews-loading text-sm text-slate-500 text-center">
-              Chargement des avis Google…
+            <div class="rounded-2xl border border-brand/20 bg-white/55 p-4">
+              <div>
+                <h2 class="font-limelight text-xl md:text-2xl text-brand uppercase">
+                  Avis Google
+                </h2>
+                <p class="mt-1 text-[var(--color-copper)] tracking-wide text-sm">
+                  ★★★★★
+                </p>
+              </div>
+
+              <article class="mt-3 rounded-xl border border-brand/15 bg-[var(--color-bg)]/70 p-4">
+                <p class="text-sm leading-relaxed text-slate-700">
+                  « Excellent bistro en centre ville ! J'y viens plusieurs fois par semaine que ça soit pour un chaï latte du matin, un déjeuner ou un cidre le weekend ! Équipe très sympa et cadre très agréable avec une belle vue sur la rivière 🌊 »
+                </p>
+
+                <div class="mt-3">
+                  <p class="font-semibold text-slate-800">Marie</p>
+                  <p class="text-xs text-slate-500">Avis Google · il y a 4 mois</p>
+                </div>
+              </article>
+
+              <div class="mt-4 text-center">
+                <button
+                  type="button"
+                  class="load-google-reviews rounded-xl border border-brand px-4 py-2 text-sm font-semibold text-brand hover:bg-brand hover:text-white transition"
+                >
+                  Afficher d’autres avis Google
+                </button>
+              </div>
+
+              <div class="google-reviews-live mt-4 hidden"></div>
             </div>
           </section>
 
@@ -253,11 +282,40 @@ const restaurantSchema = {
                 </a>
               </p>
               <!-- Avis Google -->
-              <section class="google-reviews-widget mt-5 text-left" aria-label="Avis Google">
-                <div class="google-reviews-loading text-sm text-slate-500 text-right">
-                  Chargement des avis Google…
+          <section class="google-reviews-widget mt-8 text-left" aria-label="Avis Google">
+            <div class="rounded-2xl border border-brand/20 bg-white/55 p-4">
+              <div>
+                <h2 class="font-limelight text-xl md:text-2xl text-brand uppercase">
+                  Avis Google
+                </h2>
+                <p class="mt-1 text-[var(--color-copper)] tracking-wide text-sm">
+                  ★★★★★
+                </p>
+              </div>
+
+              <article class="mt-3 rounded-xl border border-brand/15 bg-[var(--color-bg)]/70 p-4">
+                <p class="text-sm leading-relaxed text-slate-700">
+                  « Excellent bistro en centre ville ! J'y viens plusieurs fois par semaine que ça soit pour un chaï latte du matin, un déjeuner ou un cidre le weekend ! Équipe très sympa et cadre très agréable avec une belle vue sur la rivière 🌊 »
+                </p>
+
+                <div class="mt-3">
+                  <p class="font-semibold text-slate-800">Marie</p>
+                  <p class="text-xs text-slate-500">Avis Google · il y a 4 mois</p>
                 </div>
-              </section>
+              </article>
+
+              <div class="mt-4 text-center">
+                <button
+                  type="button"
+                  class="load-google-reviews rounded-xl border border-brand px-4 py-2 text-sm font-semibold text-brand hover:bg-brand hover:text-white transition"
+                >
+                  Afficher d’autres avis Google
+                </button>
+              </div>
+
+              <div class="google-reviews-live mt-4 hidden"></div>
+            </div>
+          </section>
 
             </div>
 
@@ -390,11 +448,6 @@ const restaurantSchema = {
       const widgets = Array.from(document.querySelectorAll(".google-reviews-widget"));
       if (!widgets.length) return;
 
-      const monthNames = [
-        "janvier", "février", "mars", "avril", "mai", "juin",
-        "juillet", "août", "septembre", "octobre", "novembre", "décembre"
-      ];
-
       function make(tag, className, text) {
         const el = document.createElement(tag);
         if (className) el.className = className;
@@ -402,148 +455,96 @@ const restaurantSchema = {
         return el;
       }
 
-      function formatVisitDate(visitDate) {
-        if (!visitDate?.year || !visitDate?.month) return "";
-        return `Visite en ${monthNames[visitDate.month - 1]} ${visitDate.year}`;
-      }
-
       function stars(rating) {
         const value = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
         return "★".repeat(value) + "☆".repeat(5 - value);
       }
 
-      function renderWidget(root, data) {
-        root.innerHTML = "";
+      function renderReviews(target, data) {
+        target.innerHTML = "";
+        target.classList.remove("hidden");
 
-        const box = make(
-          "div",
-          "border-t border-[var(--color-copper)]/50 pt-3"
-        );
+        const summary = make("p", "mb-3 text-sm text-slate-700");
+        summary.textContent = `${data.rating ? Number(data.rating).toFixed(1) + "/5" : "—"} · ${Number(data.userRatingCount || 0).toLocaleString("fr-FR")} avis Google`;
+        target.appendChild(summary);
 
-        const top = make(
-          "div",
-          "flex flex-wrap items-center justify-between gap-2"
-        );
+        const reviewList = make("div", "space-y-3");
 
-        const summary = make(
-          "div",
-          "flex items-center gap-2 text-sm text-slate-700"
-        );
+        (data.reviews || []).forEach((review) => {
+          const card = make("article", "rounded-xl border border-brand/15 bg-[var(--color-bg)]/70 p-3");
 
-        const starsEl = make(
-          "span",
-          "text-[var(--color-copper)] tracking-wide",
-          stars(data.rating)
-        );
+          const author = make("p", "font-semibold text-slate-800", review.author?.name || "Utilisateur Google");
+          const starLine = make("div", "mt-1 text-[var(--color-copper)] tracking-wide text-sm", stars(review.rating));
+          const body = make("p", "mt-2 text-sm leading-relaxed text-slate-700", review.text || "");
 
-        const ratingText = make(
-          "span",
-          "font-semibold text-brand",
-          data.rating ? `${Number(data.rating).toFixed(1)}/5` : "—"
-        );
+          card.append(author, starLine, body);
 
-        const countText = make(
-          "span",
-          "text-slate-500",
-          `· ${Number(data.userRatingCount || 0).toLocaleString("fr-FR")} avis Google`
-        );
-
-        summary.append(starsEl, ratingText, countText);
-
-        const mapsLink = document.createElement("a");
-        mapsLink.href = data.googleMapsUri || "#";
-        mapsLink.target = "_blank";
-        mapsLink.rel = "noopener";
-        mapsLink.className =
-          "text-xs font-semibold text-brand underline decoration-[var(--color-copper)] underline-offset-4";
-        mapsLink.textContent = "Voir les avis";
-
-        top.append(summary, mapsLink);
-        box.appendChild(top);
-
-        const review = (data.reviews || [])[0];
-
-        if (review) {
-          const reviewWrap = make(
-            "div",
-            "mt-2 text-sm leading-relaxed text-slate-700"
-          );
-
-          const text = review.text || "";
-          const shortText =
-            text.length > 180 ? `${text.slice(0, 177).trim()}…` : text;
-
-          const quote = make("p", "italic", `“${shortText}”`);
-          const meta = make(
-            "p",
-            "mt-1 text-xs text-slate-500",
-            `${review.author?.name || "Utilisateur Google"}${
-              formatVisitDate(review.visitDate)
-                ? ` — ${formatVisitDate(review.visitDate)}`
-                : ""
-            }`
-          );
-
-          reviewWrap.append(quote, meta);
-          box.appendChild(reviewWrap);
-        }
-
-        root.appendChild(box);
-      }
-
-      async function loadGoogleReviews() {
-        try {
-          const response = await fetch("/.netlify/functions/google-reviews", {
-            method: "GET",
-            cache: "no-store",
-          });
-
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(data?.error || "Avis Google indisponibles");
+          if (review.googleMapsUri) {
+            const source = document.createElement("a");
+            source.href = review.googleMapsUri;
+            source.target = "_blank";
+            source.rel = "noopener";
+            source.className = "inline-block mt-2 text-xs text-brand underline underline-offset-2";
+            source.textContent = "Voir l’avis sur Google Maps";
+            card.appendChild(source);
           }
 
-          widgets.forEach((widget) => renderWidget(widget, data));
-        } catch (error) {
-          console.error("Avis Google :", error);
-          widgets.forEach((widget) => {
-            widget.innerHTML = "";
-            const fallback = document.createElement("p");
-            fallback.className = "text-sm text-slate-500 text-center";
-            fallback.textContent = "Les avis Google sont momentanément indisponibles.";
-            widget.appendChild(fallback);
-          });
+          reviewList.appendChild(card);
+        });
+
+        target.appendChild(reviewList);
+
+        if (data.googleMapsUri) {
+          const mapsLink = document.createElement("a");
+          mapsLink.href = data.googleMapsUri;
+          mapsLink.target = "_blank";
+          mapsLink.rel = "noopener";
+          mapsLink.className = "inline-block mt-4 text-sm font-semibold text-brand underline decoration-[var(--color-copper)] underline-offset-4";
+          mapsLink.textContent = "Voir tous les avis sur Google Maps";
+          target.appendChild(mapsLink);
         }
       }
 
-      let loaded = false;
+      let loadingPromise = null;
 
-      const visibleWidgets = widgets.filter((widget) => {
-        const style = window.getComputedStyle(widget);
-        return style.display !== "none";
-      });
-
-      if ("IntersectionObserver" in window && visibleWidgets.length) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            if (loaded) return;
-
-            const shouldLoad = entries.some((entry) => entry.isIntersecting);
-            if (!shouldLoad) return;
-
-            loaded = true;
-            observer.disconnect();
-            loadGoogleReviews();
-          },
-          { rootMargin: "250px 0px" }
-        );
-
-        visibleWidgets.forEach((widget) => observer.observe(widget));
-      } else {
-        loaded = true;
-        loadGoogleReviews();
+      function fetchGoogleReviews() {
+        if (!loadingPromise) {
+          loadingPromise = fetch("/.netlify/functions/google-reviews", {
+            method: "GET",
+            cache: "no-store",
+          }).then(async (response) => {
+            const data = await response.json();
+            if (!response.ok) {
+              throw new Error(data?.error || "Avis Google indisponibles");
+            }
+            return data;
+          });
+        }
+        return loadingPromise;
       }
+
+      widgets.forEach((widget) => {
+        const button = widget.querySelector(".load-google-reviews");
+        const target = widget.querySelector(".google-reviews-live");
+        if (!button || !target) return;
+
+        button.addEventListener("click", async () => {
+          button.disabled = true;
+          button.textContent = "Chargement…";
+
+          try {
+            const data = await fetchGoogleReviews();
+            renderReviews(target, data);
+            button.classList.add("hidden");
+          } catch (error) {
+            console.error("Avis Google :", error);
+            target.classList.remove("hidden");
+            target.innerHTML = '<p class="text-sm text-slate-500 text-center">Les avis Google sont momentanément indisponibles.</p>';
+            button.disabled = false;
+            button.textContent = "Réessayer";
+          }
+        });
+      });
     })();
   </script>
 
