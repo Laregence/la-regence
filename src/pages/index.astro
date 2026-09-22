@@ -240,15 +240,15 @@ const restaurantSchema = {
     </div>
 
     <!-- ===== TABLETTE / DESKTOP : mise en page actuelle conservée ===== -->
-    <section class="hidden md:block w-full md:h-[calc(100dvh-24px)] px-4 xl:px-6 py-3 overflow-hidden">
+    <section class="hidden md:block w-full md:h-[calc(100dvh-24px)] px-0 py-3 overflow-hidden">
 
-      <div class="grid h-full grid-cols-[minmax(280px,1fr)_minmax(0,1fr)] gap-4 xl:gap-6">
+      <div class="grid h-full grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3 xl:gap-4">
 
         <!-- ===== TEXTE ===== -->
         <div class="min-h-0 flex">
-          <div class="w-full max-w-prose md:max-w-xl mx-auto text-center md:text-right px-2 md:px-5 flex flex-col justify-end pb-6 md:pb-8">
+          <div class="w-full text-center md:text-right px-0 md:pr-3 flex flex-col justify-end pb-6 md:pb-8">
 
-            <div class="space-y-4">
+            <div class="space-y-3">
               <h1 class="font-limelight text-3xl sm:text-3xl md:text-3xl text-brand leading-tight uppercase regence-title">
                 Bar Restaurant
               </h1>
@@ -282,32 +282,32 @@ const restaurantSchema = {
                 </a>
               </p>
               <!-- Avis Google -->
-          <section class="google-reviews-widget mt-2 text-left" aria-label="Avis Google">
-            <div class="rounded-md border border-brand/20 bg-white/50 p-2">
+          <section class="google-reviews-widget mt-3 text-left" aria-label="Avis Google">
+            <div class="rounded-xl border border-brand/20 bg-white/55 p-3">
               <div>
-                <h2 class="font-limelight text-sm md:text-base text-brand uppercase leading-none">
+                <h2 class="font-limelight text-lg text-brand uppercase leading-tight">
                   Avis Google
                 </h2>
-                <p class="text-[var(--color-copper)] tracking-wide text-[10px] leading-none mt-1">
+                <p class="mt-1 text-[var(--color-copper)] tracking-wide text-xs leading-none">
                   ★★★★★
                 </p>
               </div>
 
-              <article class="mt-1 rounded border border-brand/10 bg-[var(--color-bg)]/60 px-2 py-1.5">
-                <p class="text-[10px] md:text-[11px] leading-[1.25] text-slate-700">
+              <article class="mt-2 rounded-lg border border-brand/15 bg-[var(--color-bg)]/70 px-3 py-2">
+                <p class="text-xs leading-snug text-slate-700">
                   « Excellent bistro en centre ville ! J'y viens plusieurs fois par semaine que ça soit pour un chaï latte du matin, un déjeuner ou un cidre le weekend ! Équipe très sympa et cadre très agréable avec une belle vue sur la rivière 🌊 »
                 </p>
 
                 <div class="mt-1">
-                  <p class="font-semibold text-[11px] leading-none text-slate-800">Marie</p>
-                  <p class="text-[9px] leading-none mt-0.5 text-slate-500">Avis Google · il y a 4 mois</p>
+                  <p class="font-semibold text-xs leading-tight text-slate-800">Marie</p>
+                  <p class="text-[10px] leading-tight mt-0.5 text-slate-500">Avis Google · il y a 4 mois</p>
                 </div>
               </article>
 
-              <div class="mt-1.5 text-center">
+              <div class="mt-2 text-center">
                 <button
                   type="button"
-                  class="load-google-reviews rounded border border-brand px-2 py-0.5 text-[10px] font-semibold text-brand hover:bg-brand hover:text-white transition"
+                  class="load-google-reviews rounded-lg border border-brand px-3 py-1 text-[11px] font-semibold text-brand hover:bg-brand hover:text-white transition"
                 >
                   Afficher d’autres avis Google
                 </button>
