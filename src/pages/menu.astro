@@ -1,8 +1,8 @@
 ---
 import SidebarLayout from "../layouts/SidebarLayout.astro";
 
-const title = "Menu — La Régence";
-const description = "Formules du midi, tapas, entrées, plats et desserts.";
+const title = "Menu & carte du restaurant à Mont-de-Marsan | La Régence";
+const description = "Découvrez le menu et la carte de La Régence à Mont-de-Marsan : formule du midi, tapas, plats de brasserie, burgers, tartares, salades et desserts.";
 ---
 
 <SidebarLayout {title} {description} active="carte">
@@ -13,7 +13,11 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
 
 
       <!-- Titre -->
-      <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase text-right">MENU</h1>
+      <h1 class="font-limelight text-4xl sm:text-5xl text-brand tracking-wide uppercase text-right">Menu & carte</h1>
+      <p class="mt-2 text-slate-600 text-sm sm:text-base text-right">
+        Découvrez la carte de <strong translate="no" class="notranslate">La Régence</strong>,
+        restaurant brasserie au centre-ville de Mont-de-Marsan.
+      </p>
       <div class="h-8"></div>
 
       <!-- ===== FORMULE MIDI (cliquable) ===== -->
@@ -30,7 +34,7 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
       tradition de brasserie, produits frais et inspirations du Sud-Ouest.
       Formule du midi, tapas à partager, burgers, tartares, salades,
       desserts maison et suggestions de saison vous accompagnent
-      du déjeuner jusqu'au dîner.
+      du déjeuner jusqu'au dîner à Mont-de-Marsan.
     </p>
   </div>
 </div>
@@ -80,7 +84,9 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
   <figure class="hidden lg:block">
     <img
       src="/menu-tapas.jpg"
-      alt="Tapas — La Régence"
+      alt="Tapas du restaurant La Régence à Mont-de-Marsan"
+      loading="lazy"
+      decoding="async"
       class="w-[360px] h-[546px] object-cover rounded-2xl soft-border"
     />
   </figure>
@@ -156,7 +162,9 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
   <figure class="hidden lg:block">
           <img
             src="/menu-entrees.jpg"
-            alt="Entrées — La Régence"
+            alt="Entrées de la carte de La Régence à Mont-de-Marsan"
+            loading="lazy"
+            decoding="async"
             class="md:max-w-[360px] md:ml-auto text-right rounded-2xl soft-border"
             
           />
@@ -212,7 +220,9 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
   <figure class="hidden lg:block">
           <img
             src="/menu-plats.jpg"
-            alt="Plats — La Régence"
+            alt="Plats de brasserie de La Régence à Mont-de-Marsan"
+            loading="lazy"
+            decoding="async"
             class="md:max-w-[360px] md:ml-auto text-right rounded-2xl soft-border"
           />
         </figure>
@@ -268,7 +278,9 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
   <figure class="hidden lg:block">
           <img
             src="/menu-desserts.jpg"
-            alt="Desserts — La Régence"
+            alt="Desserts de La Régence à Mont-de-Marsan"
+            loading="lazy"
+            decoding="async"
             class="md:max-w-[360px] md:ml-auto text-right rounded-2xl soft-border"
           />
         </figure>
@@ -340,22 +352,42 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
     </div>
   </section>
 
+  <!-- Liens internes -->
+  <div class="px-6 pb-2 flex flex-wrap justify-end gap-x-5 gap-y-2 text-sm">
+    <a
+      href="/boissons/"
+      class="text-brand underline decoration-[var(--color-copper)] underline-offset-4 hover:text-[var(--color-copper)] transition-colors"
+    >
+      Voir la carte des boissons
+    </a>
+    <a
+      href="/reservation/"
+      class="text-brand underline decoration-[var(--color-copper)] underline-offset-4 hover:text-[var(--color-copper)] transition-colors"
+    >
+      Réserver une table
+    </a>
+  </div>
+
   <!-- Photos regroupées en bas -->
 <div class="mt-10 -mx-6 sm:mx-0 grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-4 lg:hidden">
   <img
-    src="/menu-tapas.jpg" alt="Tapas — La Régence"
+    src="/menu-tapas.jpg" alt="Tapas du restaurant La Régence à Mont-de-Marsan"
+    loading="lazy" decoding="async"
     class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
   />
   <img
-    src="/menu-entrees.jpg" alt="Entrées — La Régence"
+    src="/menu-entrees.jpg" alt="Entrées de la carte de La Régence à Mont-de-Marsan"
+    loading="lazy" decoding="async"
     class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
   />
   <img
-    src="/menu-plats.jpg" alt="Plats — La Régence"
+    src="/menu-plats.jpg" alt="Plats de brasserie de La Régence à Mont-de-Marsan"
+    loading="lazy" decoding="async"
     class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
   />
   <img
-    src="/menu-desserts.jpg" alt="Desserts — La Régence"
+    src="/menu-desserts.jpg" alt="Desserts de La Régence à Mont-de-Marsan"
+    loading="lazy" decoding="async"
     class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
   />
 </div>
@@ -368,7 +400,7 @@ const description = "Formules du midi, tapas, entrées, plats et desserts.";
   <div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]" aria-hidden="true" role="dialog" aria-modal="true">
     <div id="lb-backdrop" class="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300"></div>
     <div id="lb-figure" class="relative opacity-0 scale-95 translate-y-2 transition-all duration-300 will-change-transform will-change-opacity">
-      <img id="lb-img" src="/menu-du-jour.png" alt="Menu du jour"
+      <img id="lb-img" src="/menu-du-jour.png" alt="Menu du jour de La Régence à Mont-de-Marsan"
            class="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-xl transition-transform duration-300"
            style="filter:none !important;" />
     </div>
