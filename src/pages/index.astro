@@ -2,8 +2,8 @@
 import SidebarLayout from "../layouts/SidebarLayout.astro";
 import { execSync } from "node:child_process";
 
-const title = "La Régence — Bar Brasserie Restaurant à Mont-de-Marsan";
-const description = "La Régence est un restaurant brasserie à Mont-de-Marsan, situé en centre-ville. Menu du midi, carte de brasserie, tapas, cocktails, bières pression et vins du lundi au samedi.";
+const title = "Restaurant & brasserie à Mont-de-Marsan | La Régence";
+const description = "La Régence, restaurant brasserie au centre-ville de Mont-de-Marsan : menu du midi, cuisine généreuse, tapas, cocktails, bières pression et vins.";
 const menuFile = "public/menu-du-jour.png";
 
 // Format FR affiché
@@ -40,6 +40,7 @@ const restaurantSchema = {
   "@id": "https://laregencemdm.fr/#restaurant",
   "name": "La Régence",
   "url": "https://laregencemdm.fr/",
+  "logo": "https://laregencemdm.fr/logo.png",
   "telephone": "+33558859272",
   "image": [
     "https://laregencemdm.fr/contact-grande.jpg",
@@ -102,7 +103,7 @@ const restaurantSchema = {
 
     <div class="absolute w-full text-center text-sm opacity-80 flex flex-col items-center" style="top:92%;">
       <img src="/logo.png" alt="La Régence" class="w-6 h-6 mb-1 opacity-90" />
-      <p>© <span translate="no" class="notranslate">La Régence</span> 2025</p>
+      <p>© <span translate="no" class="notranslate">La Régence</span> 2026</p>
     </div>
 
     <div class="flex flex-col items-center gap-5 font-splash fade-in-contents">
@@ -112,7 +113,7 @@ const restaurantSchema = {
         class="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" 
       />
       <p class="text-2xl md:text-3xl text-center">
-        Bar-Brasserie à Mont-de-Marsan
+        Restaurant & Brasserie à Mont-de-Marsan
       </p>
     </div>
   </div>
@@ -126,7 +127,7 @@ const restaurantSchema = {
       <!-- 1. Grande image -->
       <img
         src="/grande.jpg"
-        alt="La Régence"
+        alt="Salle du restaurant La Régence à Mont-de-Marsan"
         class="block w-full h-auto object-contain"
       />
 
@@ -134,15 +135,15 @@ const restaurantSchema = {
       <section class="w-full px-6 py-10 text-center">
         <div class="space-y-4">
           <h1 class="font-limelight text-3xl text-brand leading-tight uppercase regence-title">
-            Bar Restaurant
+            Restaurant Brasserie à Mont-de-Marsan
           </h1>
 
-          <h1
+          <p
             translate="no"
             class="notranslate font-limelight text-4xl text-brand leading-tight uppercase regence-title"
           >
             La Régence
-          </h1>
+          </p>
 
           <p class="text-slate-700 italic text-base leading-snug">
             « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
@@ -161,10 +162,10 @@ const restaurantSchema = {
             Notre cuisine, inspirée de la tradition brasserie, se veut généreuse,
             accessible et préparée avec soin, à partir de produits frais et de recettes
             travaillées sur place. Le midi, nous vous accueillons pour une pause déjeuner
-            autour de notre <strong>menu du jour</strong> et de notre carte.
+            autour de <a href="/menu/" class="underline underline-offset-2 hover:text-brand transition-colors"><strong>notre menu du jour et notre carte</strong></a>.
             Le soir, <span translate="no" class="notranslate">La Régence</span> devient
-            une adresse idéale pour dîner, partager des tapas, boire un verre,
-            découvrir nos cocktails, nos bières pression et nos vins.
+            une adresse idéale pour dîner, partager des tapas, boire un verre et
+            découvrir <a href="/boissons/" class="underline underline-offset-2 hover:text-brand transition-colors">nos cocktails, nos bières pression et nos vins</a>.
           </p>
 
           <p class="text-slate-700 leading-relaxed text-base">
@@ -174,7 +175,7 @@ const restaurantSchema = {
           </p>
 
           <p class="text-slate-700">
-            <a href="tel:+33558859272" class="underline">
+            <a href="/reservation/" class="underline underline-offset-2 hover:text-brand transition-colors">
               Réservez votre table en ligne ou par téléphone au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72
             </a>
           </p>
@@ -234,7 +235,7 @@ const restaurantSchema = {
       <!-- 4. Petite image -->
       <img
         src="/petite2.jpg"
-        alt="La Régence"
+        alt="Ambiance de La Régence, restaurant brasserie à Mont-de-Marsan"
         class="block w-full h-auto object-contain"
       />
     </div>
@@ -249,16 +250,16 @@ const restaurantSchema = {
           <div class="w-full text-center md:text-right px-0 md:pr-3 flex flex-col justify-end pb-6 md:pb-8">
 
             <div class="space-y-3">
-              <h1 class="font-limelight text-3xl sm:text-3xl md:text-3xl text-brand leading-tight uppercase regence-title">
-                Bar Restaurant
-              </h1>
+              <h2 class="font-limelight text-3xl sm:text-3xl md:text-3xl text-brand leading-tight uppercase regence-title">
+                Restaurant Brasserie à Mont-de-Marsan
+              </h2>
 
-              <h1
+              <p
                 translate="no"
                 class="notranslate font-limelight text-3xl sm:text-4xl md:text-5xl text-brand leading-tight uppercase regence-title"
               >
                 La Régence
-              </h1>
+              </p>
 
               <p class="text-slate-700 italic text-base leading-snug">
                 « Au cœur de Mont-de-Marsan, là où le Midou et la Douze se rejoignent pour former la Midouze… »
@@ -269,7 +270,7 @@ const restaurantSchema = {
               </p>
 
               <p class="text-slate-700 leading-relaxed text-base">
-                Notre cuisine, inspirée de la tradition brasserie, se veut généreuse, accessible et préparée avec soin, à partir de produits frais et de recettes travaillées sur place. Le midi, nous vous accueillons pour une pause déjeuner autour de notre <strong> menu du jour </strong>et de notre carte. Le soir, <span translate="no" class="notranslate">La Régence</span> devient une adresse idéale pour dîner, partager des tapas, boire un verre, découvrir nos cocktails, nos bières pression et nos vins.
+                Notre cuisine, inspirée de la tradition brasserie, se veut généreuse, accessible et préparée avec soin, à partir de produits frais et de recettes travaillées sur place. Le midi, nous vous accueillons pour une pause déjeuner autour de <a href="/menu/" class="underline underline-offset-2 hover:text-brand transition-colors"><strong>notre menu du jour et notre carte</strong></a>. Le soir, <span translate="no" class="notranslate">La Régence</span> devient une adresse idéale pour dîner, partager des tapas, boire un verre et découvrir <a href="/boissons/" class="underline underline-offset-2 hover:text-brand transition-colors">nos cocktails, nos bières pression et nos vins</a>.
               </p>
 
               <p class="text-slate-700 leading-relaxed text-base">
@@ -277,7 +278,7 @@ const restaurantSchema = {
               </p>
 
               <p class="text-slate-700">
-                <a href="tel:+33558859272" class="underline">
+                <a href="/reservation/" class="underline underline-offset-2 hover:text-brand transition-colors">
                   Réservez votre table en ligne ou par téléphone au 05&nbsp;58&nbsp;85&nbsp;92&nbsp;72
                 </a>
               </p>
@@ -329,7 +330,11 @@ const restaurantSchema = {
 
             <!-- Grande image -->
             <div class="xl:col-span-2 xl:row-span-10 rounded-2xl soft-border overflow-hidden">
-              <img src="/grande.jpg" class="w-full md:h-[60vh] xl:h-full object-cover" />
+              <img
+                src="/grande.jpg"
+                alt="Salle du restaurant La Régence à Mont-de-Marsan"
+                class="w-full md:h-[60vh] xl:h-full object-cover"
+              />
             </div>
 
             <div class="hidden xl:block xl:col-span-1 xl:row-span-2"></div>
@@ -354,7 +359,11 @@ const restaurantSchema = {
 
             <!-- Petite image -->
             <div class="rounded-2xl soft-border overflow-hidden xl:col-span-1 xl:row-span-4">
-              <img src="/petite2.jpg" class="w-full md:h-[28vh] xl:h-full object-cover" />
+              <img
+                src="/petite2.jpg"
+                alt="Ambiance de La Régence, restaurant brasserie à Mont-de-Marsan"
+                class="w-full md:h-[28vh] xl:h-full object-cover"
+              />
             </div>
 
           </div>
