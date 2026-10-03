@@ -2,23 +2,31 @@
 import SidebarLayout from "../layouts/SidebarLayout.astro";
 
 const title = "Réservation — La Régence";
-const description = "Demande de réservation à La Régence, bar-brasserie à Mont-de-Marsan.";
+const description =
+  "Demande de réservation à La Régence, bar-brasserie à Mont-de-Marsan.";
 ---
 
 <SidebarLayout {title} {description} active="reservation">
-  <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
-    <div class="max-w-3xl ml-auto text-right md:pr-12">
+  <section
+    class="min-h-screen w-full bg-[var(--color-bg)] px-5 py-6 md:px-6 md:py-3"
+  >
+    <div class="max-w-4xl ml-auto text-right md:pr-8">
 
+      <!-- INTRO -->
       <div id="booking-intro">
-        <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">
+        <h1
+          class="font-limelight text-4xl md:text-5xl text-brand tracking-wide uppercase"
+        >
           Réservation
         </h1>
 
-        <p class="mt-4 text-slate-700">
+        <p class="mt-2 text-sm md:text-base text-slate-700">
           Votre demande sera étudiée par notre équipe. Vous recevrez une confirmation après validation.
         </p>
       </div>
 
+
+      <!-- RESERVATIONS DESACTIVEES -->
       <div
         id="booking-disabled-box"
         class="hidden rounded-2xl soft-border bg-white/60 p-8 text-right"
@@ -27,7 +35,10 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
           Réservation en ligne indisponible
         </h2>
 
-        <p id="booking-disabled-message" class="mt-4 text-lg text-slate-700"></p>
+        <p
+          id="booking-disabled-message"
+          class="mt-4 text-lg text-slate-700"
+        ></p>
 
         <a
           href="tel:+33558859272"
@@ -37,31 +48,49 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         </a>
       </div>
 
-      <form id="reservation-form" class="mt-10 space-y-6 text-left">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- FORMULAIRE -->
+      <form
+        id="reservation-form"
+        class="mt-5 md:mt-4 space-y-5 md:space-y-3 text-left"
+      >
 
+        <!-- DATE / SERVICE / HEURE / PERSONNES -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-2"
+        >
+
+          <!-- DATE -->
           <label class="block">
-            <span class="text-sm uppercase text-slate-600">Date</span>
+            <span class="text-xs md:text-sm uppercase text-slate-600">
+              Date
+            </span>
 
             <input
               type="date"
               name="date_service"
               required
-              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-2 md:py-2"
             />
 
-            <p id="date-message" class="mt-2 text-sm text-red-700"></p>
+            <p
+              id="date-message"
+              class="mt-1 text-xs text-red-700"
+            ></p>
           </label>
 
+
+          <!-- SERVICE -->
           <label class="block">
-            <span class="text-sm uppercase text-slate-600">Service</span>
+            <span class="text-xs md:text-sm uppercase text-slate-600">
+              Service
+            </span>
 
             <select
               name="service"
               id="service"
               required
-              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-2 md:py-2"
             >
               <option value="">Choisir</option>
               <option value="midi">Midi</option>
@@ -69,21 +98,29 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
             </select>
           </label>
 
+
+          <!-- HEURE -->
           <label class="block">
-            <span class="text-sm uppercase text-slate-600">Heure</span>
+            <span class="text-xs md:text-sm uppercase text-slate-600">
+              Heure
+            </span>
 
             <select
               name="heure"
               id="heure"
               required
-              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-2 md:py-2"
             >
-              <option value="">Choisissez d’abord un service</option>
+              <option value="">
+                Choisissez d’abord un service
+              </option>
             </select>
           </label>
 
+
+          <!-- PERSONNES -->
           <label class="block">
-            <span class="text-sm uppercase text-slate-600">
+            <span class="text-xs md:text-sm uppercase text-slate-600">
               Nombre de personnes
             </span>
 
@@ -92,131 +129,192 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
               name="nb_personnes"
               min="1"
               required
-              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-2 md:py-2"
             />
 
-            <p class="mt-2 text-sm text-brand/70">
-              Votre réservation sera confirmée après validation par notre équipe.
+            <p class="mt-1 text-xs text-brand/70">
+              Réservation confirmée après validation par notre équipe.
             </p>
           </label>
 
-          <label class="block md:col-span-2">
-            <span class="text-sm uppercase text-slate-600">
+        </div>
+
+
+        <!-- SALLE + COMMENTAIRE -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 md:gap-y-2"
+        >
+
+          <!-- SALLE -->
+          <label class="block">
+            <span class="text-xs md:text-sm uppercase text-slate-600">
               Préférence de salle
             </span>
 
             <select
               name="preference_salle"
               required
-              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-2 md:py-2"
             >
-              <option value="peu_importe">Peu importe</option>
-              <option value="salle_bas">Salle du bas</option>
-              <option value="etage">Étage</option>
-              <option value="terrasse">Terrasse</option>
+              <option value="peu_importe">
+                Peu importe
+              </option>
+
+              <option value="salle_bas">
+                Salle du bas
+              </option>
+
+              <option value="etage">
+                Étage
+              </option>
+
+              <option value="terrasse">
+                Terrasse
+              </option>
             </select>
+          </label>
+
+
+          <!-- COMMENTAIRE -->
+          <label class="block">
+            <span class="text-xs md:text-sm uppercase text-slate-600">
+              Commentaire
+            </span>
+
+            <textarea
+              name="commentaire_client"
+              rows="2"
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-2 resize-none"
+              placeholder="Allergie, poussette, demande particulière..."
+            ></textarea>
           </label>
 
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
+        <!-- COORDONNEES -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-4 md:gap-y-2"
+        >
+
+          <!-- NOM -->
           <label class="block">
-            <span class="text-sm uppercase text-slate-600">Nom</span>
+            <span class="text-xs md:text-sm uppercase text-slate-600">
+              Nom
+            </span>
 
             <input
               type="text"
               name="nom"
               required
-              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-3 py-2"
             />
           </label>
 
+
+          <!-- PRENOM -->
           <label class="block">
-            <span class="text-sm uppercase text-slate-600">Prénom</span>
+            <span class="text-xs md:text-sm uppercase text-slate-600">
+              Prénom
+            </span>
 
             <input
               type="text"
               name="prenom"
-              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-3 py-2"
             />
           </label>
 
+
+          <!-- TELEPHONE -->
           <label class="block">
-            <span class="text-sm uppercase text-slate-600">Téléphone</span>
+            <span class="text-xs md:text-sm uppercase text-slate-600">
+              Téléphone
+            </span>
 
             <input
               type="tel"
               name="telephone"
               required
-              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-3 py-2"
             />
           </label>
 
+
+          <!-- EMAIL -->
           <label class="block">
-            <span class="text-sm uppercase text-slate-600">Email</span>
+            <span class="text-xs md:text-sm uppercase text-slate-600">
+              Email
+            </span>
 
             <input
               type="email"
               name="email"
               required
-              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
+              class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-3 py-2"
             />
           </label>
 
         </div>
 
-        <label class="block">
-          <span class="text-sm uppercase text-slate-600">Commentaire</span>
 
-          <textarea
-            name="commentaire_client"
-            rows="4"
-            class="mt-1 w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3"
-            placeholder="Allergie, poussette, demande particulière..."
-          ></textarea>
-        </label>
+        <!-- MARKETING + BOUTON -->
+        <div
+          class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6"
+        >
 
-        <label class="flex items-start gap-3 cursor-pointer">
+          <label
+            class="flex items-start gap-2 cursor-pointer md:max-w-[70%]"
+          >
 
-          <input
-            type="checkbox"
-            id="marketing_email"
-            name="marketing_email"
-            class="mt-1"
-          />
+            <input
+              type="checkbox"
+              id="marketing_email"
+              name="marketing_email"
+              class="mt-1"
+            />
 
-          <span class="text-sm text-slate-700">
-            J’accepte de recevoir occasionnellement par email les actualités
-            et événements de
-            <span translate="no" class="notranslate">La Régence</span>.
+            <span class="text-xs md:text-sm text-slate-700">
+              J’accepte de recevoir occasionnellement par email les actualités
+              et événements de
+              <span translate="no" class="notranslate">
+                La Régence
+              </span>.
 
-            <span class="block text-xs text-slate-500 mt-1">
-              Réveillon, Saint-Valentin, Fêtes de la Madeleine, concerts,
-              stand-up et événements spéciaux. Désinscription possible à tout moment.
+              <span class="block text-[11px] md:text-xs text-slate-500 mt-0.5">
+                Réveillon, Saint-Valentin, Fêtes de la Madeleine, concerts,
+                stand-up et événements spéciaux. Désinscription possible à tout moment.
+              </span>
             </span>
-          </span>
 
-        </label>
+          </label>
 
-        <div class="text-right">
+
           <button
             type="submit"
             id="submit-btn"
-            class="font-limelight bg-brand text-white px-6 py-3 rounded-xl hover:bg-[var(--color-copper)] transition"
+            class="shrink-0 font-limelight bg-brand text-white px-6 py-2.5 rounded-xl hover:bg-[var(--color-copper)] transition"
           >
             Envoyer ma demande
           </button>
+
         </div>
 
-        <p id="form-message" class="text-right text-sm"></p>
+
+        <p
+          id="form-message"
+          class="text-right text-sm"
+        ></p>
 
       </form>
+
     </div>
   </section>
 
+
   <script>
     import { supabase } from "../lib/supabaseClient.js";
+
 
     const bookingDisabledBox =
       document.getElementById("booking-disabled-box");
@@ -247,6 +345,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
 
     const horaires = {
+
       midi: [
         "12:00",
         "12:15",
@@ -274,9 +373,9 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
 
     /*
-     * Limites du calendrier :
-     * aujourd'hui minimum
-     * aujourd'hui + 2 ans maximum
+     * CALENDRIER
+     * Minimum : aujourd'hui
+     * Maximum : aujourd'hui + 2 ans
      */
 
     const dateInput =
@@ -284,12 +383,40 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
     let maxReservationDate = "";
 
+
     if (dateInput) {
 
-      const todayDate = new Date();
+      const todayDate =
+        new Date();
+
+
+      /*
+       * On construit la date locale afin d'éviter
+       * un éventuel décalage UTC autour de minuit.
+       */
+
+      const formatLocalDate = (date) => {
+
+        const year =
+          date.getFullYear();
+
+        const month =
+          String(
+            date.getMonth() + 1
+          ).padStart(2, "0");
+
+        const day =
+          String(
+            date.getDate()
+          ).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+      };
+
 
       const minDate =
-        todayDate.toISOString().split("T")[0];
+        formatLocalDate(todayDate);
+
 
       const maxDateObj =
         new Date(todayDate);
@@ -298,8 +425,10 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         maxDateObj.getFullYear() + 2
       );
 
+
       maxReservationDate =
-        maxDateObj.toISOString().split("T")[0];
+        formatLocalDate(maxDateObj);
+
 
       dateInput.setAttribute(
         "min",
@@ -313,6 +442,11 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
     }
 
 
+    /*
+     * ACTIVATION / DESACTIVATION
+     * DES RESERVATIONS EN LIGNE
+     */
+
     async function checkBookingAvailability() {
 
       const { data, error } =
@@ -321,6 +455,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
           .select("*")
           .eq("key", "online_booking")
           .single();
+
 
       if (error) {
 
@@ -332,8 +467,10 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         return;
       }
 
+
       const value =
         data?.value || {};
+
 
       if (value.enabled === false) {
 
@@ -341,31 +478,51 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
           value.message ||
           "La réservation en ligne est actuellement en maintenance. Veuillez nous appeler au 05 58 85 92 72 pour toute réservation. Merci.";
 
-        bookingDisabledBox.classList.remove("hidden");
 
-        form.classList.add("hidden");
+        bookingDisabledBox.classList.remove(
+          "hidden"
+        );
 
-        bookingIntro?.classList.add("hidden");
+        form.classList.add(
+          "hidden"
+        );
+
+        bookingIntro?.classList.add(
+          "hidden"
+        );
 
       } else {
 
-        bookingDisabledBox.classList.add("hidden");
+        bookingDisabledBox.classList.add(
+          "hidden"
+        );
 
-        form.classList.remove("hidden");
+        form.classList.remove(
+          "hidden"
+        );
 
-        bookingIntro?.classList.remove("hidden");
+        bookingIntro?.classList.remove(
+          "hidden"
+        );
       }
     }
 
+
+    /*
+     * HORAIRES
+     */
 
     function updateHeures() {
 
       const service =
         serviceSelect?.value;
 
+
       if (!heureSelect) return;
 
+
       heureSelect.innerHTML = "";
+
 
       if (
         !service ||
@@ -378,30 +535,45 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         return;
       }
 
+
       heureSelect.innerHTML =
         '<option value="">Choisir une heure</option>';
 
-      horaires[service].forEach((h) => {
 
-        if (
-          isToday(dateInput?.value) &&
-          isPastSlot(h)
-        ) {
-          return;
+      horaires[service].forEach(
+        (h) => {
+
+          if (
+            isToday(dateInput?.value) &&
+            isPastSlot(h)
+          ) {
+            return;
+          }
+
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+
+          option.value = h;
+
+          option.textContent =
+            h.replace(":", "h");
+
+
+          heureSelect.appendChild(
+            option
+          );
         }
-
-        const option =
-          document.createElement("option");
-
-        option.value = h;
-
-        option.textContent =
-          h.replace(":", "h");
-
-        heureSelect.appendChild(option);
-      });
+      );
     }
 
+
+    /*
+     * EXCEPTIONS
+     */
 
     let reservationExceptions = [];
 
@@ -412,6 +584,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         await supabase
           .from("reservation_exceptions")
           .select("*");
+
 
       if (error) {
 
@@ -425,14 +598,18 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         return;
       }
 
+
       reservationExceptions =
         data || [];
+
 
       validateDateSelection();
     }
 
 
-    function getExceptionForDate(dateStr) {
+    function getExceptionForDate(
+      dateStr
+    ) {
 
       return reservationExceptions.find(
         (e) =>
@@ -441,11 +618,16 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
     }
 
 
+    /*
+     * EVENEMENTS SERVICE
+     */
+
     serviceSelect?.addEventListener(
       "change",
       () => {
 
         updateHeures();
+
         validateDateSelection();
       }
     );
@@ -456,42 +638,54 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
       () => {
 
         updateHeures();
+
         validateDateSelection();
       }
     );
 
 
-    checkBookingAvailability();
-
-    updateHeures();
-
+    /*
+     * OUTILS DATE
+     */
 
     function isSunday(dateStr) {
 
-      if (!dateStr) return false;
+      if (!dateStr) {
+        return false;
+      }
+
 
       const date =
         new Date(
           dateStr + "T00:00:00"
         );
 
-      return date.getDay() === 0;
+
+      return (
+        date.getDay() === 0
+      );
     }
 
 
     function isToday(dateStr) {
 
-      if (!dateStr) return false;
+      if (!dateStr) {
+        return false;
+      }
+
 
       const today =
         new Date();
+
 
       const selected =
         new Date(
           dateStr + "T00:00:00"
         );
 
+
       return (
+
         selected.getFullYear() ===
           today.getFullYear() &&
 
@@ -500,21 +694,27 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
         selected.getDate() ===
           today.getDate()
+
       );
     }
 
 
     function isPastSlot(heure) {
 
-      if (!heure) return true;
+      if (!heure) {
+        return true;
+      }
+
 
       const now =
         new Date();
+
 
       const [hour, minute] =
         heure
           .split(":")
           .map(Number);
+
 
       if (
         hour < now.getHours()
@@ -522,12 +722,14 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         return true;
       }
 
+
       if (
         hour === now.getHours() &&
         minute <= now.getMinutes()
       ) {
         return true;
       }
+
 
       return false;
     }
@@ -538,12 +740,16 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
       const now =
         new Date();
 
+
       return (
+
         now.getHours() > 13 ||
+
         (
           now.getHours() === 13 &&
           now.getMinutes() >= 30
         )
+
       );
     }
 
@@ -553,28 +759,39 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
       const now =
         new Date();
 
+
       return (
+
         now.getHours() > 21 ||
+
         (
           now.getHours() === 21 &&
           now.getMinutes() >= 30
         )
+
       );
     }
 
+
+    /*
+     * VALIDATION DATE
+     */
 
     function validateDateSelection() {
 
       const selectedDate =
         dateInput?.value;
 
+
       const selectedService =
         serviceSelect?.value;
+
 
       const exception =
         getExceptionForDate(
           selectedDate
         );
+
 
       if (
         !dateMessage ||
@@ -590,7 +807,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
 
       /*
-       * Date supérieure à 2 ans
+       * LIMITE +2 ANS
        */
 
       if (
@@ -602,6 +819,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         dateMessage.textContent =
           "Les réservations sont ouvertes jusqu’à 2 ans à l’avance. Après, on préfère laisser un peu de suspense 😉";
 
+
         submitBtn.disabled = true;
 
         return false;
@@ -609,10 +827,15 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
 
       let midiOuvert =
-        !isSunday(selectedDate);
+        !isSunday(
+          selectedDate
+        );
+
 
       let soirOuvert =
-        !isSunday(selectedDate);
+        !isSunday(
+          selectedDate
+        );
 
 
       if (exception) {
@@ -625,6 +848,10 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
       }
 
 
+      /*
+       * MIDI FERME
+       */
+
       if (
         selectedService === "midi" &&
         !midiOuvert
@@ -634,11 +861,16 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
           exception?.raison ||
           "Les réservations du midi sont fermées ce jour-là. Merci de nous appeler au 05 58 85 92 72.";
 
+
         submitBtn.disabled = true;
 
         return false;
       }
 
+
+      /*
+       * SOIR FERME
+       */
 
       if (
         selectedService === "soir" &&
@@ -649,11 +881,16 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
           exception?.raison ||
           "Les réservations du soir sont fermées ce jour-là. Merci de nous appeler au 05 58 85 92 72.";
 
+
         submitBtn.disabled = true;
 
         return false;
       }
 
+
+      /*
+       * DIMANCHE
+       */
 
       if (
         !selectedService &&
@@ -664,11 +901,16 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         dateMessage.textContent =
           "Le restaurant est fermé le dimanche. Pour une demande particulière, merci de nous appeler au 05 58 85 92 72.";
 
+
         submitBtn.disabled = true;
 
         return false;
       }
 
+
+      /*
+       * MIDI DU JOUR
+       */
 
       if (
         selectedService === "midi" &&
@@ -679,11 +921,16 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         dateMessage.textContent =
           "Les réservations pour ce midi sont désormais fermées. Merci de nous appeler au 05 58 85 92 72.";
 
+
         submitBtn.disabled = true;
 
         return false;
       }
 
+
+      /*
+       * SOIR DU JOUR
+       */
 
       if (
         selectedService === "soir" &&
@@ -693,6 +940,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
         dateMessage.textContent =
           "Les réservations pour ce soir sont désormais fermées. Merci de nous appeler au 05 58 85 92 72.";
+
 
         submitBtn.disabled = true;
 
@@ -705,7 +953,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
 
     /*
-     * Contrôle immédiat de la date
+     * EVENEMENTS DATE
      */
 
     dateInput?.addEventListener(
@@ -713,6 +961,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
       () => {
 
         updateHeures();
+
         validateDateSelection();
       }
     );
@@ -723,19 +972,33 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
       () => {
 
         updateHeures();
+
         validateDateSelection();
       }
     );
 
 
+    /*
+     * INITIALISATION
+     */
+
+    checkBookingAvailability();
+
+    updateHeures();
+
     loadReservationExceptions();
 
+
+    /*
+     * ENVOI DU FORMULAIRE
+     */
 
     form?.addEventListener(
       "submit",
       async (event) => {
 
         event.preventDefault();
+
 
         if (
           !validateDateSelection()
@@ -748,6 +1011,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
         message.className =
           "text-right text-sm";
+
 
         submitBtn.disabled = true;
 
@@ -785,22 +1049,30 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
           nom:
             String(
-              formData.get("nom") || ""
+              formData.get(
+                "nom"
+              ) || ""
             ).trim(),
 
           prenom:
             String(
-              formData.get("prenom") || ""
+              formData.get(
+                "prenom"
+              ) || ""
             ).trim(),
 
           telephone:
             String(
-              formData.get("telephone") || ""
+              formData.get(
+                "telephone"
+              ) || ""
             ).trim(),
 
           email:
             String(
-              formData.get("email") || ""
+              formData.get(
+                "email"
+              ) || ""
             ).trim(),
 
           preference_salle:
@@ -820,19 +1092,28 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
               "marketing_email"
             ) === "on",
 
-          origine: "site",
+          origine:
+            "site",
 
-          statut: "nouvelle",
+          statut:
+            "nouvelle",
 
-          a_traiter: true,
+          a_traiter:
+            true,
         };
 
+
+        /*
+         * CREATION RESERVATION
+         */
 
         const createResponse =
           await fetch(
             "/.netlify/functions/create-reservation",
             {
-              method: "POST",
+
+              method:
+                "POST",
 
               headers: {
                 "Content-Type":
@@ -858,6 +1139,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
             createResult
           );
 
+
           message.textContent =
             "Erreur Supabase : " +
             (
@@ -865,14 +1147,19 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
               "Erreur inconnue"
             );
 
+
           message.classList.add(
             "text-red-700"
           );
 
-          submitBtn.disabled = false;
+
+          submitBtn.disabled =
+            false;
+
 
           submitBtn.textContent =
             "Envoyer ma demande";
+
 
           return;
         }
@@ -882,13 +1169,19 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
           createResult.reservation;
 
 
+        /*
+         * EMAIL ADMIN
+         */
+
         try {
 
           const emailResponse =
             await fetch(
               "/.netlify/functions/send-reservation-email",
               {
-                method: "POST",
+
+                method:
+                  "POST",
 
                 headers: {
                   "Content-Type":
@@ -897,6 +1190,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
                 body:
                   JSON.stringify({
+
                     type:
                       "new_reservation_admin",
 
@@ -924,6 +1218,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
               emailResult
             );
 
+
             alert(
               "Réservation enregistrée, mais mail non envoyé : " +
               (
@@ -933,6 +1228,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
             );
           }
 
+
         } catch (emailError) {
 
           console.error(
@@ -940,11 +1236,16 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
             emailError
           );
 
+
           alert(
             "Réservation enregistrée, mais erreur mail."
           );
         }
 
+
+        /*
+         * NOTIFICATION PUSH
+         */
 
         try {
 
@@ -955,9 +1256,15 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
             ).toLocaleDateString(
               "fr-FR",
               {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
+
+                weekday:
+                  "long",
+
+                day:
+                  "numeric",
+
+                month:
+                  "long",
               }
             );
 
@@ -969,7 +1276,9 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
           await fetch(
             "/.netlify/functions/send-push-notification",
             {
-              method: "POST",
+
+              method:
+                "POST",
 
               headers: {
                 "Content-Type":
@@ -978,6 +1287,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
 
               body:
                 JSON.stringify({
+
                   title:
                     `Nouvelle réservation — ${pushNom || "Client"}`,
 
@@ -990,6 +1300,7 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
             }
           );
 
+
         } catch (pushError) {
 
           console.error(
@@ -999,7 +1310,12 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         }
 
 
+        /*
+         * SUCCES
+         */
+
         form.reset();
+
 
         heureSelect.innerHTML =
           '<option value="">Choisissez d’abord un service</option>';
@@ -1008,12 +1324,15 @@ const description = "Demande de réservation à La Régence, bar-brasserie à Mo
         message.textContent =
           "Votre demande de réservation a bien été envoyée. Nous reviendrons vers vous pour confirmation.";
 
+
         message.classList.add(
           "text-green-700"
         );
 
 
-        submitBtn.disabled = false;
+        submitBtn.disabled =
+          false;
+
 
         submitBtn.textContent =
           "Envoyer ma demande";
