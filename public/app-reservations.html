@@ -3,53 +3,517 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Réservations — La Régence</title>
 
   <link rel="manifest" href="/manifest.webmanifest" />
+
   <meta name="theme-color" content="#25471f" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="Réservations" />
-  <link rel="apple-touch-icon" href="/icon-192.png" />
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  />
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="Réservations"
+  />
+
+  <link
+    rel="apple-touch-icon"
+    href="/icon-192.png"
+  />
 </head>
 
-<body style="margin:0;font-family:Arial;background:#F5EFE6;color:#25471f;display:flex;align-items:center;justify-content:center;min-height:100vh;">
-  <main style="text-align:center;padding:32px;max-width:420px;">
-    <img src="/icon-192.png" alt="La Régence" style="width:120px;margin-bottom:24px;" />
+<body
+  style="
+    margin:0;
+    font-family:Arial;
+    background:#F5EFE6;
+    color:#25471f;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+  "
+>
 
-    <h1 style="font-size:32px;margin:0 0 12px;">La Régence</h1>
+  <main
+    style="
+      text-align:center;
+      padding:32px;
+      max-width:420px;
+      width:100%;
+    "
+  >
 
-    <p style="font-size:18px;margin-bottom:28px;color:#334155;">
+    <img
+      src="/icon-192.png"
+      alt="La Régence"
+      style="
+        width:120px;
+        margin-bottom:24px;
+      "
+    />
+
+    <h1
+      style="
+        font-size:32px;
+        margin:0 0 12px;
+      "
+    >
+      La Régence
+    </h1>
+
+
+    <p
+      style="
+        font-size:18px;
+        margin-bottom:28px;
+        color:#334155;
+      "
+    >
       Application de gestion des réservations
     </p>
 
-    <a href="/admin/reservations" style="display:block;background:#a3742c;color:white;text-decoration:none;border-radius:12px;padding:16px;font-size:18px;font-weight:bold;">
+
+    <!-- ACTIVER LES NOTIFICATIONS -->
+
+    <button
+      id="enable-notifications"
+      type="button"
+      style="
+        display:block;
+        width:100%;
+        border:0;
+        background:#25471f;
+        color:white;
+        border-radius:12px;
+        padding:16px;
+        font-size:18px;
+        font-weight:bold;
+        cursor:pointer;
+        margin-bottom:12px;
+      "
+    >
+      Activer les notifications
+    </button>
+
+
+    <!-- ETAT DES NOTIFICATIONS -->
+
+    <p
+      id="notification-status"
+      style="
+        min-height:20px;
+        font-size:14px;
+        margin:0 0 20px;
+        color:#475569;
+      "
+    ></p>
+
+
+    <!-- OUVRIR RESERVATIONS -->
+
+    <a
+      href="/admin/reservations"
+      style="
+        display:block;
+        background:#a3742c;
+        color:white;
+        text-decoration:none;
+        border-radius:12px;
+        padding:16px;
+        font-size:18px;
+        font-weight:bold;
+      "
+    >
       Ouvrir les réservations
     </a>
+
   </main>
 
+
   <script>
+
     const VAPID_PUBLIC_KEY =
       "BJgk1b6pXi6nF5-EcytZxzU72giY63BjqU2RYq1_lASGeKXZuaAMqNvHH-gwI2NELPjiPu3dm6wkV_8eu92_rxY";
 
-    function urlBase64ToUint8Array(base64String) {
-      const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-      const base64 = (base64String + padding)
-        .replace(/-/g, "+")
-        .replace(/_/g, "/");
 
-      const rawData = window.atob(base64);
-      const outputArray = new Uint8Array(rawData.length);
+    const notificationButton =
+      document.getElementById(
+        "enable-notifications"
+      );
 
-      for (let i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i);
+
+    const notificationStatus =
+      document.getElementById(
+        "notification-status"
+      );
+
+
+    /*
+     * Conversion de la clé VAPID
+     */
+
+    function urlBase64ToUint8Array(
+      base64String
+    ) {
+
+      const padding =
+        "=".repeat(
+          (
+            4 -
+            (
+              base64String.length % 4
+            )
+          ) % 4
+        );
+
+
+      const base64 =
+        (
+          base64String +
+          padding
+        )
+          .replace(/-/g, "+")
+          .replace(/_/g, "/");
+
+
+      const rawData =
+        window.atob(
+          base64
+        );
+
+
+      const outputArray =
+        new Uint8Array(
+          rawData.length
+        );
+
+
+      for (
+        let i = 0;
+        i < rawData.length;
+        ++i
+      ) {
+
+        outputArray[i] =
+          rawData.charCodeAt(i);
       }
+
 
       return outputArray;
     }
 
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js");
+
+
+    /*
+     * Enregistrement du Service Worker
+     */
+
+    let serviceWorkerRegistration = null;
+
+
+    async function registerServiceWorker() {
+
+      if (
+        !("serviceWorker" in navigator)
+      ) {
+
+        throw new Error(
+          "Service Worker non disponible."
+        );
+      }
+
+
+      serviceWorkerRegistration =
+        await navigator.serviceWorker.register(
+          "/sw.js"
+        );
+
+
+      return navigator.serviceWorker.ready;
     }
+
+
+
+    /*
+     * Activation des notifications
+     */
+
+    async function enableNotifications() {
+
+      notificationButton.disabled =
+        true;
+
+
+      notificationStatus.textContent =
+        "Activation en cours…";
+
+
+      try {
+
+        /*
+         * Vérification Push
+         */
+
+        if (
+          !("Notification" in window)
+        ) {
+
+          throw new Error(
+            "Les notifications ne sont pas disponibles."
+          );
+        }
+
+
+        if (
+          !("PushManager" in window)
+        ) {
+
+          throw new Error(
+            "Les notifications Push ne sont pas disponibles."
+          );
+        }
+
+
+
+        /*
+         * Demande d'autorisation iPad
+         */
+
+        let permission =
+          Notification.permission;
+
+
+        if (
+          permission === "default"
+        ) {
+
+          permission =
+            await Notification.requestPermission();
+        }
+
+
+
+        if (
+          permission !== "granted"
+        ) {
+
+          notificationStatus.textContent =
+            "Les notifications n'ont pas été autorisées.";
+
+
+          notificationButton.disabled =
+            false;
+
+
+          return;
+        }
+
+
+
+        /*
+         * Service Worker
+         */
+
+        const registration =
+          await registerServiceWorker();
+
+
+
+        /*
+         * Vérifie si un abonnement existe
+         */
+
+        let subscription =
+          await registration
+            .pushManager
+            .getSubscription();
+
+
+
+        /*
+         * Création du nouvel abonnement
+         */
+
+        if (!subscription) {
+
+          subscription =
+            await registration
+              .pushManager
+              .subscribe({
+
+                userVisibleOnly:
+                  true,
+
+                applicationServerKey:
+                  urlBase64ToUint8Array(
+                    VAPID_PUBLIC_KEY
+                  ),
+              });
+        }
+
+
+
+        /*
+         * Enregistrement de l'iPad
+         * côté serveur
+         */
+
+        const response =
+          await fetch(
+            "/.netlify/functions/save-push-subscription",
+            {
+
+              method:
+                "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+
+              body:
+                JSON.stringify(
+                  subscription
+                ),
+            }
+          );
+
+
+
+        const result =
+          await response
+            .json()
+            .catch(
+              () => ({})
+            );
+
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            result.error ||
+            "Impossible d'enregistrer les notifications."
+          );
+        }
+
+
+
+        /*
+         * Succès
+         */
+
+        notificationStatus.textContent =
+          "✓ Notifications activées sur cette caisse.";
+
+
+        notificationStatus.style.color =
+          "#15803d";
+
+
+        notificationButton.textContent =
+          "Notifications activées";
+
+
+        notificationButton.style.background =
+          "#15803d";
+
+
+        notificationButton.disabled =
+          false;
+
+
+      } catch (error) {
+
+        console.error(
+          "Erreur notifications :",
+          error
+        );
+
+
+        notificationStatus.textContent =
+          "Erreur : " +
+          (
+            error.message ||
+            "impossible d'activer les notifications"
+          );
+
+
+        notificationStatus.style.color =
+          "#b91c1c";
+
+
+        notificationButton.disabled =
+          false;
+      }
+    }
+
+
+
+    /*
+     * Clic sur le bouton
+     */
+
+    notificationButton.addEventListener(
+      "click",
+      enableNotifications
+    );
+
+
+
+    /*
+     * Enregistre le Service Worker
+     * au chargement de la page
+     */
+
+    registerServiceWorker()
+      .catch(
+        error => {
+
+          console.error(
+            "Erreur Service Worker :",
+            error
+          );
+        }
+      );
+
+
+
+    /*
+     * Affiche l'état actuel
+     */
+
+    if (
+      "Notification" in window
+    ) {
+
+      if (
+        Notification.permission ===
+        "granted"
+      ) {
+
+        notificationStatus.textContent =
+          "Notifications autorisées. Appuyez sur le bouton pour enregistrer cette caisse.";
+
+      } else if (
+        Notification.permission ===
+        "denied"
+      ) {
+
+        notificationStatus.textContent =
+          "Les notifications sont bloquées dans les réglages de l’iPad.";
+
+        notificationStatus.style.color =
+          "#b91c1c";
+      }
+    }
+
   </script>
+
 </body>
 </html>
