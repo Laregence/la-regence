@@ -376,10 +376,10 @@
                   "application/json",
               },
 
-              body:
-                JSON.stringify(
-                  subscription
-                ),
+              body: JSON.stringify({
+  subscription: subscription,
+  userAgent: navigator.userAgent,
+}),
             }
           );
 
