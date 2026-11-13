@@ -1,5 +1,6 @@
 ---
 import SidebarLayout from "../layouts/SidebarLayout.astro";
+import PromoPopup from "../components/PromoPopup.astro";
 import { execSync } from "node:child_process";
 
 const title = "Restaurant & brasserie à Mont-de-Marsan | La Régence";
@@ -370,6 +371,9 @@ const restaurantSchema = {
         </div>
       </div>
     </section>
+
+    <!-- POP-UP MISE EN AVANT (géré dans /admin/mises-en-avant) -->
+    <PromoPopup />
 
     <!-- LIGHTBOX -->
     <div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]">

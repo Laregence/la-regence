@@ -1,0 +1,174 @@
+---
+// Pop-up "mise en avant" — contenu géré depuis /admin/mises-en-avant
+// Affiché une fois par session de navigation (forcer avec ?promo=1)
+const { delay = 3400 } = Astro.props;
+---
+
+<div
+  id="promo-popup"
+  class="fixed inset-0 z-[70] hidden items-center justify-center p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="promo-title"
+  data-delay={delay}
+>
+  <div id="promo-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+
+  <div
+    id="promo-card"
+    class="relative w-full max-w-md max-h-[92dvh] overflow-y-auto rounded-2xl bg-[var(--color-bg)] shadow-2xl
+           opacity-0 scale-95 translate-y-2 transition duration-300"
+  >
+    <button
+      id="promo-close"
+      type="button"
+      aria-label="Fermer"
+      class="absolute top-2 right-2 z-10 w-9 h-9 rounded-full bg-black/55 text-white text-xl leading-none
+             flex items-center justify-center hover:bg-black/75 transition"
+    >×</button>
+
+    <img id="promo-img" alt="" class="hidden w-full max-h-[60dvh] object-cover" />
+
+    <div id="promo-body" class="p-5 text-center space-y-3">
+      <h2 id="promo-title" class="hidden font-limelight text-2xl md:text-3xl text-brand uppercase leading-tight"></h2>
+      <p id="promo-text" class="hidden text-slate-700 leading-relaxed whitespace-pre-line"></p>
+      <a
+        id="promo-cta"
+        class="hidden inline-block font-limelight bg-brand text-white px-6 py-3 rounded-xl hover:bg-[var(--color-copper)] transition"
+      ></a>
+
+      <div id="promo-nav" class="hidden items-center justify-center gap-4 pt-1">
+        <button id="promo-prev" type="button" aria-label="Précédent"
+          class="w-8 h-8 rounded-full border border-brand text-brand hover:bg-brand hover:text-white transition">‹</button>
+        <span id="promo-count" class="text-sm text-slate-600"></span>
+        <button id="promo-next" type="button" aria-label="Suivant"
+          class="w-8 h-8 rounded-full border border-brand text-brand hover:bg-brand hover:text-white transition">›</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { supabase } from "../lib/supabaseClient.js";
+
+  (async () => {
+    const root = document.getElementById("promo-popup");
+    if (!root) return;
+
+    const $ = (id) => document.getElementById(id);
+    const backdrop = $("promo-backdrop");
+    const card = $("promo-card");
+    const img = $("promo-img");
+    const titleEl = $("promo-title");
+    const textEl = $("promo-text");
+    const cta = $("promo-cta");
+    const nav = $("promo-nav");
+    const count = $("promo-count");
+
+    const force = new URLSearchParams(location.search).get("promo") === "1";
+    const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(new Date());
+
+    let items = [];
+    try {
+      const { data, error } = await supabase
+        .from("mises_en_avant")
+        .select("id,titre,texte,image_url,lien_url,lien_label,date_debut,date_fin,ordre,updated_at")
+        .eq("actif", true)
+        .order("ordre", { ascending: true })
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      items = (data || []).filter(
+        (i) => (!i.date_debut || i.date_debut <= today) && (!i.date_fin || i.date_fin >= today)
+      );
+    } catch (e) {
+      console.warn("Mises en avant indisponibles :", e);
+      return;
+    }
+
+    if (!items.length) return;
+
+    // Ne ré-affiche pas dans la même session, sauf si le contenu a changé
+    const signature = items.map((i) => i.id + i.updated_at).join("|");
+    const KEY = "regence-promo-seen";
+    try {
+      if (!force && sessionStorage.getItem(KEY) === signature) return;
+    } catch {}
+
+    // Précharge l'image pendant le splash
+    items.forEach((i) => { if (i.image_url) new Image().src = i.image_url; });
+
+    let index = 0;
+
+    function show(i) {
+      const item = items[i];
+
+      if (item.image_url) {
+        img.src = item.image_url;
+        img.alt = item.titre || "Mise en avant La Régence";
+        img.classList.remove("hidden");
+      } else {
+        img.classList.add("hidden");
+      }
+
+      titleEl.textContent = item.titre || "";
+      titleEl.classList.toggle("hidden", !item.titre);
+
+      textEl.textContent = item.texte || "";
+      textEl.classList.toggle("hidden", !item.texte);
+
+      if (item.lien_url) {
+        cta.href = item.lien_url;
+        cta.textContent = item.lien_label || "En savoir plus";
+        cta.classList.remove("hidden");
+      } else {
+        cta.classList.add("hidden");
+      }
+
+      const hasBody = item.titre || item.texte || item.lien_url || items.length > 1;
+      $("promo-body").classList.toggle("hidden", !hasBody);
+
+      if (items.length > 1) {
+        nav.classList.remove("hidden");
+        nav.classList.add("flex");
+        count.textContent = `${i + 1} / ${items.length}`;
+      }
+    }
+
+    function open() {
+      show(index);
+      root.classList.remove("hidden");
+      root.classList.add("flex");
+      document.documentElement.style.overflow = "hidden";
+      requestAnimationFrame(() => {
+        backdrop.classList.replace("opacity-0", "opacity-100");
+        card.classList.remove("opacity-0", "scale-95", "translate-y-2");
+      });
+      $("promo-close").focus();
+      try { sessionStorage.setItem(KEY, signature); } catch {}
+    }
+
+    function close() {
+      backdrop.classList.replace("opacity-100", "opacity-0");
+      card.classList.add("opacity-0", "scale-95", "translate-y-2");
+      document.documentElement.style.overflow = "";
+      setTimeout(() => {
+        root.classList.add("hidden");
+        root.classList.remove("flex");
+      }, 300);
+    }
+
+    $("promo-close").addEventListener("click", close);
+    backdrop.addEventListener("click", close);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !root.classList.contains("hidden")) close();
+    });
+    $("promo-prev").addEventListener("click", () => { index = (index - 1 + items.length) % items.length; show(index); });
+    $("promo-next").addEventListener("click", () => { index = (index + 1) % items.length; show(index); });
+
+    // Attend la fin du splash de la page d'accueil
+    const delay = Number(root.dataset.delay) || 0;
+    const start = () => setTimeout(open, delay);
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+  })();
+</script>

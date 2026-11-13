@@ -1,0 +1,523 @@
+---
+import SidebarLayout from "../../layouts/SidebarLayout.astro";
+
+const title = "Admin mises en avant — La Régence";
+const description = "Gestion du pop-up de la page d'accueil.";
+---
+
+<SidebarLayout {title} {description}>
+  <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
+    <div class="max-w-5xl ml-auto text-right md:pr-12">
+      <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">
+        Mises en avant
+      </h1>
+
+      <p class="mt-4 text-slate-700">
+        Image et informations affichées en pop-up sur la page d'accueil.
+      </p>
+
+      <!-- LOGIN -->
+      <div id="login-box" class="mt-10 max-w-md ml-auto text-left space-y-4">
+        <h2 class="font-limelight text-2xl text-brand text-right">Connexion admin</h2>
+
+        <input id="login-email" type="email" placeholder="Email"
+          class="w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3" />
+
+        <input id="login-password" type="password" placeholder="Mot de passe"
+          class="w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3" />
+
+        <button id="login-btn"
+          class="w-full font-limelight bg-brand text-white px-6 py-3 rounded-xl hover:bg-[var(--color-copper)] transition">
+          Se connecter
+        </button>
+
+        <p id="login-message" class="text-sm text-red-700 text-right"></p>
+      </div>
+
+      <!-- ADMIN -->
+      <div id="admin-box" class="hidden mt-10">
+        <div class="flex flex-wrap justify-end gap-3 mb-6">
+          <a href="/admin/reservations"
+            class="font-limelight border border-brand text-brand px-4 py-2 rounded-xl hover:bg-brand hover:text-white transition">
+            Réservations
+          </a>
+          <a href="/admin/fermetures"
+            class="font-limelight border border-brand text-brand px-4 py-2 rounded-xl hover:bg-brand hover:text-white transition">
+            Fermetures
+          </a>
+          <a href="/?promo=1" target="_blank" rel="noopener"
+            class="font-limelight border border-brand text-brand px-4 py-2 rounded-xl hover:bg-brand hover:text-white transition">
+            Voir sur le site
+          </a>
+          <button id="logout-btn"
+            class="font-limelight border border-red-700 text-red-700 px-4 py-2 rounded-xl hover:bg-red-700 hover:text-white transition">
+            Déconnexion
+          </button>
+        </div>
+
+        <!-- FORMULAIRE -->
+        <form id="mea-form" class="rounded-2xl soft-border bg-white/50 p-5 text-left">
+          <h2 id="form-title" class="font-limelight text-2xl text-brand text-right mb-5">
+            Nouvelle mise en avant
+          </h2>
+
+          <input type="hidden" id="mea-id" />
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- Image -->
+            <div>
+              <span class="text-sm uppercase text-slate-600">Image</span>
+              <label for="mea-image"
+                class="mt-1 flex flex-col items-center justify-center gap-2 min-h-[220px] rounded-xl border-2 border-dashed border-brand/30 bg-white/60 p-3 cursor-pointer hover:border-brand transition">
+                <img id="mea-preview" alt="" class="hidden max-h-[260px] w-auto rounded-lg object-contain" />
+                <span id="mea-image-hint" class="text-sm text-slate-600 text-center">
+                  Cliquez pour choisir une image<br />(JPG, PNG, WebP)
+                </span>
+              </label>
+              <input id="mea-image" type="file" accept="image/*" class="hidden" />
+              <button type="button" id="mea-remove-image"
+                class="hidden mt-2 text-sm text-red-700 underline">
+                Retirer l'image
+              </button>
+            </div>
+
+            <!-- Textes -->
+            <div class="space-y-4">
+              <label class="block">
+                <span class="text-sm uppercase text-slate-600">Titre</span>
+                <input id="mea-titre" type="text" placeholder="Côte de bœuf à prix doux !"
+                  class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+              </label>
+
+              <label class="block">
+                <span class="text-sm uppercase text-slate-600">Texte</span>
+                <textarea id="mea-texte" rows="4" placeholder="En ce moment, notre côte de bœuf pour 2 personnes à 49 €…"
+                  class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3"></textarea>
+              </label>
+
+              <div class="grid grid-cols-2 gap-3">
+                <label class="block">
+                  <span class="text-sm uppercase text-slate-600">Bouton : texte</span>
+                  <input id="mea-lien-label" type="text" placeholder="Réserver une table"
+                    class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+                </label>
+                <label class="block">
+                  <span class="text-sm uppercase text-slate-600">Bouton : lien</span>
+                  <input id="mea-lien-url" type="text" placeholder="/reservation/"
+                    class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <label class="block">
+              <span class="text-sm uppercase text-slate-600">Afficher à partir du</span>
+              <input id="mea-debut" type="date"
+                class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+            </label>
+            <label class="block">
+              <span class="text-sm uppercase text-slate-600">Jusqu'au (inclus)</span>
+              <input id="mea-fin" type="date"
+                class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+            </label>
+            <label class="flex items-center justify-between rounded-xl border border-brand/20 bg-white/60 px-4 py-3 self-end">
+              <span>Active</span>
+              <input id="mea-actif" type="checkbox" checked class="w-5 h-5" />
+            </label>
+          </div>
+          <p class="mt-2 text-xs text-slate-500">Dates vides = affichée tant qu'elle est active.</p>
+
+          <div class="mt-5 flex justify-end gap-3">
+            <button type="button" id="mea-cancel"
+              class="hidden font-limelight border border-brand text-brand px-6 py-3 rounded-xl hover:bg-brand hover:text-white transition">
+              Annuler
+            </button>
+            <button type="submit" id="mea-submit"
+              class="font-limelight bg-brand text-white px-6 py-3 rounded-xl hover:bg-[var(--color-copper)] transition disabled:opacity-50">
+              Enregistrer
+            </button>
+          </div>
+
+          <p id="form-message" class="mt-3 text-sm text-right"></p>
+        </form>
+
+        <!-- LISTE -->
+        <div class="mt-10">
+          <h2 class="font-limelight text-3xl text-brand uppercase">
+            Mises en avant enregistrées
+          </h2>
+          <div id="mea-list" class="mt-5 space-y-3 text-left"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { supabase } from "../../lib/supabaseClient.js";
+
+    const BUCKET = "mises-en-avant";
+    const $ = (id) => document.getElementById(id);
+
+    const loginBox = $("login-box");
+    const adminBox = $("admin-box");
+    const loginMessage = $("login-message");
+
+    const form = $("mea-form");
+    const formTitle = $("form-title");
+    const idInput = $("mea-id");
+    const imageInput = $("mea-image");
+    const preview = $("mea-preview");
+    const imageHint = $("mea-image-hint");
+    const removeImageBtn = $("mea-remove-image");
+    const titreInput = $("mea-titre");
+    const texteInput = $("mea-texte");
+    const lienLabelInput = $("mea-lien-label");
+    const lienUrlInput = $("mea-lien-url");
+    const debutInput = $("mea-debut");
+    const finInput = $("mea-fin");
+    const actifInput = $("mea-actif");
+    const cancelBtn = $("mea-cancel");
+    const submitBtn = $("mea-submit");
+    const formMessage = $("form-message");
+    const list = $("mea-list");
+
+    let items = [];
+    // État de l'image pour le formulaire en cours
+    let currentImage = { url: null, path: null }; // image déjà enregistrée
+    let pendingFile = null;                         // nouveau fichier choisi
+    let imageRemoved = false;
+
+    function setMessage(text, ok = true) {
+      formMessage.textContent = text;
+      formMessage.className = `mt-3 text-sm text-right ${ok ? "text-green-700" : "text-red-700"}`;
+    }
+
+    function showPreview(src) {
+      if (src) {
+        preview.src = src;
+        preview.classList.remove("hidden");
+        imageHint.classList.add("hidden");
+        removeImageBtn.classList.remove("hidden");
+      } else {
+        preview.removeAttribute("src");
+        preview.classList.add("hidden");
+        imageHint.classList.remove("hidden");
+        removeImageBtn.classList.add("hidden");
+      }
+    }
+
+    function resetForm() {
+      form.reset();
+      idInput.value = "";
+      actifInput.checked = true;
+      currentImage = { url: null, path: null };
+      pendingFile = null;
+      imageRemoved = false;
+      showPreview(null);
+      formTitle.textContent = "Nouvelle mise en avant";
+      cancelBtn.classList.add("hidden");
+    }
+
+    function fillForm(item) {
+      resetForm();
+      idInput.value = item.id;
+      titreInput.value = item.titre || "";
+      texteInput.value = item.texte || "";
+      lienLabelInput.value = item.lien_label || "";
+      lienUrlInput.value = item.lien_url || "";
+      debutInput.value = item.date_debut || "";
+      finInput.value = item.date_fin || "";
+      actifInput.checked = !!item.actif;
+      currentImage = { url: item.image_url, path: item.image_path };
+      showPreview(item.image_url);
+      formTitle.textContent = "Modifier la mise en avant";
+      cancelBtn.classList.remove("hidden");
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function formatDate(d) {
+      if (!d) return "";
+      return new Date(d + "T00:00:00").toLocaleDateString("fr-FR", {
+        day: "numeric", month: "long", year: "numeric",
+      });
+    }
+
+    function todayKey() {
+      return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(new Date());
+    }
+
+    function statusOf(item) {
+      const today = todayKey();
+      if (!item.actif) return { label: "Désactivée", cls: "bg-slate-200 text-slate-700" };
+      if (item.date_debut && item.date_debut > today) return { label: "Programmée", cls: "bg-amber-100 text-amber-800" };
+      if (item.date_fin && item.date_fin < today) return { label: "Terminée", cls: "bg-slate-200 text-slate-700" };
+      return { label: "En ligne", cls: "bg-green-100 text-green-800" };
+    }
+
+    // ---------- Image ----------
+    async function compressImage(file, maxSize = 1600, quality = 0.85) {
+      // Réduit les grosses photos de téléphone avant envoi
+      try {
+        const bitmap = await createImageBitmap(file);
+        const scale = Math.min(1, maxSize / Math.max(bitmap.width, bitmap.height));
+        if (scale === 1 && file.size < 1_500_000) return file;
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(bitmap.width * scale);
+        canvas.height = Math.round(bitmap.height * scale);
+        canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        const blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", quality));
+        return blob ? new File([blob], "image.jpg", { type: "image/jpeg" }) : file;
+      } catch {
+        return file;
+      }
+    }
+
+    async function uploadImage(file) {
+      const toSend = await compressImage(file);
+      const ext = (toSend.type.split("/")[1] || "jpg").replace("jpeg", "jpg");
+      const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+      const { error } = await supabase.storage
+        .from(BUCKET)
+        .upload(path, toSend, { contentType: toSend.type, upsert: false });
+      if (error) throw error;
+
+      const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+      return { url: data.publicUrl, path };
+    }
+
+    async function deleteImage(path) {
+      if (!path) return;
+      const { error } = await supabase.storage.from(BUCKET).remove([path]);
+      if (error) console.warn("Suppression image :", error.message);
+    }
+
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files?.[0];
+      if (!file) return;
+      pendingFile = file;
+      imageRemoved = false;
+      showPreview(URL.createObjectURL(file));
+    });
+
+    removeImageBtn.addEventListener("click", () => {
+      pendingFile = null;
+      imageRemoved = true;
+      imageInput.value = "";
+      showPreview(null);
+    });
+
+    // ---------- Liste ----------
+    async function loadItems() {
+      list.innerHTML = `<p class="text-right text-slate-600">Chargement...</p>`;
+
+      const { data, error } = await supabase
+        .from("mises_en_avant")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        list.innerHTML = "";
+        const p = document.createElement("p");
+        p.className = "text-right text-red-700";
+        p.textContent = "Erreur : " + error.message +
+          (error.code === "42P01" ? " — exécutez le script supabase/mises_en_avant.sql dans Supabase." : "");
+        list.appendChild(p);
+        return;
+      }
+
+      items = data || [];
+      renderList();
+    }
+
+    function renderList() {
+      list.innerHTML = "";
+
+      if (!items.length) {
+        list.innerHTML = `<div class="rounded-2xl soft-border bg-white/40 p-5 text-right">Aucune mise en avant pour le moment.</div>`;
+        return;
+      }
+
+      items.forEach((item) => {
+        const st = statusOf(item);
+        const art = document.createElement("article");
+        art.className = "rounded-2xl soft-border bg-white/50 p-4 flex flex-col sm:flex-row gap-4";
+
+        const thumb = document.createElement("div");
+        thumb.className = "w-full sm:w-32 h-32 shrink-0 rounded-xl overflow-hidden bg-white/70 flex items-center justify-center";
+        if (item.image_url) {
+          const img = document.createElement("img");
+          img.src = item.image_url;
+          img.alt = "";
+          img.className = "w-full h-full object-cover";
+          thumb.appendChild(img);
+        } else {
+          thumb.innerHTML = `<span class="text-xs text-slate-500">Pas d'image</span>`;
+        }
+
+        const body = document.createElement("div");
+        body.className = "flex-1 min-w-0";
+
+        const badge = document.createElement("span");
+        badge.className = `inline-block rounded-full px-3 py-0.5 text-xs font-bold ${st.cls}`;
+        badge.textContent = st.label;
+
+        const h = document.createElement("p");
+        h.className = "mt-1 font-limelight text-xl text-brand";
+        h.textContent = item.titre || "(sans titre)";
+
+        body.append(badge, h);
+
+        if (item.texte) {
+          const t = document.createElement("p");
+          t.className = "text-sm text-slate-700 line-clamp-2";
+          t.textContent = item.texte;
+          body.appendChild(t);
+        }
+
+        const dates = document.createElement("p");
+        dates.className = "mt-1 text-xs text-slate-500";
+        const d1 = item.date_debut ? `du ${formatDate(item.date_debut)}` : "";
+        const d2 = item.date_fin ? `au ${formatDate(item.date_fin)}` : "";
+        dates.textContent = d1 || d2 ? `Période : ${d1} ${d2}`.trim() : "Sans date limite";
+        body.appendChild(dates);
+
+        const actions = document.createElement("div");
+        actions.className = "flex sm:flex-col gap-2 justify-end";
+
+        const mkBtn = (label, cls, onClick) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = `rounded-xl border px-4 py-2 text-sm transition ${cls}`;
+          b.textContent = label;
+          b.addEventListener("click", onClick);
+          return b;
+        };
+
+        actions.append(
+          mkBtn("Modifier", "border-brand text-brand hover:bg-brand hover:text-white", () => fillForm(item)),
+          mkBtn(item.actif ? "Désactiver" : "Activer", "border-brand text-brand hover:bg-brand hover:text-white", () => toggleActif(item)),
+          mkBtn("Supprimer", "border-red-700 text-red-700 hover:bg-red-700 hover:text-white", () => removeItem(item)),
+        );
+
+        art.append(thumb, body, actions);
+        list.appendChild(art);
+      });
+    }
+
+    async function toggleActif(item) {
+      const { error } = await supabase
+        .from("mises_en_avant")
+        .update({ actif: !item.actif, updated_at: new Date().toISOString() })
+        .eq("id", item.id);
+      if (error) return alert("Erreur : " + error.message);
+      await loadItems();
+    }
+
+    async function removeItem(item) {
+      if (!confirm(`Supprimer « ${item.titre || "cette mise en avant"} » ?`)) return;
+      const { error } = await supabase.from("mises_en_avant").delete().eq("id", item.id);
+      if (error) return alert("Erreur : " + error.message);
+      await deleteImage(item.image_path);
+      if (idInput.value === item.id) resetForm();
+      await loadItems();
+    }
+
+    // ---------- Enregistrement ----------
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      formMessage.textContent = "";
+
+      const titre = titreInput.value.trim();
+      const texte = texteInput.value.trim();
+
+      if (!titre && !texte && !pendingFile && !(currentImage.url && !imageRemoved)) {
+        return setMessage("Ajoutez au moins une image, un titre ou un texte.", false);
+      }
+      if (debutInput.value && finInput.value && finInput.value < debutInput.value) {
+        return setMessage("La date de fin est avant la date de début.", false);
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Enregistrement…";
+
+      try {
+        let image = imageRemoved ? { url: null, path: null } : { ...currentImage };
+        const oldPath = currentImage.path;
+
+        if (pendingFile) image = await uploadImage(pendingFile);
+
+        const payload = {
+          titre: titre || null,
+          texte: texte || null,
+          lien_label: lienLabelInput.value.trim() || null,
+          lien_url: lienUrlInput.value.trim() || null,
+          date_debut: debutInput.value || null,
+          date_fin: finInput.value || null,
+          actif: actifInput.checked,
+          image_url: image.url,
+          image_path: image.path,
+          updated_at: new Date().toISOString(),
+        };
+
+        const id = idInput.value;
+        const { error } = id
+          ? await supabase.from("mises_en_avant").update(payload).eq("id", id)
+          : await supabase.from("mises_en_avant").insert(payload);
+
+        if (error) throw error;
+
+        // Nettoie l'ancienne image si elle a été remplacée ou retirée
+        if (oldPath && oldPath !== image.path) await deleteImage(oldPath);
+
+        resetForm();
+        setMessage("Mise en avant enregistrée.");
+        await loadItems();
+      } catch (error) {
+        setMessage("Erreur : " + (error?.message || error), false);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Enregistrer";
+      }
+    });
+
+    cancelBtn.addEventListener("click", () => {
+      resetForm();
+      formMessage.textContent = "";
+    });
+
+    // ---------- Auth ----------
+    async function checkSession() {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        loginBox.classList.add("hidden");
+        adminBox.classList.remove("hidden");
+        await loadItems();
+      } else {
+        loginBox.classList.remove("hidden");
+        adminBox.classList.add("hidden");
+      }
+    }
+
+    $("login-btn").addEventListener("click", async () => {
+      loginMessage.textContent = "";
+      const { error } = await supabase.auth.signInWithPassword({
+        email: $("login-email").value,
+        password: $("login-password").value,
+      });
+      if (error) {
+        loginMessage.textContent = "Connexion impossible : " + error.message;
+        return;
+      }
+      await checkSession();
+    });
+
+    $("logout-btn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      await checkSession();
+    });
+
+    checkSession();
+  </script>
+</SidebarLayout>
