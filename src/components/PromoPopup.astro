@@ -4,6 +4,28 @@
 const { delay = 3400 } = Astro.props;
 ---
 
+<!-- Encart flottant : rouvre le pop-up -->
+<button
+  id="promo-teaser"
+  type="button"
+  aria-label="Voir notre mise en avant"
+  class="fixed right-3 bottom-[7rem] md:right-6 md:bottom-6 z-[45] hidden items-center gap-3
+         max-w-[15rem] rounded-2xl bg-[var(--color-bg)] pl-1.5 pr-4 py-1.5 shadow-xl
+         border-2 border-[var(--color-copper)] text-left
+         opacity-0 translate-y-3 transition duration-300 hover:scale-105"
+>
+  <span class="relative shrink-0">
+    <img id="promo-teaser-img" alt="" class="hidden w-12 h-12 rounded-xl object-cover" />
+    <span id="promo-teaser-icon" class="w-12 h-12 rounded-xl bg-brand text-white text-2xl flex items-center justify-center">★</span>
+    <span class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-[var(--color-copper)] animate-ping"></span>
+    <span class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-[var(--color-copper)]"></span>
+  </span>
+  <span class="min-w-0">
+    <span class="block text-[10px] uppercase tracking-wider text-slate-500">En ce moment</span>
+    <span id="promo-teaser-title" class="block font-limelight text-sm text-brand leading-tight line-clamp-2"></span>
+  </span>
+</button>
+
 <div
   id="promo-popup"
   class="fixed inset-0 z-[70] hidden items-center justify-center p-4"
@@ -87,12 +109,42 @@ const { delay = 3400 } = Astro.props;
 
     if (!items.length) return;
 
-    // Ne ré-affiche pas dans la même session, sauf si le contenu a changé
+    // Ouverture auto une seule fois par session (sauf si le contenu a changé) ;
+    // ensuite seul l'encart reste visible.
     const signature = items.map((i) => i.id + i.updated_at).join("|");
     const KEY = "regence-promo-seen";
+    let alreadySeen = false;
     try {
-      if (!force && sessionStorage.getItem(KEY) === signature) return;
+      alreadySeen = !force && sessionStorage.getItem(KEY) === signature;
     } catch {}
+
+    // Encart flottant
+    const teaser = $("promo-teaser");
+    const first = items[0];
+    $("promo-teaser-title").textContent =
+      first.titre || first.lien_label || "Découvrir";
+    if (first.image_url) {
+      $("promo-teaser-img").src = first.image_url;
+      $("promo-teaser-img").classList.remove("hidden");
+      $("promo-teaser-icon").classList.add("hidden");
+    }
+    if (items.length > 1) {
+      $("promo-teaser-title").textContent += ` (+${items.length - 1})`;
+    }
+
+    function showTeaser() {
+      teaser.classList.remove("hidden");
+      teaser.classList.add("flex");
+      requestAnimationFrame(() => teaser.classList.remove("opacity-0", "translate-y-3"));
+    }
+    function hideTeaser() {
+      teaser.classList.add("opacity-0", "translate-y-3");
+      setTimeout(() => {
+        teaser.classList.add("hidden");
+        teaser.classList.remove("flex");
+      }, 300);
+    }
+    teaser.addEventListener("click", () => { index = 0; open(); });
 
     // Précharge l'image pendant le splash
     items.forEach((i) => { if (i.image_url) new Image().src = i.image_url; });
@@ -135,6 +187,7 @@ const { delay = 3400 } = Astro.props;
     }
 
     function open() {
+      hideTeaser();
       show(index);
       root.classList.remove("hidden");
       root.classList.add("flex");
@@ -154,6 +207,7 @@ const { delay = 3400 } = Astro.props;
       setTimeout(() => {
         root.classList.add("hidden");
         root.classList.remove("flex");
+        showTeaser();
       }, 300);
     }
 
@@ -167,7 +221,7 @@ const { delay = 3400 } = Astro.props;
 
     // Attend la fin du splash de la page d'accueil
     const delay = Number(root.dataset.delay) || 0;
-    const start = () => setTimeout(open, delay);
+    const start = () => setTimeout(alreadySeen ? showTeaser : open, delay);
     if (document.readyState === "complete") start();
     else window.addEventListener("load", start, { once: true });
   })();
