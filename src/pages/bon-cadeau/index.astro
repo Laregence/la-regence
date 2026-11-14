@@ -1,0 +1,269 @@
+---
+import SidebarLayout from "../../layouts/SidebarLayout.astro";
+
+const title = "Bon cadeau — La Régence, restaurant à Mont-de-Marsan";
+const description =
+  "Offrez un bon cadeau La Régence : choisissez le montant, payez en ligne et recevez immédiatement un bon à imprimer ou à envoyer par email.";
+
+const montants = [30, 50, 80, 100];
+---
+
+<SidebarLayout {title} {description} active="bon-cadeau">
+  <section class="min-h-screen w-full bg-[var(--color-bg)] px-5 py-6 md:px-6 md:py-8">
+    <div class="max-w-5xl ml-auto md:pr-8">
+
+      <!-- INTRO -->
+      <div class="text-center md:text-right">
+        <h1 class="font-limelight text-4xl md:text-5xl text-brand tracking-wide uppercase">
+          Bon cadeau
+        </h1>
+        <p class="mt-2 text-slate-700 md:text-lg">
+          Faites plaisir avec un repas, un verre ou une soirée à <span translate="no" class="notranslate">La Régence</span>.
+        </p>
+      </div>
+
+      <div id="cancel-notice" class="hidden mt-5 rounded-xl border border-orange-300 bg-orange-50 px-4 py-3 text-orange-800 text-sm">
+        Le paiement a été annulé, rien n'a été débité. Vous pouvez réessayer quand vous le souhaitez.
+      </div>
+
+      <div class="mt-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-8 items-start">
+
+        <!-- APERÇU DU BON -->
+        <div class="lg:sticky lg:top-6 order-1">
+          <div class="relative mx-auto max-w-md aspect-[1.42] rounded-xl bg-brand p-2.5 shadow-2xl rotate-[-1.5deg]">
+            <div class="h-full rounded-md border-2 border-[var(--color-copper)] p-1">
+              <div class="h-full rounded-sm border border-[var(--color-copper)]/70 flex flex-col items-center justify-center text-center px-4 text-[var(--color-bg)]">
+                <img src="/logo.png" alt="" class="w-10 h-10 sm:w-12 sm:h-12 object-contain opacity-95" />
+                <p class="mt-1 font-limelight text-[var(--color-copper)] text-xs sm:text-sm tracking-[0.2em]">LA RÉGENCE</p>
+                <p class="mt-1 font-limelight text-2xl sm:text-3xl tracking-wide">BON CADEAU</p>
+                <div class="my-1.5 h-[2px] w-24 bg-[var(--color-copper)]"></div>
+                <p id="pv-montant" class="font-limelight text-4xl sm:text-5xl text-[var(--color-copper)]">50 €</p>
+                <p id="pv-pour" class="mt-1 text-sm sm:text-base hidden"></p>
+                <p id="pv-de" class="text-xs sm:text-sm italic opacity-90 hidden"></p>
+                <p id="pv-message" class="mt-1 text-[11px] sm:text-xs italic opacity-80 line-clamp-2 hidden"></p>
+                <p class="mt-2 rounded bg-[var(--color-bg)] text-brand px-3 py-0.5 text-[11px] sm:text-xs font-bold tracking-wider">CODE : REG-••••-••••</p>
+              </div>
+            </div>
+          </div>
+
+          <ul class="mt-6 mx-auto max-w-md space-y-2 text-sm text-slate-700">
+            <li class="flex gap-2"><span class="text-[var(--color-copper)]">✦</span> Reçu par email immédiatement après le paiement, en PDF</li>
+            <li class="flex gap-2"><span class="text-[var(--color-copper)]">✦</span> À imprimer, ou à envoyer directement à la personne choisie</li>
+            <li class="flex gap-2"><span class="text-[var(--color-copper)]">✦</span> Valable 12 mois, pour un déjeuner, un dîner, des tapas ou un verre</li>
+            <li class="flex gap-2"><span class="text-[var(--color-copper)]">✦</span> Paiement sécurisé par carte bancaire</li>
+          </ul>
+        </div>
+
+        <!-- FORMULAIRE -->
+        <form id="gift-form" class="order-2 rounded-2xl soft-border bg-white/50 p-5 md:p-6 space-y-6 text-left" novalidate>
+
+          <!-- Montant -->
+          <fieldset>
+            <legend class="font-limelight text-xl text-brand uppercase">1. Montant</legend>
+            <div class="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2" role="radiogroup">
+              {montants.map((m) => (
+                <button type="button" data-amount={m}
+                  class="amount-btn rounded-xl border-2 border-brand/25 bg-white/70 py-3 font-limelight text-2xl text-brand transition hover:border-brand">
+                  {m} €
+                </button>
+              ))}
+            </div>
+            <label class="mt-3 flex items-center gap-3 rounded-xl border-2 border-brand/25 bg-white/70 px-4 py-2 focus-within:border-brand transition" id="custom-wrap">
+              <span class="text-sm text-slate-600 whitespace-nowrap">Autre montant</span>
+              <input id="custom-amount" type="number" inputmode="numeric" min="10" max="500" step="1" placeholder="ex : 65"
+                class="w-full bg-transparent text-right text-lg outline-none" />
+              <span class="text-brand font-bold">€</span>
+            </label>
+            <p class="mt-1 text-xs text-slate-500">De 10 € à 500 €.</p>
+          </fieldset>
+
+          <!-- Pour qui -->
+          <fieldset class="space-y-3">
+            <legend class="font-limelight text-xl text-brand uppercase">2. Pour qui ?</legend>
+            <label class="block">
+              <span class="text-sm text-slate-600">Prénom / nom du bénéficiaire <span class="text-slate-400">(facultatif)</span></span>
+              <input id="beneficiaire-nom" type="text" maxlength="80" placeholder="Julie"
+                class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+            </label>
+            <label class="block">
+              <span class="text-sm text-slate-600">Petit mot <span class="text-slate-400">(facultatif, imprimé sur le bon)</span></span>
+              <textarea id="message" rows="3" maxlength="300" placeholder="Joyeux anniversaire ! Profite bien…"
+                class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3"></textarea>
+              <span id="message-count" class="block text-right text-xs text-slate-400">0 / 300</span>
+            </label>
+          </fieldset>
+
+          <!-- Acheteur -->
+          <fieldset class="space-y-3">
+            <legend class="font-limelight text-xl text-brand uppercase">3. Vos coordonnées</legend>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <label class="block">
+                <span class="text-sm text-slate-600">Votre nom</span>
+                <input id="acheteur-nom" type="text" maxlength="80" required autocomplete="name"
+                  class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+              </label>
+              <label class="block">
+                <span class="text-sm text-slate-600">Votre email</span>
+                <input id="acheteur-email" type="email" maxlength="120" required autocomplete="email"
+                  class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+              </label>
+            </div>
+            <!-- anti-robots -->
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+          </fieldset>
+
+          <!-- Envoi -->
+          <fieldset class="space-y-2">
+            <legend class="font-limelight text-xl text-brand uppercase">4. Envoi du bon</legend>
+            <label class="flex items-start gap-3 rounded-xl border border-brand/20 bg-white/60 px-4 py-3 cursor-pointer">
+              <input type="radio" name="envoi" value="moi" checked class="mt-1 w-4 h-4 accent-[var(--color-brand)]" />
+              <span><strong>À moi</strong><br /><span class="text-sm text-slate-600">Je l'imprime ou je le transmets moi-même.</span></span>
+            </label>
+            <label class="flex items-start gap-3 rounded-xl border border-brand/20 bg-white/60 px-4 py-3 cursor-pointer">
+              <input type="radio" name="envoi" value="beneficiaire" class="mt-1 w-4 h-4 accent-[var(--color-brand)]" />
+              <span><strong>Directement au bénéficiaire</strong><br /><span class="text-sm text-slate-600">Il le reçoit par email avec votre petit mot (vous en recevez une copie).</span></span>
+            </label>
+            <label id="beneficiaire-email-wrap" class="hidden block pt-1">
+              <span class="text-sm text-slate-600">Email du bénéficiaire</span>
+              <input id="beneficiaire-email" type="email" maxlength="120"
+                class="mt-1 w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3" />
+            </label>
+          </fieldset>
+
+          <div class="pt-1">
+            <button id="pay-btn" type="submit"
+              class="w-full font-limelight text-xl bg-brand text-white px-6 py-4 rounded-xl hover:bg-[var(--color-copper)] transition disabled:opacity-60 disabled:cursor-wait">
+              Payer 50 €
+            </button>
+            <p id="form-error" class="mt-3 text-sm text-red-700 text-center" role="alert"></p>
+            <p class="mt-2 text-xs text-slate-500 text-center">
+              🔒 Vous serez redirigé vers la page de paiement sécurisée Stripe.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const form = $("gift-form");
+    const amountBtns = Array.from(document.querySelectorAll(".amount-btn"));
+    const customInput = $("custom-amount");
+    const customWrap = $("custom-wrap");
+    const payBtn = $("pay-btn");
+    const errorEl = $("form-error");
+    const benefNom = $("beneficiaire-nom");
+    const benefEmailWrap = $("beneficiaire-email-wrap");
+    const benefEmail = $("beneficiaire-email");
+    const acheteurNom = $("acheteur-nom");
+    const message = $("message");
+
+    if (new URLSearchParams(location.search).get("annule") === "1") {
+      $("cancel-notice").classList.remove("hidden");
+    }
+
+    let amount = 50;
+
+    function selectPreset(value) {
+      amount = value;
+      customInput.value = "";
+      amountBtns.forEach((b) => {
+        const on = Number(b.dataset.amount) === value;
+        b.classList.toggle("bg-brand", on);
+        b.classList.toggle("text-white", on);
+        b.classList.toggle("border-brand", on);
+        b.classList.toggle("bg-white/70", !on);
+        b.classList.toggle("text-brand", !on);
+        b.setAttribute("aria-checked", on ? "true" : "false");
+      });
+      customWrap.classList.remove("border-brand");
+      refresh();
+    }
+
+    amountBtns.forEach((b) => b.addEventListener("click", () => selectPreset(Number(b.dataset.amount))));
+
+    customInput.addEventListener("input", () => {
+      const v = Math.round(Number(customInput.value));
+      amountBtns.forEach((b) => {
+        b.classList.remove("bg-brand", "text-white", "border-brand");
+        b.classList.add("bg-white/70", "text-brand");
+        b.setAttribute("aria-checked", "false");
+      });
+      customWrap.classList.add("border-brand");
+      amount = customInput.value ? v : 0;
+      refresh();
+    });
+
+    document.querySelectorAll('input[name="envoi"]').forEach((r) =>
+      r.addEventListener("change", () => {
+        const toBenef = form.envoi.value === "beneficiaire";
+        benefEmailWrap.classList.toggle("hidden", !toBenef);
+        if (toBenef) benefEmail.focus();
+      })
+    );
+
+    function setText(id, text) {
+      const el = $(id);
+      el.textContent = text;
+      el.classList.toggle("hidden", !text);
+    }
+
+    function refresh() {
+      const ok = Number.isInteger(amount) && amount >= 10 && amount <= 500;
+      $("pv-montant").textContent = ok ? `${amount} €` : "— €";
+      payBtn.textContent = ok ? `Payer ${amount} €` : "Choisissez un montant";
+      setText("pv-pour", benefNom.value.trim() ? `Offert à ${benefNom.value.trim()}` : "");
+      setText("pv-de", acheteurNom.value.trim() ? `De la part de ${acheteurNom.value.trim()}` : "");
+      setText("pv-message", message.value.trim() ? `« ${message.value.trim()} »` : "");
+      $("message-count").textContent = `${message.value.length} / 300`;
+    }
+
+    [benefNom, acheteurNom, message].forEach((el) => el.addEventListener("input", refresh));
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errorEl.textContent = "";
+
+      const toBenef = form.envoi.value === "beneficiaire";
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!Number.isInteger(amount) || amount < 10 || amount > 500) {
+        errorEl.textContent = "Choisissez un montant entre 10 € et 500 €.";
+        return;
+      }
+      if (!acheteurNom.value.trim()) { errorEl.textContent = "Indiquez votre nom."; acheteurNom.focus(); return; }
+      if (!emailRe.test($("acheteur-email").value.trim())) { errorEl.textContent = "Votre adresse email semble invalide."; $("acheteur-email").focus(); return; }
+      if (toBenef && !emailRe.test(benefEmail.value.trim())) { errorEl.textContent = "L'email du bénéficiaire semble invalide."; benefEmail.focus(); return; }
+
+      payBtn.disabled = true;
+      payBtn.textContent = "Redirection vers le paiement…";
+
+      try {
+        const res = await fetch("/.netlify/functions/create-gift-checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            montant: amount,
+            acheteur_nom: acheteurNom.value.trim(),
+            acheteur_email: $("acheteur-email").value.trim(),
+            beneficiaire_nom: benefNom.value.trim(),
+            beneficiaire_email: toBenef ? benefEmail.value.trim() : "",
+            envoyer_au_beneficiaire: toBenef,
+            message: message.value.trim(),
+            website: $("website").value,
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.url) throw new Error(data.error || "Une erreur est survenue.");
+        location.href = data.url;
+      } catch (err) {
+        errorEl.textContent = err.message;
+        payBtn.disabled = false;
+        refresh();
+      }
+    });
+
+    selectPreset(50);
+  </script>
+</SidebarLayout>

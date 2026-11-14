@@ -1,0 +1,278 @@
+---
+import SidebarLayout from "../../layouts/SidebarLayout.astro";
+
+const title = "Admin bons cadeaux — La Régence";
+const description = "Suivi et validation des bons cadeaux.";
+---
+
+<SidebarLayout {title} {description}>
+  <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
+    <div class="max-w-5xl ml-auto text-right md:pr-12">
+      <h1 class="font-limelight text-5xl text-brand tracking-wide uppercase">Bons cadeaux</h1>
+      <p class="mt-4 text-slate-700">Recherchez un code pour vérifier et valider un bon.</p>
+
+      <!-- LOGIN -->
+      <div id="login-box" class="mt-10 max-w-md ml-auto text-left space-y-4">
+        <h2 class="font-limelight text-2xl text-brand text-right">Connexion admin</h2>
+        <input id="login-email" type="email" placeholder="Email"
+          class="w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3" />
+        <input id="login-password" type="password" placeholder="Mot de passe"
+          class="w-full rounded-xl border border-brand/20 bg-white/60 px-4 py-3" />
+        <button id="login-btn"
+          class="w-full font-limelight bg-brand text-white px-6 py-3 rounded-xl hover:bg-[var(--color-copper)] transition">
+          Se connecter
+        </button>
+        <p id="login-message" class="text-sm text-red-700 text-right"></p>
+      </div>
+
+      <!-- ADMIN -->
+      <div id="admin-box" class="hidden mt-10">
+        <div class="flex flex-wrap justify-end gap-3 mb-6">
+          <a href="/admin/reservations" class="font-limelight border border-brand text-brand px-4 py-2 rounded-xl hover:bg-brand hover:text-white transition">Réservations</a>
+          <a href="/admin/fermetures" class="font-limelight border border-brand text-brand px-4 py-2 rounded-xl hover:bg-brand hover:text-white transition">Fermetures</a>
+          <a href="/admin/mises-en-avant" class="font-limelight border border-brand text-brand px-4 py-2 rounded-xl hover:bg-brand hover:text-white transition">Mises en avant</a>
+          <button id="logout-btn" class="font-limelight border border-red-700 text-red-700 px-4 py-2 rounded-xl hover:bg-red-700 hover:text-white transition">Déconnexion</button>
+        </div>
+
+        <!-- Stats -->
+        <div id="stats" class="grid grid-cols-2 md:grid-cols-4 gap-3 text-left"></div>
+
+        <!-- Recherche + filtres -->
+        <div class="mt-6 rounded-2xl soft-border bg-white/50 p-4 text-left">
+          <input id="search" type="search" placeholder="Code (REG-…), nom ou email"
+            class="w-full rounded-xl border border-brand/20 bg-white/70 px-4 py-3 text-lg uppercase placeholder:normal-case" />
+          <div id="filters" class="mt-3 flex flex-wrap gap-2">
+            <button data-filter="valides" class="filter-btn rounded-full border border-brand px-3 py-1 text-sm">À utiliser</button>
+            <button data-filter="utilise" class="filter-btn rounded-full border border-brand px-3 py-1 text-sm">Utilisés</button>
+            <button data-filter="expire" class="filter-btn rounded-full border border-brand px-3 py-1 text-sm">Expirés</button>
+            <button data-filter="en_attente" class="filter-btn rounded-full border border-brand px-3 py-1 text-sm">Paiements non finalisés</button>
+            <button data-filter="tous" class="filter-btn rounded-full border border-brand px-3 py-1 text-sm">Tous</button>
+          </div>
+        </div>
+
+        <div id="list" class="mt-6 space-y-3 text-left"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { supabase } from "../../lib/supabaseClient.js";
+
+    const $ = (id) => document.getElementById(id);
+    const list = $("list");
+    const search = $("search");
+    let bons = [];
+    let filter = "valides";
+
+    const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(new Date());
+    const euros = (c) => (c / 100).toLocaleString("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: c % 100 ? 2 : 0 });
+    const dateFR = (d) => d ? new Date(d.length === 10 ? d + "T12:00:00" : d).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" }) : "-";
+
+    function etat(b) {
+      if (b.statut === "en_attente") return { key: "en_attente", label: "Paiement non finalisé", cls: "bg-slate-200 text-slate-600" };
+      if (b.statut === "annule") return { key: "annule", label: "Annulé", cls: "bg-slate-200 text-slate-600" };
+      if (b.statut === "utilise") return { key: "utilise", label: `Utilisé le ${dateFR(b.utilise_le)}`, cls: "bg-blue-100 text-blue-800" };
+      if (b.expire_le && b.expire_le < today) return { key: "expire", label: "Expiré", cls: "bg-orange-100 text-orange-800" };
+      return { key: "valides", label: "Valide", cls: "bg-green-100 text-green-800" };
+    }
+
+    function renderStats() {
+      const payes = bons.filter((b) => b.statut !== "en_attente" && b.statut !== "annule");
+      const valides = bons.filter((b) => etat(b).key === "valides");
+      const cards = [
+        ["Bons vendus", payes.length],
+        ["Total vendu", euros(payes.reduce((s, b) => s + b.montant_cents, 0))],
+        ["À utiliser", valides.length],
+        ["Montant en circulation", euros(valides.reduce((s, b) => s + b.montant_cents, 0))],
+      ];
+      $("stats").innerHTML = "";
+      cards.forEach(([label, value]) => {
+        const d = document.createElement("div");
+        d.className = "rounded-2xl soft-border bg-white/50 p-4";
+        d.innerHTML = `<p class="text-xs uppercase text-slate-500"></p><p class="mt-1 font-limelight text-2xl text-brand"></p>`;
+        d.children[0].textContent = label;
+        d.children[1].textContent = value;
+        $("stats").appendChild(d);
+      });
+    }
+
+    function renderFilters() {
+      document.querySelectorAll(".filter-btn").forEach((b) => {
+        const on = b.dataset.filter === filter;
+        b.classList.toggle("bg-brand", on);
+        b.classList.toggle("text-white", on);
+        b.classList.toggle("text-brand", !on);
+      });
+    }
+
+    function render() {
+      renderFilters();
+      const q = search.value.trim().toLowerCase();
+      const qCode = q.replace(/[^a-z0-9]/g, "");
+      // Une recherche par code ignore les filtres : utile au moment d'encaisser
+      const rows = bons.filter((b) => {
+        if (q) {
+          return (b.code || "").toLowerCase().replace(/[^a-z0-9]/g, "").includes(qCode && qCode.length >= 3 ? qCode : "\u0000") ||
+            [b.acheteur_nom, b.acheteur_email, b.beneficiaire_nom, b.beneficiaire_email]
+              .some((v) => (v || "").toLowerCase().includes(q));
+        }
+        return filter === "tous" || etat(b).key === filter;
+      });
+
+      list.innerHTML = "";
+      if (!rows.length) {
+        list.innerHTML = `<div class="rounded-2xl soft-border bg-white/40 p-5 text-right text-slate-600">Aucun bon.</div>`;
+        return;
+      }
+
+      rows.forEach((b) => {
+        const st = etat(b);
+        const art = document.createElement("article");
+        art.className = "rounded-2xl soft-border bg-white/50 p-4 flex flex-col md:flex-row md:items-center gap-4";
+
+        const left = document.createElement("div");
+        left.className = "md:w-48 shrink-0";
+        left.innerHTML = `
+          <p class="font-limelight text-3xl text-brand"></p>
+          <p class="font-mono font-bold tracking-wider text-slate-800"></p>
+          <span class="inline-block mt-1 rounded-full px-3 py-0.5 text-xs font-bold ${st.cls}"></span>`;
+        left.children[0].textContent = euros(b.montant_cents);
+        left.children[1].textContent = b.code || "—";
+        left.children[2].textContent = st.label;
+
+        const mid = document.createElement("div");
+        mid.className = "flex-1 min-w-0 text-sm text-slate-700 space-y-0.5";
+        const line = (label, value) => {
+          if (!value) return;
+          const p = document.createElement("p");
+          p.innerHTML = `<span class="text-slate-500"></span> `;
+          p.children[0].textContent = label;
+          p.append(value);
+          mid.appendChild(p);
+        };
+        line("Pour :", [b.beneficiaire_nom, b.beneficiaire_email && `(${b.beneficiaire_email})`].filter(Boolean).join(" "));
+        line("De :", `${b.acheteur_nom} (${b.acheteur_email})`);
+        line("Acheté le :", b.paye_le ? dateFR(b.paye_le) : `${dateFR(b.created_at)} (non payé)`);
+        line("Valable jusqu'au :", b.expire_le && dateFR(b.expire_le));
+        if (b.message) line("Mot :", `« ${b.message} »`);
+
+        const actions = document.createElement("div");
+        actions.className = "flex flex-wrap md:flex-col gap-2 md:w-44";
+        const btn = (label, cls, fn) => {
+          const el = document.createElement("button");
+          el.type = "button";
+          el.className = `rounded-xl border px-3 py-2 text-sm transition ${cls}`;
+          el.textContent = label;
+          el.addEventListener("click", () => fn(el));
+          actions.appendChild(el);
+        };
+
+        if (b.code) {
+          if (b.statut === "paye") {
+            btn("✓ Marquer utilisé", "bg-brand text-white border-brand hover:bg-[var(--color-copper)]", () => markUsed(b, true));
+          } else if (b.statut === "utilise") {
+            btn("Annuler l'utilisation", "border-brand text-brand hover:bg-brand hover:text-white", () => markUsed(b, false));
+          }
+          btn("Télécharger le PDF", "border-brand text-brand hover:bg-brand hover:text-white", (el) => downloadPdf(b, el));
+          btn("Renvoyer l'email", "border-brand text-brand hover:bg-brand hover:text-white", (el) => resend(b, el));
+        }
+
+        art.append(left, mid, actions);
+        list.appendChild(art);
+      });
+    }
+
+    async function load() {
+      list.innerHTML = `<p class="text-right text-slate-600">Chargement...</p>`;
+      const { data, error } = await supabase.from("bons_cadeaux").select("*").order("created_at", { ascending: false });
+      if (error) {
+        list.innerHTML = "";
+        const p = document.createElement("p");
+        p.className = "text-right text-red-700";
+        p.textContent = "Erreur : " + error.message +
+          (error.code === "42P01" ? " — exécutez le script supabase/bons_cadeaux.sql dans Supabase." : "");
+        list.appendChild(p);
+        return;
+      }
+      bons = data || [];
+      renderStats();
+      render();
+    }
+
+    async function markUsed(b, used) {
+      const question = used
+        ? `Valider le bon ${b.code} de ${euros(b.montant_cents)} comme utilisé ?`
+        : `Remettre le bon ${b.code} comme non utilisé ?`;
+      if (!confirm(question)) return;
+      if (used && b.expire_le && b.expire_le < today && !confirm("Attention : ce bon est expiré. Le valider quand même ?")) return;
+
+      const { error } = await supabase.from("bons_cadeaux")
+        .update(used ? { statut: "utilise", utilise_le: new Date().toISOString() } : { statut: "paye", utilise_le: null })
+        .eq("id", b.id);
+      if (error) return alert("Erreur : " + error.message);
+      await load();
+    }
+
+    async function callAdmin(action, b) {
+      const { data } = await supabase.auth.getSession();
+      const res = await fetch("/.netlify/functions/admin-gift-voucher", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${data.session?.access_token}` },
+        body: JSON.stringify({ id: b.id, action }),
+      });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(out.error || "Erreur");
+      return out;
+    }
+
+    async function downloadPdf(b, el) {
+      const label = el.textContent;
+      el.disabled = true; el.textContent = "…";
+      try {
+        const { base64, filename } = await callAdmin("pdf", b);
+        const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+        const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+        const a = Object.assign(document.createElement("a"), { href: url, download: filename });
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+      } catch (e) { alert("Erreur : " + e.message); }
+      el.disabled = false; el.textContent = label;
+    }
+
+    async function resend(b, el) {
+      const dest = [b.acheteur_email, b.envoyer_au_beneficiaire && b.beneficiaire_email].filter(Boolean).join(" et ");
+      if (!confirm(`Renvoyer le bon par email à ${dest} ?`)) return;
+      el.disabled = true; el.textContent = "Envoi…";
+      try { await callAdmin("resend", b); el.textContent = "Envoyé ✓"; }
+      catch (e) { alert("Erreur : " + e.message); el.textContent = "Renvoyer l'email"; }
+      el.disabled = false;
+    }
+
+    search.addEventListener("input", render);
+    document.querySelectorAll(".filter-btn").forEach((b) =>
+      b.addEventListener("click", () => { filter = b.dataset.filter; search.value = ""; render(); })
+    );
+
+    // ---------- Auth ----------
+    async function checkSession() {
+      const { data } = await supabase.auth.getSession();
+      $("login-box").classList.toggle("hidden", !!data.session);
+      $("admin-box").classList.toggle("hidden", !data.session);
+      if (data.session) await load();
+    }
+
+    $("login-btn").addEventListener("click", async () => {
+      $("login-message").textContent = "";
+      const { error } = await supabase.auth.signInWithPassword({
+        email: $("login-email").value,
+        password: $("login-password").value,
+      });
+      if (error) { $("login-message").textContent = "Connexion impossible : " + error.message; return; }
+      await checkSession();
+    });
+
+    $("logout-btn").addEventListener("click", async () => { await supabase.auth.signOut(); await checkSession(); });
+
+    checkSession();
+  </script>
+</SidebarLayout>

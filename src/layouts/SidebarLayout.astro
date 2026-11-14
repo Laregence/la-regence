@@ -1,4 +1,6 @@
 ---
+// Lien "Bon cadeau" dans le menu : passer à true quand Stripe est en mode production
+const SHOW_BON_CADEAU = false;
 import "../styles/global.css";
 const {
   title = "La Régence",
@@ -204,6 +206,20 @@ const ogImageUrl = Astro.site
             : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
       >Contact</a>
     </li>
+    {SHOW_BON_CADEAU && (
+<li>
+  <a
+    href="/bon-cadeau/"
+    aria-current={active === "bon-cadeau" ? "page" : undefined}
+    class={`block px-2 py-1 transition
+      ${active === "bon-cadeau"
+        ? "text-[var(--color-copper)] font-semibold"
+        : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+  >
+    Bon cadeau
+  </a>
+</li>
+)}
     <li>
   <a
     href="/recrutement"
@@ -331,6 +347,20 @@ const ogImageUrl = Astro.site
             : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
       >Contact</a>
     </li>
+    {SHOW_BON_CADEAU && (
+<li>
+  <a
+    href="/bon-cadeau/"
+    aria-current={active === "bon-cadeau" ? "page" : undefined}
+    class={`block px-2 py-1 transition
+      ${active === "bon-cadeau"
+        ? "text-[var(--color-copper)] font-semibold"
+        : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
+  >
+    Bon cadeau
+  </a>
+</li>
+)}
     <li>
   <a
     href="/recrutement"
