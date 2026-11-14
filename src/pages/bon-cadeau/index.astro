@@ -130,6 +130,11 @@ const montants = [30, 50, 80, 100];
             </label>
           </fieldset>
 
+          <label class="flex items-start gap-3 text-sm text-slate-700 cursor-pointer">
+            <input id="cgv" type="checkbox" class="mt-0.5 w-4 h-4 shrink-0 accent-[var(--color-brand)]" />
+            <span>J'ai lu et j'accepte les <a href="#conditions" class="underline underline-offset-2 text-brand">conditions d'utilisation des bons cadeaux</a>.</span>
+          </label>
+
           <div class="pt-1">
             <button id="pay-btn" type="submit"
               class="w-full font-limelight text-xl bg-brand text-white px-6 py-4 rounded-xl hover:bg-[var(--color-copper)] transition disabled:opacity-60 disabled:cursor-wait">
@@ -142,6 +147,44 @@ const montants = [30, 50, 80, 100];
           </div>
         </form>
       </div>
+
+      <!-- CONDITIONS -->
+      <section id="conditions" class="mt-12 scroll-mt-24 rounded-2xl soft-border bg-white/40 p-5 md:p-7 text-left">
+        <h2 class="font-limelight text-2xl md:text-3xl text-brand uppercase">Conditions d'utilisation des bons cadeaux</h2>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm leading-relaxed text-slate-700">
+          <div>
+            <h3 class="font-semibold text-brand">Validité</h3>
+            <p>Le bon cadeau est valable <strong>12 mois</strong> à compter de la date d'achat. La date limite figure sur le bon. Passé cette date, le bon ne peut plus être utilisé ni prolongé, et le solde éventuel est perdu.</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand">Utilisation</h3>
+            <p>Le bon est utilisable <strong>en une ou plusieurs fois</strong>, sur place à <span translate="no" class="notranslate">La Régence</span>, pour l'ensemble de la carte (repas et boissons), sur présentation du bon imprimé ou sur téléphone. Le solde restant est conservé jusqu'à la date de validité. Si l'addition dépasse le solde, la différence est réglée par un autre moyen de paiement.</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand">Remboursement</h3>
+            <p>Sous réserve du droit de rétractation ci-dessous, le bon n'est ni remboursable, ni échangeable contre des espèces, et ne donne pas lieu à un rendu de monnaie. Il ne peut pas servir à acheter un autre bon cadeau.</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand">Droit de rétractation</h3>
+            <p>Conformément au Code de la consommation, vous disposez de <strong>14 jours</strong> à compter de l'achat pour vous rétracter, à condition que le bon n'ait pas été utilisé. Contactez-nous par email ou par téléphone : le remboursement est effectué sous 14 jours sur la carte utilisée lors du paiement.</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand">Perte ou vol</h3>
+            <p>Le bon est utilisable par toute personne qui en présente le code. En cas de perte, contactez-nous : nous pouvons renvoyer le bon par email à l'adresse indiquée lors de l'achat. <span translate="no" class="notranslate">La Régence</span> ne peut être tenue responsable de l'utilisation d'un bon perdu ou volé par un tiers.</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand">Paiement et données</h3>
+            <p>Le paiement est sécurisé par Stripe ; nous n'avons jamais accès à vos données bancaires. Les noms et adresses email saisis servent uniquement à l'envoi et au suivi du bon cadeau.</p>
+          </div>
+        </div>
+
+        <p class="mt-5 pt-4 border-t border-brand/15 text-xs text-slate-500">
+          Vendeur : SAS DGD — <span translate="no" class="notranslate">La Régence</span>, 2 rue Léon Gambetta, 40000 Mont-de-Marsan ·
+          <a href="tel:+33558859272" class="underline">05&nbsp;58&nbsp;85&nbsp;92&nbsp;72</a> ·
+          <a href="mailto:laregence.mdm@gmail.com" class="underline">laregence.mdm@gmail.com</a>
+        </p>
+      </section>
     </div>
   </section>
 
@@ -235,6 +278,7 @@ const montants = [30, 50, 80, 100];
       if (!acheteurNom.value.trim()) { errorEl.textContent = "Indiquez votre nom."; acheteurNom.focus(); return; }
       if (!emailRe.test($("acheteur-email").value.trim())) { errorEl.textContent = "Votre adresse email semble invalide."; $("acheteur-email").focus(); return; }
       if (toBenef && !emailRe.test(benefEmail.value.trim())) { errorEl.textContent = "L'email du bénéficiaire semble invalide."; benefEmail.focus(); return; }
+      if (!$("cgv").checked) { errorEl.textContent = "Merci d'accepter les conditions d'utilisation."; $("cgv").focus(); return; }
 
       payBtn.disabled = true;
       payBtn.textContent = "Redirection vers le paiement…";
