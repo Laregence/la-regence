@@ -40,6 +40,7 @@ export async function handler(event) {
       prefer: "return=representation",
       body: {
         montant_cents: montant * 100,
+        solde_cents: montant * 100,
         acheteur_nom, acheteur_email,
         beneficiaire_nom,
         beneficiaire_email: envoyer_au_beneficiaire ? beneficiaire_email : null,

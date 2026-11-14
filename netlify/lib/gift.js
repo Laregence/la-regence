@@ -185,7 +185,7 @@ export async function buildVoucherPdf(bon) {
     x: (W - sansBold.widthOfTextAtSize(codeTxt, 13)) / 2, y: boxY + 8, size: 13, font: sansBold, color: green,
   });
 
-  center(`Valable jusqu'au ${formatDateFR(bon.expire_le)} · À présenter lors de votre venue`, 52, sans, 7.5);
+  center(`Valable jusqu'au ${formatDateFR(bon.expire_le)} · Utilisable en une ou plusieurs fois`, 52, sans, 7.5);
   center("La Régence · 2 rue Léon Gambetta, 40000 Mont-de-Marsan · 05 58 85 92 72 · laregencemdm.fr", 40, sans, 7.5, copper);
 
   return pdf.save();
@@ -248,7 +248,7 @@ export async function sendVoucherEmails(bon, { notifyAdmin = true, onlyTo } = {}
         <p style="text-align:center;margin:24px 0">
           <span style="display:inline-block;background:#25471f;color:#F5EFE6;padding:10px 18px;border-radius:10px;font-family:Arial,sans-serif;font-weight:bold;letter-spacing:1px">${e(bon.code)}</span>
         </p>
-        <p style="font-size:13px;color:#555">Valable jusqu'au ${expire}, à présenter lors de votre venue (imprimé ou sur téléphone).</p>
+        <p style="font-size:13px;color:#555">Valable jusqu'au ${expire}, utilisable en une ou plusieurs fois : le solde restant reste disponible jusqu'à cette date. À présenter lors de votre venue (imprimé ou sur téléphone).</p>
         <p>À très bientôt,<br/>L'équipe de La Régence</p>`),
       attachment,
     }));
@@ -268,7 +268,7 @@ export async function sendVoucherEmails(bon, { notifyAdmin = true, onlyTo } = {}
         <p style="text-align:center;margin:24px 0">
           <span style="display:inline-block;background:#25471f;color:#F5EFE6;padding:10px 18px;border-radius:10px;font-family:Arial,sans-serif;font-weight:bold;letter-spacing:1px">${e(bon.code)}</span>
         </p>
-        <p style="font-size:13px;color:#555">Valable jusqu'au ${expire}. Réservez votre table sur
+        <p style="font-size:13px;color:#555">Valable jusqu'au ${expire}, utilisable en une ou plusieurs fois. Réservez votre table sur
         <a href="https://laregencemdm.fr/reservation" style="color:#25471f">laregencemdm.fr/reservation</a> ou au 05 58 85 92 72.</p>
         <p>À très bientôt,<br/>L'équipe de La Régence</p>`),
       attachment,
