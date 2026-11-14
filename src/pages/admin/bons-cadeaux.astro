@@ -264,6 +264,15 @@ const description = "Suivi et validation des bons cadeaux.";
       await load();
       search.value = b.code; // garde le bon affiché après l'opération
       render();
+
+      // Email au client : montant utilisé + solde restant
+      const fresh = bons.find((x) => x.id === b.id);
+      const last = [...(fresh?.bons_cadeaux_utilisations || [])]
+        .sort((x, y) => y.created_at.localeCompare(x.created_at))[0];
+      if (last) {
+        try { await callAdmin("usage_email", b, { utilisation_id: last.id }); }
+        catch (e) { alert("Déduction enregistrée, mais l'email au client n'a pas pu partir : " + e.message); }
+      }
     }
 
     async function cancelUsage(b, u) {
@@ -275,12 +284,12 @@ const description = "Suivi et validation des bons cadeaux.";
       render();
     }
 
-    async function callAdmin(action, b) {
+    async function callAdmin(action, b, extra = {}) {
       const { data } = await supabase.auth.getSession();
       const res = await fetch("/.netlify/functions/admin-gift-voucher", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${data.session?.access_token}` },
-        body: JSON.stringify({ id: b.id, action }),
+        body: JSON.stringify({ id: b.id, action, ...extra }),
       });
       const out = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(out.error || "Erreur");

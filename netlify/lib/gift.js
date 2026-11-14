@@ -296,3 +296,41 @@ export async function sendVoucherEmails(bon, { notifyAdmin = true, onlyTo } = {}
   const failed = results.filter((r) => r.status === "rejected");
   if (failed.length) throw new Error(failed.map((f) => f.reason?.message).join(" | "));
 }
+
+// Email après une utilisation : montant utilisé + solde restant
+export async function sendUsageEmail(bon, usage) {
+  const toBenef = bon.envoyer_au_beneficiaire && bon.beneficiaire_email;
+  const to = toBenef
+    ? { email: bon.beneficiaire_email, name: bon.beneficiaire_nom || undefined }
+    : { email: bon.acheteur_email, name: bon.acheteur_nom };
+  const prenom = toBenef ? bon.beneficiaire_nom : bon.acheteur_nom;
+  const e = escapeHtml;
+  const date = new Date(usage.created_at).toLocaleDateString("fr-FR", {
+    day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Paris",
+  });
+
+  const soldeHtml = bon.solde_cents > 0
+    ? `<p>Il vous reste <strong style="font-size:18px;color:#25471f">${formatEuros(bon.solde_cents)}</strong>
+       sur votre bon, utilisable jusqu'au ${formatDateFR(bon.expire_le)}.
+       Conservez bien votre bon (code <strong>${e(bon.code)}</strong>) pour votre prochaine visite.</p>`
+    : `<p>Le solde de votre bon est maintenant <strong>épuisé</strong>. Merci de l'avoir utilisé chez nous !</p>`;
+
+  await brevoSend({
+    sender: SENDER,
+    to: [to],
+    subject: bon.solde_cents > 0
+      ? `Bon cadeau La Régence : il vous reste ${formatEuros(bon.solde_cents)}`
+      : "Bon cadeau La Régence : solde utilisé",
+    htmlContent: emailLayout(`
+      <p>Bonjour${prenom ? " " + e(prenom) : ""},</p>
+      <p>Merci pour votre visite ! Le ${date}, <strong>${formatEuros(usage.montant_cents)}</strong>
+      ont été utilisés sur votre bon cadeau <strong>${e(bon.code)}</strong>.</p>
+      <table style="margin:18px auto;border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px">
+        <tr><td style="padding:4px 14px;color:#555">Montant initial</td><td style="padding:4px 14px;text-align:right">${formatEuros(bon.montant_cents)}</td></tr>
+        <tr><td style="padding:4px 14px;color:#555">Utilisé aujourd'hui</td><td style="padding:4px 14px;text-align:right">− ${formatEuros(usage.montant_cents)}</td></tr>
+        <tr><td style="padding:6px 14px;border-top:2px solid #a3742c;font-weight:bold">Solde restant</td><td style="padding:6px 14px;border-top:2px solid #a3742c;text-align:right;font-weight:bold;color:#25471f">${formatEuros(bon.solde_cents)}</td></tr>
+      </table>
+      ${soldeHtml}
+      <p>À très bientôt,<br/>L'équipe de La Régence</p>`),
+  });
+}

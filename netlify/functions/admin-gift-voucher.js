@@ -1,6 +1,6 @@
 // Actions admin sur un bon cadeau : télécharger le PDF ou renvoyer l'email.
 // Réservé aux admins connectés (jeton Supabase vérifié).
-import { json, sb, getAdminUser, buildVoucherPdf, sendVoucherEmails } from "../lib/gift.js";
+import { json, sb, getAdminUser, buildVoucherPdf, sendVoucherEmails, sendUsageEmail } from "../lib/gift.js";
 
 export async function handler(event) {
   if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
@@ -27,6 +27,15 @@ export async function handler(event) {
 
     if (action === "resend") {
       await sendVoucherEmails(bon, { notifyAdmin: false });
+      return json(200, { ok: true });
+    }
+
+    if (action === "usage_email") {
+      const uid = input.utilisation_id;
+      if (!uid || !/^[0-9a-f-]{36}$/i.test(uid)) return json(400, { error: "Utilisation invalide" });
+      const [usage] = await sb(`bons_cadeaux_utilisations?id=eq.${uid}&bon_id=eq.${bon.id}&select=*`);
+      if (!usage) return json(404, { error: "Utilisation introuvable" });
+      await sendUsageEmail(bon, usage);
       return json(200, { ok: true });
     }
 
