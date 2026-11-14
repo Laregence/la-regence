@@ -34,6 +34,7 @@ export async function handler(event) {
     return json(400, { error: "L'adresse email du bénéficiaire est invalide." });
   }
 
+  let etape = "base";
   try {
     const [bon] = await sb("bons_cadeaux", {
       method: "POST",
@@ -66,6 +67,7 @@ export async function handler(event) {
       cancel_url: `${SITE_URL}/bon-cadeau/?annule=1`,
     });
 
+    etape = "stripe";
     const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",
       headers: {
@@ -77,6 +79,7 @@ export async function handler(event) {
     const session = await res.json();
     if (!res.ok) throw new Error(session?.error?.message || "Erreur Stripe");
 
+    etape = "base-session";
     await sb(`bons_cadeaux?id=eq.${bon.id}`, {
       method: "PATCH",
       body: { stripe_session_id: session.id },
@@ -84,7 +87,12 @@ export async function handler(event) {
 
     return json(200, { url: session.url });
   } catch (error) {
-    console.error("create-gift-checkout :", error);
-    return json(500, { error: "Le paiement n'a pas pu être lancé. Réessayez ou appelez-nous au 05 58 85 92 72." });
+    console.error(`create-gift-checkout (${etape}) :`, error);
+    return json(500, {
+      error: "Le paiement n'a pas pu être lancé. Réessayez ou appelez-nous au 05 58 85 92 72.",
+      // Diagnostic : étape en échec + message Stripe (jamais de clé ni de donnée client)
+      etape,
+      detail: etape === "stripe" ? String(error.message).replace(/sk_(live|test)_\w+/g, "sk_***") : undefined,
+    });
   }
 }
