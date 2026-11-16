@@ -143,14 +143,14 @@ const year = new Date().getFullYear();
 
 
     <!-- ===== DRAWER MOBILE (plein écran, slide gauche) ===== -->
-<div id="mb-drawer" class="md:hidden fixed inset-0 z-50 hidden">
+<div id="mb-drawer" class="md:hidden fixed inset-x-0 top-0 h-[100dvh] z-50 hidden">
   <!-- Backdrop -->
   <div id="mb-backdrop" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300"></div>
 
   <!-- Panneau -->
   <aside
     id="mb-panel"
-    class="relative h-full w-full bg-brand text-[var(--color-bg)]
+    class="relative h-full w-full bg-brand text-[var(--color-bg)] overflow-y-auto
            translate-x-[-100%] transition-transform duration-300 ease-out
            flex flex-col"
   >
@@ -163,133 +163,75 @@ const year = new Date().getFullYear();
       </svg>
     </button>
 
-    <!-- HAUT : LOGO (fixe) -->
-    <div class="pt-10 px-6 flex-shrink-0 flex items-start justify-center">
+    <!-- HAUT : LOGO -->
+    <div class="pt-12 px-6 flex-shrink-0 flex items-start justify-center">
       <a href="/" aria-label="Accueil">
-        <img src="/logo.png" alt="La Régence" class="w-[220px] max-w-full" />
+        <img src="/logo.png" alt="La Régence" class="w-[120px] max-w-full" />
       </a>
     </div>
 
-    <!-- MILIEU : MENU (centré verticalement) -->
-    <div class="flex-1 flex items-center justify-center px-6">
-      <nav class="mt-4">
-  <ul class="font-limelight space-y-6 text-4xl uppercase text-center tracking-wide">
-    <li>
-      <a
-  href="/menu"
-  style="font-family: 'Limelight', cursive;"
-  aria-current={active === "carte" ? "page" : undefined}
-  class={`block px-2 py-1 transition
-    ${active === "carte"
-      ? "text-[var(--color-copper)] font-semibold"
-      : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
->
-  Carte
-</a>
-    </li>
-    <li>
-      <a
-        href="/boissons"
-        aria-current={active === "boissons" ? "page" : undefined}
-        class={`block px-2 py-1 transition
-          ${active === "boissons"
-            ? "text-[var(--color-copper)] font-semibold"
-            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
-      >Boissons</a>
-    </li>
-    <li>
-      <a
-        href="/la-regence"
-        aria-current={active === "la-regence" ? "page" : undefined}
-        class={`block px-2 py-1 transition
-          ${active === "la-regence"
-            ? "text-[var(--color-copper)] font-semibold"
-            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
-      ><span translate="no" class="notranslate">La Régence</span></a>
-    </li>
-    <li>
-      <a
-        href="/contact"
-        aria-current={active === "contact" ? "page" : undefined}
-        class={`block px-2 py-1 transition
-          ${active === "contact"
-            ? "text-[var(--color-copper)] font-semibold"
-            : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
-      >Contact</a>
-    </li>
-    {SHOW_BON_CADEAU && (
-<li>
-  <a
-    href="/bon-cadeau/"
-    aria-current={active === "bon-cadeau" ? "page" : undefined}
-    class={`block px-2 py-1 transition
-      ${active === "bon-cadeau"
-        ? "text-[var(--color-copper)] font-semibold"
-        : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
-  >
-    Bon cadeau
-  </a>
-</li>
-)}
-    <li>
-  <a
-    href="/recrutement"
-    aria-current={active === "recrutement" ? "page" : undefined}
-    class={`block px-2 py-1 transition
-      ${active === "recrutement"
-        ? "text-[var(--color-copper)] font-semibold"
-        : "text-[var(--color-bg)] hover:text-[var(--color-copper)]"}`}
-  >
-    Recrutement
-  </a>
-</li>
-  </ul>
-</nav>
+    <!-- MILIEU : MENU + RÉSERVER + RÉSEAUX -->
+    <div class="flex-1 min-h-0 flex flex-col items-center justify-center px-6 py-6 font-nour">
+      <nav aria-label="Menu principal">
+        <ul class="text-center">
+          {navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={active === item.key ? "page" : undefined}
+                class={`block py-2 text-[15px] font-medium uppercase tracking-[0.28em] transition-colors
+                  ${active === item.key ? "text-[var(--color-bg)]" : "text-[#c9974a]"}`}
+              >
+                {item.noTranslate
+                  ? <span translate="no" class="notranslate">{item.label}</span>
+                  : item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
+      <a
+        href="/reservation"
+        class="mt-7 block w-[180px] border-y-[1.5px] border-[var(--color-copper)] py-4 text-center
+               text-[15px] font-bold uppercase tracking-[0.28em] text-[#c9974a]"
+      >
+        Réserver
+      </a>
 
-    </div>
-
-    <!-- BAS : doubles barres + Réserver + réseaux + barre + copyright -->
-    <div class="px-6 pb-6 flex-shrink-0">
-      <!-- Double barre + Réserver (même largeur que la nav) -->
-      <div class="max-w-[220px] w-full mx-auto my-8 space-y-3">
-        <div class="h-[3px] bg-[var(--color-copper)]"></div>
-        <a href="/reservation"
-   class="block text-center uppercase tracking-wide font-semibold text-[var(--color-bg)] hover:text-[var(--color-copper)]">
-  Réserver
-</a>
-        <div class="h-[3px] bg-[var(--color-copper)]"></div>
-      </div>
-
-      <!-- Réseaux -->
-      <div class="flex items-center justify-center gap-6 mb-4">
+      <div class="mt-8 flex justify-center gap-3">
         <a href="https://www.instagram.com/la_regence_mdm/" target="_blank" rel="noopener"
            aria-label="Instagram"
-           class="inline-flex text-[var(--color-bg)] hover:text-[var(--color-copper)] transition-transform hover:scale-110">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-            <circle cx="17.5" cy="6.5" r="1"></circle>
+           class="w-11 h-11 rounded-xl border-[1.5px] border-[#c9974a] text-[#c9974a] flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-[22px] h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+            <rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="17.2" cy="6.8" r="0.6"></circle>
           </svg>
         </a>
         <a href="https://www.facebook.com/LaRegenceMDM/" target="_blank" rel="noopener"
            aria-label="Facebook"
-           class="inline-flex text-[var(--color-bg)] hover:text-[var(--color-copper)] transition-transform hover:scale-110">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M22 12.06C22 6.49 17.52 2 12 2S2 6.49 2 12.06c0 5.01 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.78 8.44-4.93 8.44-9.94z"/>
+           class="w-11 h-11 rounded-xl border-[1.5px] border-[#c9974a] text-[#c9974a] flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-[22px] h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+            <path d="M14 8.5h2.5V5H14c-2.2 0-3.5 1.5-3.5 3.6V11H8v3.4h2.5V21H14v-6.6h2.5l.5-3.4h-3V9.2c0-.4.3-.7.6-.7z"></path>
           </svg>
         </a>
       </div>
+    </div>
 
-      <!-- Barre cuivre pleine largeur + copyright -->
-      <div class="w-full h-[3px] bg-[var(--color-copper)]"></div>
-      <div class="flex flex-col items-center py-3 opacity-90 text-sm">
-        <img src="/logo.png" alt="La Régence" class="w-6 h-6 mb-1 opacity-90" />
-        <p>© <span translate="no" class="notranslate">La Régence</span> 2025</p>
-      </div>
+    <!-- BAS : mention + copyright -->
+    <div class="flex-shrink-0 font-nour">
+      <p class="text-center text-[12px] font-semibold uppercase tracking-[0.22em] leading-loose text-[#c9974a]">
+        Bar · Restaurant · Brasserie
+      </p>
+      <footer class="mt-4 w-full border-t border-[#c9974a]/60 py-4 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c9974a]">
+        © <span translate="no" class="notranslate">La Régence</span> {year}<br />
+        <a href="/mentions-legales/" class="inline-block mt-1 hover:text-[var(--color-bg)] transition-colors">Mentions légales</a>
+      </footer>
     </div>
   </aside>
 </div>
+
 
 
     <!-- ===== WRAPPER DESKTOP : grille 2 colonnes ===== -->
@@ -369,7 +311,8 @@ const year = new Date().getFullYear();
       Bar<br />Restaurant<br />Brasserie
     </p>
     <footer class="mt-8 w-full border-t border-[#c9974a]/60 py-5 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c9974a]">
-      © <span translate="no" class="notranslate">La Régence</span> {year}
+      © <span translate="no" class="notranslate">La Régence</span> {year}<br />
+        <a href="/mentions-legales/" class="inline-block mt-1 hover:text-[var(--color-bg)] transition-colors">Mentions légales</a>
     </footer>
   </div>
 </aside>

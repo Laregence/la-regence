@@ -1,0 +1,118 @@
+---
+import SidebarLayout from "../layouts/SidebarLayout.astro";
+
+const title = "Mentions légales — La Régence";
+const description = "Mentions légales et politique de confidentialité du site de La Régence, bar restaurant brasserie à Mont-de-Marsan.";
+
+// Informations de l'éditeur : à compléter / vérifier
+const editeur = {
+  societe: "SAS DGD",
+  enseigne: "La Régence",
+  capital: "", // ex. "1 000 €" : la mention apparaît dès qu'il est renseigné
+  adresse: "2 rue Léon Gambetta, 40000 Mont-de-Marsan",
+  rcs: "RCS Mont-de-Marsan 851 968 529 — SIRET 851 968 529 00012",
+  tva: "FR25851968529",
+  telephone: "05 58 85 92 72",
+  email: "laregence.mdm@gmail.com",
+  directeur: "Gregory Dias Costodio",
+};
+const majLe = "16 novembre 2026";
+---
+
+<SidebarLayout {title} {description} active="mentions-legales">
+  <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
+    <div class="max-w-3xl mx-auto text-left text-slate-700 leading-relaxed">
+      <h1 class="font-limelight text-4xl md:text-5xl text-brand uppercase">Mentions légales</h1>
+      <p class="mt-3 text-sm text-slate-500">Dernière mise à jour : {majLe}</p>
+
+      <div class="mt-10 space-y-10 [&_a]:text-[var(--color-copper)] [&_a]:font-semibold">
+
+        <section>
+          <h2 class="font-limelight text-2xl text-brand uppercase mb-3">Éditeur du site</h2>
+          <p>
+            Le site <a href="https://laregencemdm.fr">laregencemdm.fr</a> est édité par
+            {editeur.societe}, société par actions simplifiée{editeur.capital ? ` au capital de ${editeur.capital}` : ""},
+            exploitant l'établissement <span translate="no" class="notranslate">{editeur.enseigne}</span>.
+          </p>
+          <ul class="mt-3 space-y-1">
+            <li>Siège social : {editeur.adresse}</li>
+            <li>Immatriculation : {editeur.rcs}</li>
+            <li>TVA intracommunautaire : {editeur.tva}</li>
+            <li>Téléphone : <a href="tel:+33558859272">{editeur.telephone}</a></li>
+            <li>Email : <a href={`mailto:${editeur.email}`}>{editeur.email}</a></li>
+            <li>Directeur de la publication : {editeur.directeur}</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-limelight text-2xl text-brand uppercase mb-3">Hébergement</h2>
+          <p>
+            Le site est hébergé par Netlify, Inc., San Francisco, Californie, États-Unis —
+            <a href="https://www.netlify.com" target="_blank" rel="noopener">netlify.com</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-limelight text-2xl text-brand uppercase mb-3">Propriété intellectuelle</h2>
+          <p>
+            Les textes, photographies, logos et éléments graphiques présents sur ce site sont la propriété
+            de {editeur.societe} ou sont utilisés avec l'accord de leurs auteurs. Toute reproduction ou
+            réutilisation, totale ou partielle, sans autorisation écrite préalable est interdite.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-limelight text-2xl text-brand uppercase mb-3">Données personnelles</h2>
+          <p>
+            Nous collectons uniquement les informations nécessaires aux services proposés sur le site,
+            dans le respect du Règlement général sur la protection des données (RGPD) :
+          </p>
+          <ul class="mt-3 list-disc pl-5 space-y-2">
+            <li>
+              <strong>Réservation d'une table</strong> : nom, prénom, téléphone, email, date, heure,
+              nombre de personnes et commentaire éventuel, pour gérer votre réservation et vous recontacter si besoin.
+              Si vous cochez la case prévue, votre email est aussi utilisé pour vous envoyer nos actualités :
+              vous pouvez vous désinscrire à tout moment.
+            </li>
+            <li>
+              <strong>Bons cadeaux</strong> : nom et email de l'acheteur, et éventuellement du bénéficiaire,
+              pour émettre le bon, l'envoyer par email et suivre son utilisation. Le paiement est traité par
+              Stripe : nous n'avons jamais accès à vos coordonnées bancaires.
+            </li>
+            <li>
+              <strong>Candidatures</strong> : coordonnées, message et CV, uniquement pour étudier votre candidature.
+            </li>
+          </ul>
+          <p class="mt-3">
+            Ces données ne sont ni vendues ni cédées. Elles sont conservées le temps nécessaire à leur
+            finalité : la durée de validité augmentée des obligations comptables pour les bons cadeaux,
+            et au maximum deux ans pour les candidatures. Elles sont hébergées par nos prestataires techniques
+            (Netlify, Supabase, Stripe, Brevo pour l'envoi des emails).
+          </p>
+          <p class="mt-3">
+            Vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition sur vos données.
+            Pour l'exercer, écrivez-nous à <a href={`mailto:${editeur.email}`}>{editeur.email}</a>.
+            Vous pouvez également adresser une réclamation à la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener">cnil.fr</a>).
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-limelight text-2xl text-brand uppercase mb-3">Mesure d'audience</h2>
+          <p>
+            Le site utilise un outil de statistiques de fréquentation (Metricool) afin de connaître
+            le nombre de visites et les pages consultées. Les avis affichés proviennent de Google.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-limelight text-2xl text-brand uppercase mb-3">Bons cadeaux</h2>
+          <p>
+            Les conditions d'achat et d'utilisation des bons cadeaux sont détaillées sur la page
+            <a href="/bon-cadeau/#conditions">Bon cadeau</a>.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </section>
+</SidebarLayout>
