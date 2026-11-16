@@ -120,6 +120,12 @@ const { delay = 3400 } = Astro.props;
 
     // Encart flottant
     const teaser = $("promo-teaser");
+    // Sur ordinateur, la pastille rejoint celle du menu du jour sur la grande photo
+    const dock = document.getElementById("pill-dock");
+    if (dock && window.matchMedia("(min-width: 768px)").matches) {
+      teaser.classList.remove("fixed", "right-3", "bottom-[7rem]", "md:right-6", "md:bottom-6", "z-[45]");
+      dock.appendChild(teaser);
+    }
     const first = items[0];
     $("promo-teaser-title").textContent =
       first.titre || first.lien_label || "Découvrir";

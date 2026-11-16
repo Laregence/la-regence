@@ -236,10 +236,11 @@ const restaurantSchema = {
                 class="w-full md:h-[60vh] xl:h-full object-cover"
               />
 
-              <!-- Menu du jour : pastille sur la grande photo -->
+              <!-- Pastilles sur la grande photo : menu du jour + « En ce moment » (déplacée ici par PromoPopup) -->
+              <div id="pill-dock" class="absolute left-4 right-4 bottom-4 flex flex-wrap items-center gap-3">
               <button
                 type="button"
-                class="js-menu-thumb absolute left-4 bottom-4 flex items-center gap-3 rounded-full
+                class="js-menu-thumb flex items-center gap-3 rounded-full
                        bg-[var(--color-bg)] border-[1.5px] border-[var(--color-copper)] py-2 pl-2 pr-5
                        shadow-lg font-nour text-left hover:scale-105 transition"
                 data-img={menuImage}
@@ -255,6 +256,7 @@ const restaurantSchema = {
                   <span class="block text-sm font-semibold text-brand">Menu du jour</span>
                 </span>
               </button>
+              </div>
             </div>
 
             <div class="hidden xl:block xl:col-span-1 xl:row-span-2"></div>
