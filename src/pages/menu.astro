@@ -2,7 +2,68 @@
 import SidebarLayout from "../layouts/SidebarLayout.astro";
 
 const title = "Menu & carte du restaurant à Mont-de-Marsan | La Régence";
-const description = "Découvrez le menu et la carte de La Régence à Mont-de-Marsan : formule du midi, tapas, plats de brasserie, burgers, tartares, salades et desserts.";
+const description = "Découvrez le menu et la carte de La Régence à Mont-de-Marsan : formule du midi, tapas, plats de brasserie, burgers, tartares, pokebowl et desserts maison.";
+
+// ===== CARTE (en vigueur à partir du lundi 23 novembre 2026) =====
+// Pour modifier la carte : changer les listes ci-dessous (nom, description, prix).
+const prix = (n) => n.toFixed(2).replace(".", ",") + " €";
+
+const tapas = [
+  { nom: "Pâté Jean Haget (64)", desc: "pâté de campagne, pâté au piment d'Espelette ou pâté piquant", prix: 6 },
+  { nom: "Planche de charcuterie italienne", desc: "prosciutto di Parma, mortadelle à la pistache, spianata piccante, scamorza fumée, coppa", prix: 15 },
+  { nom: "Croquetas de cèpes", desc: "croquetas maison aux cèpes", prix: 8 },
+  { nom: "Croquetas d'effiloché de canard", desc: "croquetas maison d'effiloché de canard confit", prix: 8 },
+  { nom: "Camembert rôti", desc: "miel et thym (10 min de cuisson)", prix: 8 },
+  { nom: "Poulet croustillant", desc: "sauce sweet chili", prix: 6 },
+  { nom: "Cassolette de pommes de terre frites de la Régence", desc: "", prix: 5 },
+];
+
+const entrees = [
+  { nom: "Gravlax de bœuf", desc: "cœur de rumsteak, poivre, piment d'Espelette, roquette, tomates confites et vinaigrette thaï", prix: 7.9 },
+  { nom: "Velouté du moment", desc: "velouté ou gaspacho de légumes frais et de saison", prix: 4.9 },
+  { nom: "Tartine de camembert", desc: "pain toasté, compotée d'oignons, champignons de Paris, camembert et œuf", prix: 6.9 },
+  { nom: "Crumble salé du moment", desc: "crumble salé de légumes et parmesan, roquette et chips de jambon de Parme", prix: 5.9 },
+];
+
+const plats = [
+  { nom: "Pièce du boucher Angus", desc: "origine Irlande — env. 180-200 g, pommes de terre frites de la Régence, sauce aux cèpes ou sauce chimichurri", prix: 17.9 },
+  { nom: "Welsh", desc: "pain grillé, moutarde, jambon italien, cheddar, bière, pommes de terre de la Régence et salade", prix: 17.9 },
+  { nom: "Pokebowl", desc: "gravlax de bœuf ou gravlax de saumon ou égréné végétarien, chou chinois, carottes, betteraves, edamames, pickles de pommes, riz et vinaigrette thaï", prix: 16.9 },
+  { nom: "Tartare de la Régence", desc: "origine France — tartare de bœuf Blonde d'Aquitaine au couteau (150 g), cornichons, vinaigrette, pommes de terre frites de la Régence", prix: 18.9 },
+  { nom: "Burger Ch'ti", desc: "origine Irlande — steak haché Black Angus 150 g, maroilles, compotée d'oignons à la bière, bacon, roquette, pommes de terre frites de la Régence", prix: 17.9 },
+  { nom: "Jarret de porc braisé", desc: "jarret de porc (origine : UE, environ 600 g), sauce aux cèpes, roquette et pommes de terre frites de la Régence", prix: 23.9 },
+  { nom: "Tagliata di manzo", desc: "gravlax de bœuf, roquette, oignons, sauce chimichurri et parmesan", prix: 17.9 },
+  { nom: "Parmentier de légumes", desc: "végétarien — parmentier de courgettes, purée de pommes de terre vanille tonka, parmesan et égréné végétal", prix: 15.9 },
+  { nom: "Pavé de saumon", desc: "pavé de saumon, courgettes et purée de pommes de terre vanille tonka", prix: 18.9 },
+];
+
+const enfants = [
+  { nom: "Steak haché, poulet croustillant ou steak végétarien", desc: "pommes de terre frites de la Régence", prix: 12 },
+];
+
+const desserts = [
+  { nom: "Crème brûlée", desc: "praliné noisette", prix: 6 },
+  { nom: "Cœur coulant", desc: "pistache et chocolat blanc, sorbet framboise (12 min de cuisson)", prix: 7 },
+  { nom: "Café gourmand", desc: "brioche perdue, tartelette citron meringuée, moelleux pistache, crème brûlée praliné", prix: 7 },
+  { nom: "Tarte citron meringuée", desc: "sablé, crème citron et meringue fraîche", prix: 7 },
+  { nom: "Brioche perdue", desc: "glace mascarpone et coulis de caramel", prix: 7 },
+  { nom: "Assiette de fromages", desc: "scamorza fumée, camembert, maroilles et salade", prix: 7 },
+];
+
+const coupes = [
+  { nom: "Dame blanche", desc: "glace vanille, sauce chocolat, chantilly, amandes effilées", prix: 7 },
+  { nom: "Chocolat liégeois", desc: "glace chocolat, sauce chocolat, chantilly, amandes effilées", prix: 7 },
+  { nom: "Café liégeois", desc: "glace café, espresso, chantilly, amandes effilées", prix: 7 },
+  { nom: "Coupe canadienne", desc: "glace pistache, glace sirop d'érable, glace caramel beurre salé, chantilly, sirop d'érable", prix: 7 },
+  { nom: "Coupe Tiramisu", desc: "glace mascarpone et glace spéculoos, espresso, chantilly, spéculoos", prix: 7 },
+];
+
+const glaces = [
+  { nom: "1 boule de glace", desc: "", prix: 2.5 },
+  { nom: "2 boules de glace", desc: "", prix: 4.2 },
+  { nom: "3 boules de glace", desc: "", prix: 5.4 },
+  { nom: "Topping au choix", desc: "chantilly, chocolat, caramel, fruits rouges, éclats de noisettes, Smarties, amandes effilées, spéculoos", prix: 1 },
+];
 ---
 
 <SidebarLayout {title} {description} active="carte">
@@ -10,73 +71,66 @@ const description = "Découvrez le menu et la carte de La Régence à Mont-de-Ma
   <section class="min-h-screen w-full bg-[var(--color-bg)] px-6 py-10">
     <div class="max-w-[1400px] ml-auto">
 
-
-
       <!-- Titre -->
       <h1 class="font-limelight text-4xl sm:text-5xl text-brand tracking-wide uppercase text-right">Menu & carte</h1>
       <p class="mt-2 text-slate-600 text-sm sm:text-base text-right">
         Découvrez la carte de <strong translate="no" class="notranslate">La Régence</strong>,
-        restaurant brasserie au centre-ville de Mont-de-Marsan.
+        restaurant brasserie au centre-ville de Mont-de-Marsan. Nos plats sont faits maison.
       </p>
       <div class="h-8"></div>
 
       <!-- ===== FORMULE MIDI (cliquable) ===== -->
-<div class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
-  <!-- Colonne gauche : texte descriptif -->
-  <div class="hidden md:flex items-center">
-  <div class="max-w-sm border-l-4 border-[var(--color-copper)] pl-6">
-    <p class="font-limelight text-2xl text-brand uppercase tracking-wide mb-4">
-      Une cuisine généreuse
-    </p>
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] gap-6 md:items-start">
+        <div class="hidden md:flex items-center">
+          <div class="max-w-sm border-l-4 border-[var(--color-copper)] pl-6">
+            <p class="font-limelight text-2xl text-brand uppercase tracking-wide mb-4">
+              Une cuisine généreuse
+            </p>
+            <p class="text-slate-700 leading-relaxed text-base">
+              Découvrez la carte de <strong translate="no" class="notranslate">La Régence</strong>, entre
+              tradition de brasserie, produits frais et inspirations du Sud-Ouest.
+              Formule du midi, tapas à partager, burgers, tartares, pokebowl,
+              desserts maison et suggestions de saison vous accompagnent
+              du déjeuner jusqu'au dîner à Mont-de-Marsan.
+            </p>
+          </div>
+        </div>
 
-    <p class="text-slate-700 leading-relaxed text-base">
-      Découvrez la carte de <strong translate="no" class="notranslate">La Régence</strong>, entre
-      tradition de brasserie, produits frais et inspirations du Sud-Ouest.
-      Formule du midi, tapas à partager, burgers, tartares, salades,
-      desserts maison et suggestions de saison vous accompagnent
-      du déjeuner jusqu'au dîner à Mont-de-Marsan.
-    </p>
-  </div>
-</div>
+        <div class="justify-self-end w-full max-w-5xl text-right">
+          <button
+            type="button"
+            id="open-midi"
+            class="text-lg uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer
+                   text-brand font-semibold underline decoration-[var(--color-copper)]
+                   decoration-2 underline-offset-4
+                   hover:text-[var(--color-copper)] hover:scale-105 transition"
+            aria-haspopup="dialog"
+            aria-controls="menu-du-jour-lightbox"
+          >
+            Formule midi
+            <span aria-hidden="true">↗</span>
+          </button>
 
-  <!-- Colonne droite : menu / formule midi -->
-  <div class="justify-self-end w-full max-w-5xl text-right">
-    <button
-  type="button"
-  id="open-midi"
-  class="text-lg uppercase tracking-wide inline-flex items-center gap-2 justify-end cursor-pointer
-         text-brand font-semibold underline decoration-[var(--color-copper)]
-         decoration-2 underline-offset-4
-         hover:text-[var(--color-copper)] hover:scale-105 transition"
-  aria-haspopup="dialog"
-  aria-controls="menu-du-jour-lightbox"
->
-  Formule midi
-  <span aria-hidden="true">↗</span>
-</button>
+          <p class="mt-2 text-sm text-slate-600">Du lundi au vendredi • le midi</p>
 
-<p class="mt-2 text-sm text-slate-600">
-  Du lundi au vendredi • le midi
-</p>
-
-    <div class="mt-4 space-y-4">
-      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-        <div class="text-right"><p class="uppercase">Plat</p></div>
-        <div class="text-right font-medium">12 €</div>
+          <div class="mt-4 space-y-4">
+            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+              <div class="text-right"><p class="uppercase">Plat</p></div>
+              <div class="text-right font-medium">12 €</div>
+            </div>
+            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+              <div class="text-right"><p class="uppercase">Entrée / Plat ou Plat / Dessert</p></div>
+              <div class="text-right font-medium">15 €</div>
+            </div>
+            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+              <div class="text-right"><p class="uppercase">Entrée / Plat / Dessert</p></div>
+              <div class="text-right font-medium">18 €</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-        <div class="text-right"><p class="uppercase">Entrée / Plat ou Plat / Dessert</p></div>
-        <div class="text-right font-medium">15 €</div>
-      </div>
-      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-        <div class="text-right"><p class="uppercase">Entrée / Plat / Dessert</p></div>
-        <div class="text-right font-medium">18 €</div>
-      </div>
-    </div>
-  </div>
-</div>
 
-      <!-- Séparateur (uniquement sous la colonne texte) -->
+      <!-- Séparateur -->
       <div class="my-8 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,56rem)] items-center">
         <div class="hidden md:block"></div>
         <div class="h-[2px] w-full max-w-5xl ml-auto bg-[var(--color-copper)]"></div>
@@ -84,332 +138,102 @@ const description = "Découvrez le menu et la carte de La Régence à Mont-de-Ma
 
       <!-- ===== DISPONIBILITÉ CARTE ===== -->
       <div class="mb-8 text-right">
-        <p class="font-limelight text-2xl text-brand uppercase tracking-wide">
-          La Carte
-        </p>
-
-        <p class="mt-2 text-sm text-slate-600">
-          Disponible tous les midis et tous les soirs, du lundi au samedi.
-        </p>
+        <p class="font-limelight text-2xl text-brand uppercase tracking-wide">La Carte</p>
+        <p class="mt-2 text-sm text-slate-600">Disponible tous les midis et tous les soirs, du lundi au samedi.</p>
       </div>
 
-      <!-- ===== SECTION : TAPAS ===== -->
-<section class="relative grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 lg:items-start">
-  <!-- Image : centrée verticalement -->
-  <figure class="hidden lg:block">
-    <img
-      src="/menu-tapas.jpg"
-      alt="Tapas du restaurant La Régence à Mont-de-Marsan"
-      loading="lazy"
-      decoding="async"
-      class="w-[360px] h-[546px] object-cover rounded-2xl soft-border"
-    />
-  </figure>
-
-  <!-- Texte : largeur limitée, collé à droite -->
-  <div class="md:max-w-[560px] md:ml-auto text-right">
-    <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Tapas</h2>
-    <div class="mt-6 space-y-5 text-slate-800">
-      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-        <div class="text-right">
-          <p translate="no" class="notranslate font-semibold uppercase">Pâté Jean Haget (64)</p>
-          <p class="text-slate-700">pâté de campagne / pâté au piment d'Espelette / pâté piquant</p>
-        </div>
-        <div class="text-right font-medium">6 €</div>
-      </div>
-
-      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-        <div class="text-right">
-          <p translate="no" class="notranslate font-semibold uppercase">Planche de charcuterie & fromage</p>
-          <p class="text-slate-700">jambon Serrano, chorizo ibérique, lomo et fromage de brebis</p>
-        </div>
-        <div class="text-right font-medium">15 €</div>
-      </div>
-
-      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-        <div class="text-right">
-          <p translate="no" class="notranslate font-semibold uppercase">Croquetas</p>
-          <p class="text-slate-700">Serrano au piment d'espelette ou fromage de brebis</p>
-        </div>
-        <div class="text-right font-medium">8 €</div>
-      </div>
-
-      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-        <div class="text-right">
-          <p translate="no" class="notranslate font-semibold uppercase">Camembert rôti</p>
-          <p class="text-slate-700">miel et thym</p>
-        </div>
-        <div class="text-right font-medium">8 €</div>
-      </div>
-
-      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-        <div class="text-right">
-          <p translate="no" class="notranslate font-semibold uppercase">Poulet croustillant</p>
-          <p class="text-slate-700">sauce sweet chili</p>
-        </div>
-        <div class="text-right font-medium">6 €</div>
-      </div>
-
-      <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-        <div class="text-right">
-          <p translate="no" class="notranslate font-semibold uppercase">Pommes de terre frites de la Régence</p>
-             <p class="text-slate-700">pommes de terre frites en persillade</p>
-        </div>
-        <div class="text-right font-medium">5 €</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-      <!-- Séparateur -->
-      <div class="my-8 grid grid-cols-1 md:grid-cols-[360px_1fr] items-center">
-  <!-- Colonne image (vide en desktop) -->
-  <div class="hidden md:block"></div>
-  <!-- Colonne texte : barre cuivre -->
-  <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
-</div>
-
-
-      <!-- ===== ENTRÉES ===== -->
-      <section class="relative grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 lg:items-start">
-        <!-- Image : centrée verticalement -->
-  <figure class="hidden lg:block">
-          <img
-            src="/menu-entrees.jpg"
-            alt="Entrées de la carte de La Régence à Mont-de-Marsan"
-            loading="lazy"
-            decoding="async"
-            class="md:max-w-[360px] md:ml-auto text-right rounded-2xl soft-border"
-            
-          />
-        </figure>
-
-        <div class="justify-self-end w-full max-w-5xl text-right">
-          <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Entrées</h2>
-          <div class="mt-6 space-y-5 text-slate-800">
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Salade de toast de chèvre et poulet croustillant</p>
-                <p class="text-slate-700">Chèvre toasté, poulet croustillant, salade, carotte et vinaigrette</p>
-              </div>
-              <div class="text-right font-medium">5,90 €</div>
+      {[
+        { titre: "Tapas", img: "/menu-tapas.jpg", alt: "Tapas du restaurant La Régence à Mont-de-Marsan", groupes: [{ items: tapas }] },
+        { titre: "Entrées", img: "/menu-entrees.jpg", alt: "Entrées de la carte de La Régence à Mont-de-Marsan", groupes: [{ items: entrees }] },
+        {
+          titre: "Plats", img: "/menu-plats.jpg", alt: "Plats de brasserie de La Régence à Mont-de-Marsan",
+          groupes: [
+            { items: plats },
+            { sousTitre: "Accompagnements", note: "Pommes de terre frites de la Régence, légumes, purée du moment ou salade." },
+            { sousTitre: "Plat enfant", items: enfants },
+          ],
+          note: "Nos steaks hachés ou notre poulet croustillant peuvent être remplacés par un steak végétarien.",
+        },
+        {
+          titre: "Desserts", img: "/menu-desserts.jpg", alt: "Desserts de La Régence à Mont-de-Marsan",
+          groupes: [
+            { items: desserts },
+            { sousTitre: "Coupes glacées", items: coupes },
+            { sousTitre: "Glaces", items: glaces, note: "Parfums au choix : vanille, chocolat, café, fraise, framboise, Smarties, pistache, mascarpone, spéculoos, caramel beurre salé." },
+          ],
+        },
+      ].map((section, i) => (
+        <>
+          {i > 0 && (
+            <div class="my-8 grid grid-cols-1 md:grid-cols-[360px_1fr] items-center">
+              <div class="hidden md:block"></div>
+              <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
             </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Oeuf cocotte</p>
-                <p class="text-slate-700">œuf cocotte avec sa garniture du moment</p>
-              </div>
-              <div class="text-right font-medium">4,90 €</div>
-            </div>
-              <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Velouté du moment</p>
-                <p class="text-slate-700">velouté de légumes frais et de saison</p>
-              </div>
-              <div class="text-right font-medium">4,90 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Tartine du moment</p>
-                <p class="text-slate-700">pain toasté, garniture du moment, produits de saison et touches gourmandes</p>
-              </div>
-              <div class="text-right font-medium">5,90 €</div>
-            </div>
-          </div>
-        </div>
-      </section>
+          )}
+          <section class="relative grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 lg:items-start">
+            <figure class="hidden lg:block">
+              <img
+                src={section.img}
+                alt={section.alt}
+                loading="lazy"
+                decoding="async"
+                class="w-[360px] h-[546px] object-cover rounded-2xl soft-border"
+              />
+            </figure>
 
-      <!-- Séparateur -->
-      <div class="my-8 grid grid-cols-1 md:grid-cols-[360px_1fr] items-center">
-  <!-- Colonne image (vide en desktop) -->
-  <div class="hidden md:block"></div>
-  <!-- Colonne texte : barre cuivre -->
-  <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
-</div>
+            <div class="justify-self-end w-full max-w-[560px] text-right">
+              <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">{section.titre}</h2>
 
+              {section.groupes.map((g) => (
+                <>
+                  {g.sousTitre && (
+                    <h3 class="mt-8 text-sm tracking-wide text-slate-600 uppercase">{g.sousTitre}</h3>
+                  )}
+                  {g.items && (
+                    <div class={`${g.sousTitre ? "mt-3" : "mt-6"} space-y-5 text-slate-800`}>
+                      {g.items.map((it) => (
+                        <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
+                          <div class="text-right">
+                            <p translate="no" class="notranslate font-semibold uppercase">{it.nom}</p>
+                            {it.desc && <p class="text-slate-700">{it.desc}</p>}
+                          </div>
+                          <div class="text-right font-medium whitespace-nowrap">{prix(it.prix)}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {g.note && <p class={`${g.items ? "mt-3" : "mt-2"} text-sm text-slate-600`}>{g.note}</p>}
+                </>
+              ))}
 
-      <!-- ===== PLATS ===== -->
-      <section class="relative grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 lg:items-start">
-        <!-- Image : centrée verticalement -->
-  <figure class="hidden lg:block">
-          <img
-            src="/menu-plats.jpg"
-            alt="Plats de brasserie de La Régence à Mont-de-Marsan"
-            loading="lazy"
-            decoding="async"
-            class="md:max-w-[360px] md:ml-auto text-right rounded-2xl soft-border"
-          />
-        </figure>
+              {section.note && <p class="mt-6 text-sm italic text-slate-600">{section.note}</p>}
+            </div>
+          </section>
+        </>
+      ))}
 
-        <div class="justify-self-end w-full max-w-5xl text-right">
-          <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Plats</h2>
-          <div class="mt-6 space-y-5 text-slate-800">
-            <!-- … (tes items plats inchangés) … -->
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p translate="no" class="notranslate font-semibold uppercase">Pièce du boucher Angus</p><p class="text-slate-700">origine UE — 250gr - pommes de terre frites de <span translate="no" class="notranslate">La Régence</span>, échalote confite</p></div>
-              <div class="text-right font-medium">17.90 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p translate="no" class="notranslate font-semibold uppercase">Confit de canard</p><p class="text-slate-700">pommes de terre frites de <span translate="no" class="notranslate">La Régence</span>, sauce au miel</p></div>
-              <div class="text-right font-medium">17,90 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p translate="no" class="notranslate font-semibold uppercase">Pokebowl</p><p class="text-slate-700">poulet croustillant, chou rouge, carotte, concombre, fève d'edamame, crème d’avocat, pêche rotie, boulgour et vinaigrette thaï</p></div>
-              <div class="text-right font-medium">16,90 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p translate="no" class="notranslate font-semibold uppercase">Tartare de bœuf façon thaï</p><p class="text-slate-700">origine France — tartare de bœuf Charolais au couteau 150gr, cébettes, graine de sésame, sauce soja, pommes de terre frites de <span translate="no" class="notranslate">La Régence</span>, </p></div>
-              <div class="text-right font-medium">18,90 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p translate="no" class="notranslate font-semibold uppercase">Burger Gorgonzola</p><p class="text-slate-700">origine Irlande — steak haché Black Angus 150gr, gorgonzola, bacon, confits d'oignons, sauce miel & moutarde, pommes de terre frites de <span translate="no" class="notranslate">La Régence</span></p></div>
-              <div class="text-right font-medium">17,90 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p translate="no" class="notranslate font-semibold uppercase">Salade du soleil</p><p class="text-slate-700">Pêches roties, straciatella (coeur de burrata), jambon Serrano, roquette, pistaches croquantes</p></div>
-              <div class="text-right font-medium">17,90 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right"><p translate="no" class="notranslate font-semibold uppercase">Burger Poulet Satay</p><p class="text-slate-700">poulet croustillant, sauce satay au lait coco, cheddar, coleslaw, pommes de terre frites de <span translate="no" class="notranslate">La Régence</span></p></div>
-              <div class="text-right font-medium">16,90 €</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Séparateur -->
-      <div class="my-8 grid grid-cols-1 md:grid-cols-[360px_1fr] items-center">
-  <!-- Colonne image (vide en desktop) -->
-  <div class="hidden md:block"></div>
-  <!-- Colonne texte : barre cuivre -->
-  <div class="h-[2px] w-[min(560px,90%)] ml-auto bg-[var(--color-copper)]"></div>
-</div>
-
-
-      <!-- ===== DESSERTS ===== -->
-      <section class="relative grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 lg:items-start">
-        <!-- Image : centrée verticalement -->
-  <figure class="hidden lg:block">
-          <img
-            src="/menu-desserts.jpg"
-            alt="Desserts de La Régence à Mont-de-Marsan"
-            loading="lazy"
-            decoding="async"
-            class="md:max-w-[360px] md:ml-auto text-right rounded-2xl soft-border"
-          />
-        </figure>
-
-        <div class="justify-self-end w-full max-w-5xl text-right">
-          <h2 class="font-limelight text-3xl text-brand tracking-wide uppercase">Desserts</h2>
-          <div class="mt-6 space-y-5 text-slate-800">
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Crème brûlée pistache</p>
-                <p class="text-slate-700">à la vanille et pistache</p>
-              </div>
-              <div class="text-right font-medium">6,00 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Cœur coulant</p>
-                <p class="text-slate-700">à la pistache et chocolat blanc, sorbet framboise</p>
-              </div>
-              <div class="text-right font-medium">6,50 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Café gourmand</p>
-                <p class="text-slate-700">Boule de glace, tartelette citron, petit pastis landais façon pain perdu, crème brulée pistache</p>
-              </div>
-              <div class="text-right font-medium">7,00 €</div>
-            </div>
-            <div class="h-6"></div> <!-- Saut de ligne ici -->
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Dame Blanche</p>
-                <p class="text-slate-700">Glace vanille, sauce chocolat, chantilly, amande éffilée</p>
-              </div>
-              <div class="text-right font-medium">7,00 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Café liégeois</p>
-                <p class="text-slate-700">Glace café, espresso, chantilly, amande éffilée</p>
-              </div>
-              <div class="text-right font-medium">7,00 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Chocolat liégeois</p>
-                <p class="text-slate-700">Glace chocolat, sauce chocolat, chantilly, amande éffilée</p>
-              </div>
-              <div class="text-right font-medium">7,00 €</div>
-            </div>
-            <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Coupe Tiramisu</p>
-                <p class="text-slate-700">Glace mascarpone, glace spéculoos, chantilly, espresso, chantilly, spéculoos</p>
-              </div>
-              <div class="text-right font-medium">7,00 €</div>
-            </div>
-              <div class="grid grid-cols-[1fr_auto] gap-6 items-baseline">
-              <div class="text-right">
-                <p translate="no" class="notranslate font-semibold uppercase">Coupe Canadienne</p>
-                <p class="text-slate-700">Glace pistache, glace au sirop d'érable, glace caramel beurre salé, chantilly et sirop d'érable</p>
-              </div>
-              <div class="text-right font-medium">7,00 €</div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <p class="mt-10 text-right text-sm text-slate-500">Nos plats sont faits maison · prix en euros, net & TTC, service inclus.</p>
 
     </div>
   </section>
 
   <!-- Liens internes -->
   <div class="px-6 pb-2 flex flex-wrap justify-end gap-x-5 gap-y-2 text-sm">
-    <a
-      href="/boissons/"
-      class="text-brand underline decoration-[var(--color-copper)] underline-offset-4 hover:text-[var(--color-copper)] transition-colors"
-    >
+    <a href="/boissons/" class="text-brand underline decoration-[var(--color-copper)] underline-offset-4 hover:text-[var(--color-copper)] transition-colors">
       Voir la carte des boissons
     </a>
-    <a
-      href="/reservation/"
-      class="text-brand underline decoration-[var(--color-copper)] underline-offset-4 hover:text-[var(--color-copper)] transition-colors"
-    >
+    <a href="/reservation/" class="text-brand underline decoration-[var(--color-copper)] underline-offset-4 hover:text-[var(--color-copper)] transition-colors">
       Réserver une table
     </a>
   </div>
 
-  <!-- Photos regroupées en bas -->
-<div class="mt-10 -mx-6 sm:mx-0 grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-4 lg:hidden">
-  <img
-    src="/menu-tapas.jpg" alt="Tapas du restaurant La Régence à Mont-de-Marsan"
-    loading="lazy" decoding="async"
-    class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
-  />
-  <img
-    src="/menu-entrees.jpg" alt="Entrées de la carte de La Régence à Mont-de-Marsan"
-    loading="lazy" decoding="async"
-    class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
-  />
-  <img
-    src="/menu-plats.jpg" alt="Plats de brasserie de La Régence à Mont-de-Marsan"
-    loading="lazy" decoding="async"
-    class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
-  />
-  <img
-    src="/menu-desserts.jpg" alt="Desserts de La Régence à Mont-de-Marsan"
-    loading="lazy" decoding="async"
-    class="w-full h-auto object-cover rounded-none sm:rounded-2xl"
-  />
-</div>
-
-
-
-
+  <!-- Photos regroupées en bas (mobile / tablette) -->
+  <div class="mt-10 -mx-6 sm:mx-0 grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-4 lg:hidden">
+    <img src="/menu-tapas.jpg" alt="Tapas du restaurant La Régence à Mont-de-Marsan" loading="lazy" decoding="async" class="w-full h-auto object-cover rounded-none sm:rounded-2xl" />
+    <img src="/menu-entrees.jpg" alt="Entrées de la carte de La Régence à Mont-de-Marsan" loading="lazy" decoding="async" class="w-full h-auto object-cover rounded-none sm:rounded-2xl" />
+    <img src="/menu-plats.jpg" alt="Plats de brasserie de La Régence à Mont-de-Marsan" loading="lazy" decoding="async" class="w-full h-auto object-cover rounded-none sm:rounded-2xl" />
+    <img src="/menu-desserts.jpg" alt="Desserts de La Régence à Mont-de-Marsan" loading="lazy" decoding="async" class="w-full h-auto object-cover rounded-none sm:rounded-2xl" />
+  </div>
 
   <!-- ===== LIGHTBOX “Formule midi” ===== -->
   <div id="menu-du-jour-lightbox" class="fixed inset-0 hidden items-center justify-center z-[60]" aria-hidden="true" role="dialog" aria-modal="true">
